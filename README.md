@@ -1,5 +1,3 @@
-# ACTA
-
 # Frontend
 
 Install node_modules
