@@ -12,6 +12,8 @@ Run development server
 npm start
 ```
 
+The app will be hosted on http://localhost:3000
+
 # Backend
 
 Docker tutorial
