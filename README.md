@@ -1,7 +1,5 @@
 # Frontend
-Template
-
-https://dali110.github.io/react-material-admin/
+Template(https://dali110.github.io/react-material-admin/)
 
 Install node_modules
 ```
@@ -17,9 +15,7 @@ The app will be hosted on http://localhost:3000
 
 # Backend
 
-Docker tutorial
-
-https://www.digitalocean.com/community/tutorials/how-to-set-up-laravel-nginx-and-mysql-with-docker-compose-pt
+Docker tutorial(https://www.digitalocean.com/community/tutorials/how-to-set-up-laravel-nginx-and-mysql-with-docker-compose-pt)
 
 
 Copy environment example file
