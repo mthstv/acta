@@ -29,22 +29,9 @@ Run docker (-d flag for daemon)
 docker-compose up -d
 ```
 
-Create Databse User
+Running migrations
 ```
-docker-compose exec db bash
-```
-
-```
-mysql -u root -p
-```
-
-```
-GRANT ALL ON acta.* TO 'actauser'@'%' IDENTIFIED BY 'ACTA20201';
-```
-
-Running migrations and seeds
-```
-docker-compose exec app php artisan migrate --seed
+docker-compose exec app php artisan migrate:refresh
 ```
 
 The app will be hosted on http://localhost:8080
