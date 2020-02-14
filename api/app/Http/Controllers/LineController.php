@@ -16,7 +16,7 @@ class LineController extends Controller
     public function index()
     {
         $lines = Line::all();
-        return response()->json(['data' => $lines]);
+        return response()->json(['success' => true, 'data' => $lines]);
     }
 
     /**
@@ -44,7 +44,7 @@ class LineController extends Controller
         $request->incise ? $line->incise()->associate($request->incise) : null;
         $line->fill($data);
         $line->save();
-        return response()->json(['data' => $line]);
+        return response()->json(['success' => true, 'data' => $line]);
     }
 
     /**
@@ -55,7 +55,7 @@ class LineController extends Controller
      */
     public function show(Line $line)
     {
-        return response()->json(['data' => $line]);
+        return response()->json(['success' => true, 'data' => $line]);
     }
 
     /**
@@ -79,7 +79,7 @@ class LineController extends Controller
     public function update(Request $request, Line $line)
     {
         $line->update($request->all());
-        return response()->json(['data' => $line]);
+        return response()->json(['success' => true, 'data' => $line]);
     }
 
     /**
@@ -91,6 +91,6 @@ class LineController extends Controller
     public function destroy(Line $line)
     {
         $line->delete();
-        return response()->json(['success' => trans('api.line.delete')]);
+        return response()->json(['success' => true, 'data' => trans('api.line.delete')]);
     }
 }

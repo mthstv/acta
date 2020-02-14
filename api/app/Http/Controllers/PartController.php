@@ -16,7 +16,7 @@ class PartController extends Controller
     public function index()
     {
         $parts = Part::all();
-        return response()->json(['data' => $parts]);
+        return response()->json(['success' => true, 'data' => $parts]);
     }
 
     /**
@@ -42,7 +42,7 @@ class PartController extends Controller
         $part->rule()->associate($request->rule);
         $part->fill($data);
         $part->save();
-        return response()->json(['data' => $part]);
+        return response()->json(['success' => true, 'data' => $part]);
     }
 
     /**
@@ -53,7 +53,7 @@ class PartController extends Controller
      */
     public function show(Part $part)
     {
-        return response()->json(['data' => $part]);
+        return response()->json(['success' => true, 'data' => $part]);
     }
 
     /**
@@ -77,7 +77,7 @@ class PartController extends Controller
     public function update(Request $request, Part $part)
     {
         $part->update($request->all());
-        return response()->json(['data' => $part]);
+        return response()->json(['success' => true, 'data' => $part]);
     }
 
     /**
@@ -89,6 +89,6 @@ class PartController extends Controller
     public function destroy(Part $part)
     {
         $part->delete();
-        return response()->json(['success' => trans('api.part.delete')]);
+        return response()->json(['success' => true, 'data' => trans('api.part.delete')]);
     }
 }

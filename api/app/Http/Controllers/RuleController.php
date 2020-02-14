@@ -17,7 +17,7 @@ class RuleController extends Controller
     public function index()
     {
         $rules = Rule::all();
-        return response()->json(['data' => $rules]);
+        return response()->json(['success' => true, 'data' => $rules]);
     }
 
     /**
@@ -38,7 +38,7 @@ class RuleController extends Controller
         $validated = $request->validated();
         $data = $request->all();
         $rule = Rule::create($data);
-        return response()->json(['data' => $rule]);
+        return response()->json(['success' => true, 'data' => $rule]);
     }
 
     /**
@@ -49,7 +49,7 @@ class RuleController extends Controller
      */
     public function show(Rule $rule)
     {
-        return response()->json(['data' => $rule]);
+        return response()->json(['success' => true, 'data' => $rule]);
     }
 
     /**
@@ -73,7 +73,7 @@ class RuleController extends Controller
     public function update(Request $request, Rule $rule)
     {
         $rule->update($request->all());
-        return response()->json(['data' => $rule]);
+        return response()->json(['success' => true, 'data' => $rule]);
     }
 
     /**
@@ -85,6 +85,6 @@ class RuleController extends Controller
     public function destroy(Rule $rule)
     {
         $rule->delete();
-        return response()->json(['success' => trans('api.rule.delete')]);
+        return response()->json(['success' => true, 'data' => trans('api.rule.delete')]);
     }
 }

@@ -16,7 +16,7 @@ class ParagraphController extends Controller
     public function index()
     {
         $paragraphs = Paragraph::all();
-        return response()->json(['data' => $paragraphs]);
+        return response()->json(['success' => true, 'data' => $paragraphs]);
     }
 
     /**
@@ -42,7 +42,7 @@ class ParagraphController extends Controller
         $request->article ? $paragraph->article()->associate($request->article) : null;
         $paragraph->fill($data);
         $paragraph->save();
-        return response()->json(['data' => $paragraph]);
+        return response()->json(['success' => true, 'data' => $paragraph]);
     }
 
     /**
@@ -53,7 +53,7 @@ class ParagraphController extends Controller
      */
     public function show(Paragraph $paragraph)
     {
-        return response()->json(['data' => $paragraph]);
+        return response()->json(['success' => true, 'data' => $paragraph]);
     }
 
     /**
@@ -77,7 +77,7 @@ class ParagraphController extends Controller
     public function update(Request $request, Paragraph $paragraph)
     {
         $paragraph->update($request->all());
-        return response()->json(['data' => $paragraph]);
+        return response()->json(['success' => true, 'data' => $paragraph]);
     }
 
     /**
@@ -89,6 +89,6 @@ class ParagraphController extends Controller
     public function destroy(Paragraph $paragraph)
     {
         $paragraph->delete();
-        return response()->json(['success' => trans('api.paragraph.delete')]);
+        return response()->json(['success' => true, 'data' => trans('api.paragraph.delete')]);
     }
 }

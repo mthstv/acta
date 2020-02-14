@@ -16,7 +16,7 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::all();
-        return response()->json(['data' => $books]);
+        return response()->json(['success' => true, 'data' => $books]);
     }
 
     /**
@@ -43,7 +43,7 @@ class BookController extends Controller
         $request->part ? $book->part()->associate($request->part) : null;
         $book->fill($data);
         $book->save();
-        return response()->json(['data' => $book]);
+        return response()->json(['success' => true, 'data' => $book]);
     }
 
     /**
@@ -54,7 +54,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        return response()->json(['data' => $book]);
+        return response()->json(['success' => true, 'data' => $book]);
     }
 
     /**
@@ -78,7 +78,7 @@ class BookController extends Controller
     public function update(Request $request, Book $book)
     {
         $book->update($request->all());
-        return response()->json(['data' => $book]);
+        return response()->json(['success' => true, 'data' => $book]);
     }
 
     /**
@@ -90,6 +90,6 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         $book->delete();
-        return response()->json(['success' => trans('api.book.delete')]);
+        return response()->json(['success' => true, 'data' => trans('api.book.delete')]);
     }
 }

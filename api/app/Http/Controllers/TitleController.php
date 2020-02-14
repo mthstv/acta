@@ -16,7 +16,7 @@ class TitleController extends Controller
     public function index()
     {
         $titles = Title::all();
-        return response()->json(['data' => $titles]);
+        return response()->json(['success' => true, 'data' => $titles]);
     }
 
     /**
@@ -43,7 +43,7 @@ class TitleController extends Controller
         $request->book ? $title->book()->associate($request->book) : null;
         $title->fill($data);
         $title->save();
-        return response()->json(['data' => $title]);
+        return response()->json(['success' => true, 'data' => $title]);
     }
 
     /**
@@ -54,7 +54,7 @@ class TitleController extends Controller
      */
     public function show(Title $title)
     {
-        return response()->json(['data' => $title]);
+        return response()->json(['success' => true, 'data' => $title]);
     }
 
     /**
@@ -78,7 +78,7 @@ class TitleController extends Controller
     public function update(Request $request, Title $title)
     {
         $title->update($request->all());
-        return response()->json(['data' => $title]);
+        return response()->json(['success' => true, 'data' => $title]);
     }
 
     /**
@@ -90,6 +90,6 @@ class TitleController extends Controller
     public function destroy(Title $title)
     {
         $title->delete();
-        return response()->json(['success' => trans('api.title.delete')]);
+        return response()->json(['success' => true, 'data' => trans('api.title.delete')]);
     }
 }

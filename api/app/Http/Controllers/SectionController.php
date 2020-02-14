@@ -16,7 +16,7 @@ class SectionController extends Controller
     public function index()
     {
         $sections = Section::all();
-        return response()->json(['data' => $sections]);
+        return response()->json(['success' => true, 'data' => $sections]);
     }
 
     /**
@@ -42,7 +42,7 @@ class SectionController extends Controller
         $request->chapter ? $section->chapter()->associate($request->chapter) : null;
         $section->fill($data);
         $section->save();
-        return response()->json(['data' => $section]);
+        return response()->json(['success' => true, 'data' => $section]);
     }
 
     /**
@@ -53,7 +53,7 @@ class SectionController extends Controller
      */
     public function show(Section $section)
     {
-        return response()->json(['data' => $section]);
+        return response()->json(['success' => true, 'data' => $section]);
     }
 
     /**
@@ -77,7 +77,7 @@ class SectionController extends Controller
     public function update(Request $request, Section $section)
     {
         $section->update($request->all());
-        return response()->json(['data' => $section]);
+        return response()->json(['success' => true, 'data' => $section]);
     }
 
     /**
@@ -89,6 +89,6 @@ class SectionController extends Controller
     public function destroy(Section $section)
     {
         $section->delete();
-        return response()->json(['success' => trans('api.section.delete')]);
+        return response()->json(['success' => true, 'data' => trans('api.section.delete')]);
     }
 }

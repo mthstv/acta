@@ -16,7 +16,7 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::all();
-        return response()->json(['data' => $articles]);
+        return response()->json(['success' => true, 'data' => $articles]);
     }
 
     /**
@@ -45,7 +45,7 @@ class ArticleController extends Controller
         $request->sub_section ? $article->sub_section()->associate($request->sub_section) : null;
         $article->fill($data);
         $article->save();
-        return response()->json(['data' => $article]);
+        return response()->json(['success' => true, 'data' => $article]);
     }
 
     /**
@@ -56,7 +56,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        return response()->json(['data' => $article]);
+        return response()->json(['success' => true, 'data' => $article]);
     }
 
     /**
@@ -80,7 +80,7 @@ class ArticleController extends Controller
     public function update(Request $request, Article $article)
     {
         $article->update($request->all());
-        return response()->json(['data' => $article]);
+        return response()->json(['success' => true, 'data' => $article]);
     }
 
     /**
@@ -92,6 +92,6 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $article->delete();
-        return response()->json(['success' => trans('api.article.delete')]);
+        return response()->json(['success' => true, 'data' => trans('api.article.delete')]);
     }
 }

@@ -16,7 +16,7 @@ class ItemController extends Controller
     public function index()
     {
         $items = Item::all();
-        return response()->json(['data' => $items]);
+        return response()->json(['success' => true, 'data' => $items]);
     }
 
     /**
@@ -42,7 +42,7 @@ class ItemController extends Controller
         $request->line ? $item->line()->associate($request->line) : null;
         $item->fill($data);
         $item->save();
-        return response()->json(['data' => $item]);
+        return response()->json(['success' => true, 'data' => $item]);
     }
 
     /**
@@ -53,7 +53,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        return response()->json(['data' => $item]);
+        return response()->json(['success' => true, 'data' => $item]);
     }
 
     /**
@@ -77,7 +77,7 @@ class ItemController extends Controller
     public function update(Request $request, Item $item)
     {
         $item->update($request->all());
-        return response()->json(['data' => $item]);
+        return response()->json(['success' => true, 'data' => $item]);
     }
 
     /**
@@ -89,6 +89,6 @@ class ItemController extends Controller
     public function destroy(Item $item)
     {
         $item->delete();
-        return response()->json(['success' => trans('api.item.delete')]);
+        return response()->json(['success' => true, 'data' => trans('api.item.delete')]);
     }
 }

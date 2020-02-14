@@ -16,7 +16,7 @@ class InciseController extends Controller
     public function index()
     {
         $incises = Incise::all();
-        return response()->json(['data' => $incises]);
+        return response()->json(['success' => true, 'data' => $incises]);
     }
 
     /**
@@ -43,7 +43,7 @@ class InciseController extends Controller
         $request->paragraph ? $incise->paragraph()->associate($request->paragraph) : null;
         $incise->fill($data);
         $incise->save();
-        return response()->json(['data' => $incise]);
+        return response()->json(['success' => true, 'data' => $incise]);
     }
 
     /**
@@ -54,7 +54,7 @@ class InciseController extends Controller
      */
     public function show(Incise $incise)
     {
-        return response()->json(['data' => $incise]);
+        return response()->json(['success' => true, 'data' => $incise]);
     }
 
     /**
@@ -78,7 +78,7 @@ class InciseController extends Controller
     public function update(Request $request, Incise $incise)
     {
         $incise->update($request->all());
-        return response()->json(['data' => $incise]);
+        return response()->json(['success' => true, 'data' => $incise]);
     }
 
     /**
@@ -90,6 +90,6 @@ class InciseController extends Controller
     public function destroy(Incise $incise)
     {
         $incise->delete();
-        return response()->json(['success' => trans('api.incise.delete')]);
+        return response()->json(['success' => true, 'data' => trans('api.incise.delete')]);
     }
 }

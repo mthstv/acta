@@ -16,7 +16,7 @@ class ChapterController extends Controller
     public function index()
     {
         $chapters = Chapter::all();
-        return response()->json(['data' => $chapters]);
+        return response()->json(['success' => true, 'data' => $chapters]);
     }
 
     /**
@@ -42,7 +42,7 @@ class ChapterController extends Controller
         $request->title ? $chapter->title()->associate($request->title) : null;
         $chapter->fill($data);
         $chapter->save();
-        return response()->json(['data' => $chapter]);
+        return response()->json(['success' => true, 'data' => $chapter]);
     }
 
     /**
@@ -53,7 +53,7 @@ class ChapterController extends Controller
      */
     public function show(Chapter $chapter)
     {
-        return response()->json(['data' => $chapter]);
+        return response()->json(['success' => true, 'data' => $chapter]);
     }
 
     /**
@@ -77,7 +77,7 @@ class ChapterController extends Controller
     public function update(Request $request, Chapter $chapter)
     {
         $chapter->update($request->all());
-        return response()->json(['data' => $chapter]);
+        return response()->json(['success' => true, 'data' => $chapter]);
     }
 
     /**
@@ -89,6 +89,6 @@ class ChapterController extends Controller
     public function destroy(Chapter $chapter)
     {
         $chapter->delete();
-        return response()->json(['success' => trans('api.chapter.delete')]);
+        return response()->json(['success' => true, 'data' => trans('api.chapter.delete')]);
     }
 }

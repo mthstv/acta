@@ -16,7 +16,7 @@ class SubSectionController extends Controller
     public function index()
     {
         $subSections = SubSection::all();
-        return response()->json(['data' => $subSections]);
+        return response()->json(['success' => true, 'data' => $subSections]);
     }
 
     /**
@@ -42,7 +42,7 @@ class SubSectionController extends Controller
         $request->section ? $subSection->section()->associate($request->section) : null;
         $subSection->fill($data);
         $subSection->save();
-        return response()->json(['data' => $subSection]);
+        return response()->json(['success' => true, 'data' => $subSection]);
     }
 
     /**
@@ -53,7 +53,7 @@ class SubSectionController extends Controller
      */
     public function show(SubSection $subSection)
     {
-        return response()->json(['data' => $subSection]);
+        return response()->json(['success' => true, 'data' => $subSection]);
     }
 
     /**
@@ -77,7 +77,7 @@ class SubSectionController extends Controller
     public function update(Request $request, SubSection $subSection)
     {
         $subSection->update($request->all());
-        return response()->json(['data' => $subSection]);
+        return response()->json(['success' => true, 'data' => $subSection]);
     }
 
     /**
@@ -89,6 +89,6 @@ class SubSectionController extends Controller
     public function destroy(SubSection $subSection)
     {
         $subSection->delete();
-        return response()->json(['success' => trans('api.subSection.delete')]);
+        return response()->json(['success' => true, 'data' => trans('api.subSection.delete')]);
     }
 }

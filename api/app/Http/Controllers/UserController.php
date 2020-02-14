@@ -30,17 +30,24 @@ class UserController extends Controller
     }
     public function login(Request $request)
     {
-        $user = \App\Models\User::where('email', $request->email)->get()->first();
+        $user = User::where('email', $request->email)->get()->first();
         if ($user && \Hash::check($request->password, $user->password)) // The passwords match...
         {
             $token = self::getToken($request->email, $request->password);
             $user->auth_token = $token;
             $user->save();
-            $response = ['success'=>true, 'data'=>['id'=>$user->id,'auth_token'=>$user->auth_token,'name'=>$user->name, 'email'=>$user->email]];           
+            $response = [
+                'success'=>true, 
+                'data'=>[
+                    'id'=>$user->id,
+                    'auth_token'=>$user->auth_token,
+                    'name'=>$user->name, 
+                    'email'=>$user->email
+                ]
+            ];           
         }
         else 
           $response = ['success'=>false, 'data'=>'Record doesnt exists'];
-      
 
         return response()->json($response, 201);
     }
@@ -53,7 +60,7 @@ class UserController extends Controller
             'auth_token'=> ''
         ];
                   
-        $user = new \App\Models\User($payload);
+        $user = new User($payload);
         if ($user->save())
         {
             
@@ -61,7 +68,7 @@ class UserController extends Controller
             
             if (!is_string($token))  return response()->json(['success'=>false,'data'=>'Token generation failed'], 201);
             
-            $user = \App\Models\User::where('email', $request->email)->get()->first();
+            $user = User::where('email', $request->email)->get()->first();
             
             $user->auth_token = $token; // update user token
             

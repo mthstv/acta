@@ -27,6 +27,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
         return response()->json($response, 201);
     });
 });
+
 Route::group(['middleware' => 'api-header'], function () {
   
     // The registration and login requests doesn't come with tokens 
