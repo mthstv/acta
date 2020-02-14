@@ -39,7 +39,7 @@ const drawStyles = theme => {
     avatarRoot: {
       padding: "16px 0 10px 15px",
       backgroundImage: null, // "url(" + require("../images/material_bg.png") + ")",
-      height: 45,
+      height: 70,
       display: "flex"
     },
     avatarRootMini: {

@@ -37,7 +37,7 @@ export const availableThemes = [
 const defaultTheme = {
   palette: {
     primary: blue,
-    secondary: pink
+    secondary: grey
   },
   error: red,
   appBar: {

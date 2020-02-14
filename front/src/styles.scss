@@ -20,7 +20,7 @@ body, html, #app, #app > div{
 
 a {
   // color: #ff4081;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 a:hover {

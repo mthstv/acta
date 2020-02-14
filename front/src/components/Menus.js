@@ -29,6 +29,7 @@ const styles = theme => {
     menuItem: {
       padding: "10px 16px",
       color: "white",
+      cursor: "pointer",
       fontSize: 14,
       "&:focus": {
         backgroundColor: theme.palette.primary.main,
