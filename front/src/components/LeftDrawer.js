@@ -38,7 +38,8 @@ const drawStyles = theme => {
     },
     avatarRoot: {
       padding: "16px 0 10px 15px",
-      backgroundImage: null, // "url(" + require("../images/material_bg.png") + ")",
+      backgroundImage: "url(" + require("../images/material_bg.png") + ")",
+      cursor: "pointer",
       height: 70,
       display: "flex"
     },
@@ -65,13 +66,18 @@ const drawStyles = theme => {
   };
 };
 
+function handleRedirect () {
+  window.location.href = '/login'
+
+}
+
 const LeftDrawer = props => {
   let { navDrawerOpen, classes, theme, handleChangeNavDrawer } = props;
 
   const drawerContent = () => (
     <div>
       <div className={classes.logo}>ACTA</div>
-      <div className={classNames(classes.avatarRoot, !navDrawerOpen && classes.avatarRootMini)}>
+      <div className={classNames(classes.avatarRoot, !navDrawerOpen && classes.avatarRootMini)} onClick={handleRedirect}>
         <Avatar src={data.user.avatar} size={navDrawerOpen ? 48 : 32} classes={{ root: classes }} />
         <span className={classes.avatarSpan}>{data.user.userName}</span>
       </div>
@@ -85,7 +91,7 @@ const LeftDrawer = props => {
       <Hidden mdUp>
         <Drawer
           variant="temporary"
-          anchor={theme.direction === "rtl" ? "right" : "left"}
+          anchor={theme.direction= "left"}
           open={navDrawerOpen}
           onClose={handleChangeNavDrawer}
           classes={{

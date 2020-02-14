@@ -28,11 +28,11 @@ const data = {
         }
       ]
     },
-    { text: "Login Page", icon: <PermIdentity />, link: "/login" }
+    // { text: "Login Page", icon: <PermIdentity />, link: "/login" }
   ],
   user: {
-    userName: `${Faker.name.firstName()} ${Faker.name.lastName()}`,
-    avatar: null
+    userName: "ENTER/REGISTER", // `${Faker.name.firstName()} ${Faker.name.lastName()}`,
+    avatar: null // 'https://secure.gravatar.com/avatar/6a892a927dfbe1345572ab1e34780f0a?s=800&d=identicon'
   },
   tablePage: {
     items: Array.from({ length: 105 }, (item, index) => ({
