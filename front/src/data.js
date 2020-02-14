@@ -4,30 +4,32 @@ import Assessment from "@material-ui/icons/Assessment";
 import GridOn from "@material-ui/icons/GridOn";
 import PermIdentity from "@material-ui/icons/PermIdentity";
 import Web from "@material-ui/icons/Web";
+import Home from "@material-ui/icons/Home";
 import BorderClear from "@material-ui/icons/BorderClear";
 import BorderOuter from "@material-ui/icons/BorderOuter";
 
 const data = {
   menus: [
-    { text: "DashBoard", icon: <Assessment />, link: "/dashboard" },
-    { text: "Form Page", icon: <Web />, link: "/form" },
-    {
-      text: "Table Page",
-      icon: <GridOn />,
-      // link: "/table",
-      subMenus: [
-        {
-          text: "Basic Table",
-          icon: <BorderClear />,
-          link: "/table/basic"
-        },
-        {
-          text: "Data Table",
-          icon: <BorderOuter />,
-          link: "/table/data"
-        }
-      ]
-    },
+    { text: "Home", icon: <Home />, link: "/" },
+    // { text: "DashBoard", icon: <Assessment />, link: "/dashboard" },
+    // { text: "Form Page", icon: <Web />, link: "/form" },
+    // {
+    //   text: "Table Page",
+    //   icon: <GridOn />,
+    //   // link: "/table",
+    //   subMenus: [
+    //     {
+    //       text: "Basic Table",
+    //       icon: <BorderClear />,
+    //       link: "/table/basic"
+    //     },
+    //     {
+    //       text: "Data Table",
+    //       icon: <BorderOuter />,
+    //       link: "/table/data"
+    //     }
+    //   ]
+    // },
     // { text: "Login Page", icon: <PermIdentity />, link: "/login" }
   ],
   user: {

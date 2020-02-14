@@ -35,6 +35,10 @@ const styles = theme => {
         backgroundColor: theme.palette.primary.main,
         "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
           color: theme.palette.common.white
+        },
+        "&:active": {
+          backgroundColor: theme.palette.secondary.main,
+
         }
       }
     },

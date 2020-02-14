@@ -6,7 +6,6 @@ import Button from 'react-bootstrap/Button';
 const HomePage = () => {
   return (
     <div>
-      <h3 style={globalStyles.navigation}>Application / Home</h3>
       <Card style={{ width: '18rem' }}>
         <Card.Body>
           <Card.Title>Card Title</Card.Title>

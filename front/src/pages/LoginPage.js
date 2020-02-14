@@ -20,12 +20,13 @@ const LoginPage = () => {
       position: "absolute",
       top: "20%",
       left: 0,
-      right: 0,
+      right: 800,
       margin: "auto"
     },
     paper: {
       padding: 20,
-      overflow: "auto"
+      overflow: "auto",
+      backgroundColor: '#eeeeee'
     },
     buttonsDiv: {
       textAlign: "center",
@@ -60,12 +61,6 @@ const LoginPage = () => {
       borderRadius: 2,
       margin: 2,
       fontSize: 13
-    },
-    btnFacebook: {
-      background: "#4f81e9"
-    },
-    btnGoogle: {
-      background: "#e14441"
     },
     btnSpan: {
       marginLeft: 5
@@ -104,7 +99,7 @@ const LoginPage = () => {
             </form>
           </Paper>
 
-          <div style={styles.buttonsDiv}>
+          <div style={styles.buttonsDiv} >
             <Button href="/" style={styles.flatButton}>
               <PersonAdd />
               <span style={{ margin: 5 }}>Register</span>
@@ -116,16 +111,6 @@ const LoginPage = () => {
             </Button>
           </div>
 
-          <div style={styles.buttonsDiv}>
-            <Link to="/" style={{ ...styles.btn, ...styles.btnFacebook }}>
-              <i className="fa fa-facebook fa-lg" />
-              <span style={styles.btnSpan}>Log in with Facebook</span>
-            </Link>
-            <Link to="/" style={{ ...styles.btn, ...styles.btnGoogle }}>
-              <i className="fa fa-google-plus fa-lg" />
-              <span style={styles.btnSpan}>Log in with Google</span>
-            </Link>
-          </div>
         </div>
       </div>
     </ThemeProvider>

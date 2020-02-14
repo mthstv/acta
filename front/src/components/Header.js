@@ -218,7 +218,7 @@ class Header extends React.Component {
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <IconButton color="inherit">
+              {/* <IconButton color="inherit">
                 <Badge
                   className={classes.margin}
                   badgeContent={4}
@@ -226,7 +226,7 @@ class Header extends React.Component {
                 >
                   <MailIcon />
                 </Badge>
-              </IconButton>
+              </IconButton> */}
               <IconButton color="inherit">
                 <Badge
                   className={classes.margin}
@@ -236,14 +236,14 @@ class Header extends React.Component {
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
-              <IconButton
+              {/* <IconButton
                 aria-owns={isMenuOpen ? "material-appbar" : null}
                 aria-haspopup="true"
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
               >
                 <AccountCircle />
-              </IconButton>
+              </IconButton> */}
             </div>
             <div className={classes.sectionMobile}>
               <IconButton
