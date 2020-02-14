@@ -33,4 +33,9 @@ Running migrations
 docker-compose exec app php artisan migrate:refresh
 ```
 
+Generate the jwt key
+```
+php artisan jwt:secret
+```
+
 The app will be hosted on http://localhost:8080
