@@ -11,25 +11,25 @@ import BorderOuter from "@material-ui/icons/BorderOuter";
 const data = {
   menus: [
     { text: "Home", icon: <Home />, link: "/" },
-    // { text: "DashBoard", icon: <Assessment />, link: "/dashboard" },
-    // { text: "Form Page", icon: <Web />, link: "/form" },
-    // {
-    //   text: "Table Page",
-    //   icon: <GridOn />,
-    //   // link: "/table",
-    //   subMenus: [
-    //     {
-    //       text: "Basic Table",
-    //       icon: <BorderClear />,
-    //       link: "/table/basic"
-    //     },
-    //     {
-    //       text: "Data Table",
-    //       icon: <BorderOuter />,
-    //       link: "/table/data"
-    //     }
-    //   ]
-    // },
+    { text: "DashBoard", icon: <Assessment />, link: "/dashboard" },
+    { text: "Form Page", icon: <Web />, link: "/form" },
+    {
+      text: "Table Page",
+      icon: <GridOn />,
+      // link: "/table",
+      subMenus: [
+        {
+          text: "Basic Table",
+          icon: <BorderClear />,
+          link: "/table/basic"
+        },
+        {
+          text: "Data Table",
+          icon: <BorderOuter />,
+          link: "/table/data"
+        }
+      ]
+    },
     // { text: "Login Page", icon: <PermIdentity />, link: "/login" }
   ],
   user: {
