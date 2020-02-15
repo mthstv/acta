@@ -7,7 +7,7 @@ import Header from "../components/Header";
 import LeftDrawer from "../components/LeftDrawer";
 import Data from "../data";
 import Dashboard from "./DashboardPage";
-import Home from "./HomePage";
+import Home from "./RuleList";
 import Form from "./FormPage";
 import Rule from "./RulePage";
 import BasicTable from "./Table/BasicTables";

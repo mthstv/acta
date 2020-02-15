@@ -5,7 +5,15 @@ import api from "../services/api";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
-class HomePage extends React.Component {
+const style = {
+  margin: 0,
+  top: 'auto',
+  right: 20,
+  bottom: 20,
+  left: 'auto',
+  position: 'fixed',
+};
+class RuleList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -29,15 +37,15 @@ class HomePage extends React.Component {
               <Row key={item.id}>
               <Col md={12}>
                 <HomeCard
-                  title={ item.description }
-                  text={ item.preamble }
+                  title={ item.rule_title }
+                  text={ item.description }
                   linkToRedirect={`/regra/${item.id}`}
                 />
               </Col>
             </Row>
           )}
         </div>
-        <Fab color="primary" aria-label="add">
+        <Fab color="primary" style={style} aria-label="add">
           <AddIcon />
         </Fab>
       </>
@@ -45,4 +53,4 @@ class HomePage extends React.Component {
   }
 }
 
-export default HomePage;
+export default RuleList;

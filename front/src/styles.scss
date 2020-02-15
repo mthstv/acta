@@ -29,3 +29,18 @@ a:hover {
 .m-b-15 {
   margin-bottom: 15px
 }
+
+.btn:focus,.btn:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.button:active, 
+ button:active,
+.button:focus, 
+ button:focus,
+.button:hover, 
+ button:hover{
+    border:none !important;
+    outline:none !important;
+}

@@ -15,7 +15,8 @@ class CreateRulesTable extends Migration
     {
         Schema::create('rules', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('description', 100);
+            $table->string('rule_title', 100);
+            $table->string('description', 255);
             $table->longText('preamble')->nullable();
             $table->timestamps();
         });

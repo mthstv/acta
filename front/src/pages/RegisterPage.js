@@ -11,7 +11,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { Link } from "react-router-dom";
 import theme from "../theme";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const styles = {
     loginContainer: {
       minWidth: 320,
@@ -82,20 +82,9 @@ const LoginPage = () => {
               </div>
 
               <div style={{ marginTop: 10 }}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      label="Lembre de mim"
-                      style={styles.checkRemember.style}
-                      labelStyle={styles.checkRemember.labelStyle}
-                      iconStyle={styles.checkRemember.iconStyle}
-                    />
-                  }
-                  label="Lembre de mim"
-                />
                 <Link to="/">
                   <Button variant="contained" color="primary" style={styles.loginBtn}>
-                    Login
+                    Registrar
                   </Button>
                 </Link>
               </div>
@@ -103,14 +92,9 @@ const LoginPage = () => {
           </Paper>
 
           <div style={styles.buttonsDiv} >
-            <Button href="/registrar" style={styles.flatButton}>
+            <Button href="/login" style={styles.flatButton}>
               <PersonAdd />
-              <span style={{ margin: 5 }}>Registrar</span>
-            </Button>
-
-            <Button href="/" style={styles.flatButton}>
-              <Help />
-              <span style={{ margin: 5 }}>Esqueceu a senha?</span>
+              <span style={{ margin: 5 }}>Login</span>
             </Button>
           </div>
 
@@ -120,4 +104,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

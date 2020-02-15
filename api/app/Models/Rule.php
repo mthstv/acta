@@ -12,7 +12,7 @@ class Rule extends Model
     * @var array
     */
     protected $fillable = [
-        'description', 'preamble'
+        'rule_title', 'description', 'preamble'
 
     ];
 

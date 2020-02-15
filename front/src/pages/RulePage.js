@@ -24,7 +24,7 @@ class RulePage extends React.Component {
             <Col md={12}>
               <Card>
                 <Card.Body>
-                  <Card.Title>{ rule.description }</Card.Title>
+                  <Card.Title>{ rule.rule_title }</Card.Title>
                     <Card.Text>
                       { rule.preamble }
                     </Card.Text>

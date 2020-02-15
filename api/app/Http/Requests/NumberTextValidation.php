@@ -25,7 +25,7 @@ class NumberTextValidation extends FormRequest
      {
          return [
              'number' => 'required|numeric',
-             'text' => 'required|max:100',
+             'text' => 'required',
          ];
      }
  
@@ -40,7 +40,6 @@ class NumberTextValidation extends FormRequest
              'number.required' => 'A numeração é obrigatória',
              'number.numeric' => 'Numeração inválida',
              'text.required'  => 'O texto é obrigatório',
-             'text.max'  => 'O texto ultrapassou 100 caracteres',
          ];
      }
 }

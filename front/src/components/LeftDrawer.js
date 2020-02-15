@@ -79,7 +79,7 @@ const LeftDrawer = props => {
       <div className={classes.logo}>ACTA</div>
       <div className={classNames(classes.avatarRoot, !navDrawerOpen && classes.avatarRootMini)} onClick={handleRedirect}>
         <Avatar src={data.user.avatar} size={navDrawerOpen ? 48 : 32} classes={{ root: classes }} />
-        <span className={classes.avatarSpan}> { data.isLoggedIn ? data.user.userName : "ENTER/REGISTER" } </span>
+        <span className={classes.avatarSpan}> { data.isLoggedIn ? data.user.userName : "ENTRAR" } </span>
       </div>
       <Menus menus={props.menus} navDrawerOpen={navDrawerOpen} />
     </div>

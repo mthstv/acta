@@ -25,7 +25,7 @@ class LetterTextValidation extends FormRequest
      {
          return [
              'letter' => 'required',
-             'text' => 'required|max:100',
+             'text' => 'required',
          ];
      }
  
@@ -38,8 +38,7 @@ class LetterTextValidation extends FormRequest
      {
          return [
              'number.letter' => 'A letra é obrigatória',
-             'text.required'  => 'O texto é obrigatório',
-             'text.max'  => 'O texto ultrapassou 100 caracteres',
+             'text.required'  => 'O texto é obrigatório'
          ];
      }
 }

@@ -24,7 +24,8 @@ class RuleValidation extends FormRequest
      public function rules()
      {
          return [
-             'description' => 'required|max:100',
+            'rule_title' => 'required|max:100',
+            'description' => 'required|max:255',
          ];
      }
  
@@ -36,8 +37,10 @@ class RuleValidation extends FormRequest
      public function messages()
      {
          return [
+             'rule_title.required'  => 'O título é obrigatório',
+             'rule_title.max'  => 'O título é ultrapassou 100 caracteres',
              'description.required'  => 'O descrição é obrigatório',
-             'description.max'  => 'O descrição é ultrapassou 100 caracteres',
+             'description.max'  => 'O descrição é ultrapassou 255 caracteres',
          ];
      }
 }
