@@ -7,6 +7,7 @@ import Web from "@material-ui/icons/Web";
 import Home from "@material-ui/icons/Home";
 import BorderClear from "@material-ui/icons/BorderClear";
 import BorderOuter from "@material-ui/icons/BorderOuter";
+import api from "./services/api"
 
 const data = {
   menus: [
@@ -32,8 +33,9 @@ const data = {
     },
     // { text: "Login Page", icon: <PermIdentity />, link: "/login" }
   ],
+  isLoggedIn: false,
   user: {
-    userName: "ENTER/REGISTER", // `${Faker.name.firstName()} ${Faker.name.lastName()}`,
+    userName: `${Faker.name.firstName()} ${Faker.name.lastName()}`,
     avatar: null // 'https://secure.gravatar.com/avatar/6a892a927dfbe1345572ab1e34780f0a?s=800&d=identicon'
   },
   tablePage: {

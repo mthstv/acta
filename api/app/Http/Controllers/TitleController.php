@@ -41,6 +41,7 @@ class TitleController extends Controller
         $title = new Title;
         $request->rule ? $title->rule()->associate($request->rule) : null;
         $request->book ? $title->book()->associate($request->book) : null;
+        $request->part ? $title->part()->associate($request->part) : null;
         $title->fill($data);
         $title->save();
         return response()->json(['success' => true, 'data' => $title]);

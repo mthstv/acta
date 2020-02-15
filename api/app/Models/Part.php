@@ -21,7 +21,7 @@ class Part extends Model
     *
     * @var array
     */
-    protected $with = ['books'];
+    protected $with = ['books', 'titles'];
 
     /**
     * The attributes that should be hidden for arrays.
@@ -45,7 +45,8 @@ class Part extends Model
     {
         return $this->hasMany('App\Models\Book');
     }
-
-    //scopes
-
+    public function titles()
+    {
+        return $this->hasMany('App\Models\Title');
+    }
 }

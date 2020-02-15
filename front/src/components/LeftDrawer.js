@@ -69,7 +69,6 @@ const drawStyles = theme => {
 
 function handleRedirect () {
   window.location.href = '/login'
-
 }
 
 const LeftDrawer = props => {
@@ -80,7 +79,7 @@ const LeftDrawer = props => {
       <div className={classes.logo}>ACTA</div>
       <div className={classNames(classes.avatarRoot, !navDrawerOpen && classes.avatarRootMini)} onClick={handleRedirect}>
         <Avatar src={data.user.avatar} size={navDrawerOpen ? 48 : 32} classes={{ root: classes }} />
-        <span className={classes.avatarSpan}>{data.user.userName}</span>
+        <span className={classes.avatarSpan}> { data.isLoggedIn ? data.user.userName : "ENTER/REGISTER" } </span>
       </div>
       <Menus menus={props.menus} navDrawerOpen={navDrawerOpen} />
     </div>

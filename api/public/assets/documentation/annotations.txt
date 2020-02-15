@@ -1,3 +1,27 @@
 regra->partes(opcional)->livros(opcional)->titulos(opcional)->capitulos->seções(opcional)->subseções(opcional)->artigos(caput)->paragrafos(§)(paragrafo unico)
                                                                                                                               ->incisos(I,II,III)
                                                                                                                               ->alíneas(a,b,c)->itens(1,2,3)
+
+rule
+part
+book
+title
+chapter
+section
+subsection
+article
+paragraph
+incise
+item
+
+rules
+parts
+books
+titles
+chapters
+sections
+sub_sections
+articles
+paragraphs
+incises
+items

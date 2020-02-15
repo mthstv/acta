@@ -40,6 +40,10 @@ class Title extends Model
     {
         return $this->belongsTo('App\Models\Book')->withDefault();
     }
+    public function part()
+    {
+        return $this->belongsTo('App\Models\Part')->withDefault();
+    }
 
     //hasmany
 

@@ -9,6 +9,7 @@ import Data from "../data";
 import Dashboard from "./DashboardPage";
 import Home from "./HomePage";
 import Form from "./FormPage";
+import Rule from "./RulePage";
 import BasicTable from "./Table/BasicTables";
 import DataTable from "./Table/DataTables";
 import NotFound from "./NotFoundPage";
@@ -95,6 +96,7 @@ class App extends React.Component {
             <Route exact path="/" component={Home} />
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/form" component={Form} />
+            <Route path="/regra/:rule" component={Rule} />
             <Route path="/table/basic" component={BasicTable} />
             <Route path="/table/data" component={DataTable} />
             <Route component={NotFound} />

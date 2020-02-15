@@ -21,6 +21,8 @@ class CreateTitlesTable extends Migration
             $table->foreign('rule_id')->references('id')->on('rules')->onDelete('cascade');
             $table->bigInteger('book_id')->unsigned()->nullable();
             $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
+            $table->bigInteger('part_id')->unsigned()->nullable();
+            $table->foreign('part_id')->references('id')->on('parts')->onDelete('cascade');
             $table->timestamps();
         });
     }
