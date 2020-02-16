@@ -76,11 +76,13 @@ const RegisterPage = () => {
           </Button>
           <Paper style={styles.paper}>
             <form>
-              <TextField hintText="E-mail" label="E-mail" fullWidth={true} />
+                <TextField hintText="Name" label="Nome" fullWidth={true} />
+              <div style={{ marginTop: 16 }}>
+                <TextField hintText="E-mail" label="E-mail" fullWidth={true} />
+              </div>
               <div style={{ marginTop: 16 }}>
                 <TextField hintText="Password" label="Senha" fullWidth={true} type="password" />
               </div>
-
               <div style={{ marginTop: 10 }}>
                 <Link to="/">
                   <Button variant="contained" color="primary" style={styles.loginBtn}>
