@@ -5,6 +5,7 @@ import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import Avatar from "@material-ui/core/Avatar";
 import { withStyles } from "@material-ui/core/styles";
+import { ReactComponent as Logo } from '../images/book_shelf.svg';
 
 import Menus from "./Menus";
 import data from "../data";
@@ -76,7 +77,10 @@ const LeftDrawer = props => {
 
   const drawerContent = () => (
     <div>
-      <div className={classes.logo}>ACTA</div>
+      <div className={classes.logo}> 
+        {/* <Logo style={{height: 40, fill: 'white'}}/> */}
+        ACTA
+      </div>
       <div className={classNames(classes.avatarRoot, !navDrawerOpen && classes.avatarRootMini)} onClick={handleRedirect}>
         <Avatar src={data.user.avatar} size={navDrawerOpen ? 48 : 32} classes={{ root: classes }} />
         <span className={classes.avatarSpan}> { data.isLoggedIn ? data.user.userName : "ENTRAR" } </span>
