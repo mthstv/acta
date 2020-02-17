@@ -53,6 +53,5 @@
     "node-sass": "^4.13.1",
     "prettier": "^1.19.1",
     "prettier-eslint": "^9.0.1"
-  },
-  "homepage": "https://dali110.github.io/react-material-admin"
+  }
 }
