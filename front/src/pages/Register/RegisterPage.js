@@ -28,7 +28,7 @@ class RegisterPage extends Component {
   registerUser = () => {
     api.post('/user/register', this.state)
     .then((res) => {
-      this.props.GetUserData(res.data.data);
+      this.props.SaveUserData(res.data.data);
       login(res.data.data)
       this.props.history.push('/');
     })

@@ -1,6 +1,6 @@
-export function GetUserData(user) {
+export function SaveUserData(user) {
     return {
-        type: 'GET_USER_DATA',
+        type: 'SAVE_USER_DATA',
         user
     }
 }

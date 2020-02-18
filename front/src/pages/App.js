@@ -19,6 +19,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { isAuthenticated } from '../services/auth';
 import { bindActionCreators } from 'redux';
+import api from '../services/api';
 
 import * as userActions from '../_actions/user'
 
@@ -69,7 +70,10 @@ class App extends React.Component {
     this.handleChangeTheme = this.handleChangeTheme.bind(this);
 
     // Get user data
+    api.get('/')
+    this.props.SaveUserData()
 
+    console.log(this.props.user)
   }
 
   handleChangeNavDrawer() {

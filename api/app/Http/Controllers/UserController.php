@@ -82,4 +82,10 @@ class UserController extends Controller
         
         return response()->json($response, 201);
     }
+
+    public function getUserByToken() 
+    {
+        $user = JWTAuth::parseToken()->toUser();
+        return response()->json(['success' => true, 'data' => $user]);
+    }
 }
