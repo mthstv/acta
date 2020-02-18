@@ -70,8 +70,16 @@ class App extends React.Component {
     this.handleChangeTheme = this.handleChangeTheme.bind(this);
 
     // Get user data
-    api.get('/')
-    this.props.SaveUserData()
+    api.get('/user/by-token')
+      .then((res) => {
+        this.props.SaveUserData(res.data.data)
+        localStorage.setItem('token', res.data.data.auth_token)
+        delete res.data.data.auth_token
+        localStorage.setItem('user', JSON.stringify(res.data.data))
+      })
+      .catch((err) => {
+        console.log('token expired')
+      })
 
     console.log(this.props.user)
   }
