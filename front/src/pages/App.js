@@ -6,15 +6,21 @@ import { withStyles } from "@material-ui/core/styles";
 import Header from "../components/Header";
 import LeftDrawer from "../components/LeftDrawer";
 import Data from "../data";
-import Dashboard from "./DashboardPage";
+import Dashboard from "./Dashboard/DashboardPage";
 import Home from "./RuleList";
-import Form from "./FormPage";
+import Form from "./Form/FormPage";
 import Rule from "./RulePage";
 import BasicTable from "./Table/BasicTables";
 import DataTable from "./Table/DataTables";
 import NotFound from "./NotFoundPage";
 import { ThemeProvider } from "@material-ui/core/styles";
 import defaultTheme, { customTheme } from "../theme";
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { isAuthenticated } from '../services/auth';
+import { bindActionCreators } from 'redux';
+
+import * as userActions from '../_actions/user'
 
 const styles = () => ({
   container: {
@@ -61,6 +67,9 @@ class App extends React.Component {
 
     this.handleChangeNavDrawer = this.handleChangeNavDrawer.bind(this);
     this.handleChangeTheme = this.handleChangeTheme.bind(this);
+
+    // Get user data
+
   }
 
   handleChangeNavDrawer() {
@@ -87,6 +96,8 @@ class App extends React.Component {
         <Header handleChangeNavDrawer={this.handleChangeNavDrawer} navDrawerOpen={navDrawerOpen} />
 
         <LeftDrawer
+          userName={this.props.user.name}
+          isLogged={isAuthenticated()}
           navDrawerOpen={navDrawerOpen}
           handleChangeNavDrawer={this.handleChangeNavDrawer}
           menus={Data.menus}
@@ -112,4 +123,12 @@ App.propTypes = {
   classes: PropTypes.object
 };
 
-export default withStyles(styles)(App);
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(userActions, dispatch);
+
+
+export default compose( withStyles(styles), connect(mapStateToProps, mapDispatchToProps) )(App);;

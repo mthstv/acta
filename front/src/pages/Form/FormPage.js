@@ -6,36 +6,19 @@ import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import { grey } from "@material-ui/core/colors";
 import Divider from "@material-ui/core/Divider";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
-import PageBase from "../components/PageBase";
+import PageBase from "../../components/PageBase";
+import styles from './styles';
 
 const FormPage = () => {
-  const styles = {
-    toggleDiv: {
-      marginTop: 20,
-      marginBottom: 5
-    },
-    toggleLabel: {
-      color: grey[400],
-      fontWeight: 100
-    },
-    buttons: {
-      marginTop: 30,
-      float: "right"
-    },
-    saveButton: {
-      marginLeft: 5
-    }
-  };
 
   return (
     <PageBase title="Form Page">
       <form>
         <TextField
-          hintText="Name"
+          // hintText="Name"
           label="Name"
           fullWidth={true}
           margin="normal"

@@ -33,7 +33,7 @@ const SearchBox = () => {
         <Search color={white} />
       </IconButton>
       <TextField
-        hintText="Search..."
+        // hintText="Search..."
         underlineShow={false}
         fullWidth={true}
         style={styles.textField}

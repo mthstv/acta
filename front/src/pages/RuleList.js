@@ -5,13 +5,15 @@ import api from "../services/api";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
-const style = {
-  margin: 0,
-  top: 'auto',
-  right: 20,
-  bottom: 20,
-  left: 'auto',
-  position: 'fixed',
+const styles = {
+  fab: {
+    margin: 0,
+    top: 'auto',
+    right: 20,
+    bottom: 20,
+    left: 'auto',
+    position: 'fixed',
+  }
 };
 class RuleList extends React.Component {
   constructor(props) {
@@ -45,7 +47,7 @@ class RuleList extends React.Component {
             </Row>
           )}
         </div>
-        <Fab color="primary" style={style} aria-label="add">
+        <Fab color="primary" style={styles.fab} aria-label="add">
           <AddIcon />
         </Fab>
       </>

@@ -6,6 +6,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/styles": "^4.9.0",
     "axios": "^0.19.2",
+    "babel-plugin-root-import": "^6.4.1",
     "bootstrap": "^4.4.1",
     "classnames": "^2.2.6",
     "eslint-plugin-flowtype": "^4.6.0",
