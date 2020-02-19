@@ -17,7 +17,6 @@ class RulePage extends React.Component {
   
     render() {
       const { rule } = this.state;
-      console.log(rule)
       return (
         rule ?
           <Row>

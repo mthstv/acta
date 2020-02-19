@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
 import { Provider } from 'react-redux';
 import { createBrowserHistory } from "history";
 import registerServiceWorker from "./registerServiceWorker";
@@ -12,15 +12,21 @@ import Login from "./pages/Login/LoginPage";
 import Register from "./pages/Register/RegisterPage";
 import store from './store';
 
+import { isAuthenticated } from './services/auth'
+
 const history = createBrowserHistory();
 
+console.log(isAuthenticated())
 render(
     <Provider store={store}>
       <Router history={history}>
         <Switch>
+          <Route
+            path="/"
+            render={ (props) => ( isAuthenticated() ? <App {...props} /> : <Redirect to='/login'/> ) }
+          />
           <Route exact path="/login" component={Login} />
           <Route path="/registrar" component={Register} />
-          <Route path="/" component={App} />
         </Switch>
       </Router>
     </Provider>,

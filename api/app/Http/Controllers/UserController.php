@@ -44,12 +44,14 @@ class UserController extends Controller
                     'name'=>$user->name, 
                     'email'=>$user->email
                 ]
-            ];           
+            ];
+            return response()->json($response, 201);
+        } else {
+            $response = ['success'=>false, 'data'=>[], 'message'=>'Record doesnt exists'];
+            return response()->json($response, 400);
         }
-        else 
-          $response = ['success'=>false, 'data'=>'Record doesnt exists'];
 
-        return response()->json($response, 201);
+        
     }
     public function register(Request $request)
     { 

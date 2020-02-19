@@ -7,9 +7,7 @@ export const login = async user => {
   delete user.auth_token;
   await localStorage.setItem(USER_DATA, JSON.stringify(user));
 };
-export const logout = async (history = "") => {
+export const logout = async () => {
   await localStorage.removeItem(TOKEN_KEY);
-  if(history) {
-    history.push("/login");
-  }
+  await localStorage.removeItem(USER_DATA);
 };

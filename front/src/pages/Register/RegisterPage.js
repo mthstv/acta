@@ -6,8 +6,10 @@ import PersonAdd from "@material-ui/icons/PersonAdd";
 import TextField from "@material-ui/core/TextField";
 import theme from "../../theme";
 import styles from './styles';
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import api from '../../services/api';
 import { isAuthenticated, login } from '../../services/auth';
 
@@ -16,7 +18,6 @@ import * as userActions from '../../_actions/user'
 class RegisterPage extends Component {
   constructor(props) {
     super(props);
-    console.log(props)
   }
 
   state = {
@@ -32,7 +33,6 @@ class RegisterPage extends Component {
       login(res.data.data)
       this.props.history.push('/');
     })
-    console.log(this.props);
   };
 
   render() {
@@ -46,25 +46,25 @@ class RegisterPage extends Component {
           <Paper style={styles.paper}>
             <form>
               <TextField 
-                // hintText="Name" 
                 label="Nome" 
                 fullWidth={true}
                 onChange={(e) => this.setState({ name: e.target.value })}/>
+             
               <div style={{ marginTop: 16 }}>
                 <TextField 
-                  // hintText="E-mail" 
                   label="E-mail" 
                   fullWidth={true}
                   onChange={(e) => this.setState({ email: e.target.value })}/>
               </div>
+             
               <div style={{ marginTop: 16 }}>
                 <TextField
-                  // hintText="Password"
                   label="Senha"
                   fullWidth={true}
                   type="password"
                   onChange={(e) => this.setState({ password: e.target.value })}/>
               </div>
+              
               <div style={{ marginTop: 10 }}>
                   <Button 
                     variant="contained" 

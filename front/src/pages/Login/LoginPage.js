@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
@@ -11,66 +11,107 @@ import { Link } from "react-router-dom";
 import theme from "../../theme";
 import styles from './styles';
 
-const LoginPage = () => {
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-  return (
-    <ThemeProvider theme={theme}>
-      <div>
-        <div style={styles.loginContainer}>
-          <Button href="/" style={styles.flatButton}>
-            Voltar
-          </Button>
-          <Paper style={styles.paper}>
-            <form>
-              <TextField 
-                // hintText="E-mail" 
-                label="E-mail" 
-                fullWidth={true} />
-              <div style={{ marginTop: 16 }}>
+import api from '../../services/api';
+import { isAuthenticated, login } from '../../services/auth';
+
+import * as userActions from '../../_actions/user'
+
+
+class LoginPage extends Component {
+  constructor(props) {
+    super(props);
+
+  }
+  state = {
+    email: '',
+    password: ''
+  }
+
+  LoginUser = () => {
+    api.post('/user/login', this.state)
+    .then((res) => {
+      this.props.SaveUserData(res.data.data);
+      login(res.data.data)
+      this.props.history.push('/');
+    })
+    .catch((err) => {
+      if(err.response) {
+        console.log(err.response.data.message)
+      }
+    })
+  }
+
+  render() {
+    return (
+      <ThemeProvider theme={theme}>
+        <div>
+          <div style={styles.loginContainer}>
+            <Button href="/" style={styles.flatButton}>
+              Voltar
+            </Button>
+            <Paper style={styles.paper}>
+              <form>
                 <TextField 
-                  // hintText="Password" 
-                  label="Senha" 
+                  label="E-mail" 
                   fullWidth={true} 
-                  type="password" />
-              </div>
-
-              <div style={{ marginTop: 10 }}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      label="Lembre de mim"
-                      style={styles.checkRemember.style}
-                      // labelStyle={styles.checkRemember.labelStyle}
-                      // iconStyle={styles.checkRemember.iconStyle}
-                    />
-                  }
-                  label="Lembre de mim"
-                />
-                <Link to="/">
-                  <Button variant="contained" color="primary" style={styles.loginBtn}>
+                  onChange={(e) => this.setState({email: e.target.value})}/>
+                
+                <div style={{ marginTop: 16 }}>
+                  <TextField 
+                    label="Senha" 
+                    fullWidth={true} 
+                    type="password" 
+                    onChange={(e) => this.setState({password: e.target.value})}/>
+                </div>
+  
+                <div style={{ marginTop: 10 }}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        label="Lembre de mim"
+                        style={styles.checkRemember.style}
+                      />
+                    }
+                    label="Lembre de mim"
+                  />
+                  <Button 
+                    variant="contained" 
+                    color="primary" 
+                    style={styles.loginBtn}
+                    onClick={this.LoginUser}>
                     Login
                   </Button>
-                </Link>
-              </div>
-            </form>
-          </Paper>
-
-          <div style={styles.buttonsDiv} >
-            <Button href="/registrar" style={styles.flatButton}>
-              <PersonAdd />
-              <span style={{ margin: 5 }}>Registrar</span>
-            </Button>
-
-            <Button href="/" style={styles.flatButton}>
-              <Help />
-              <span style={{ margin: 5 }}>Esqueceu a senha?</span>
-            </Button>
+                </div>
+              </form>
+            </Paper>
+  
+            <div style={styles.buttonsDiv} >
+              <Button href="/registrar" style={styles.flatButton}>
+                <PersonAdd />
+                <span style={{ margin: 5 }}>Registrar</span>
+              </Button>
+  
+              <Button href="/" style={styles.flatButton}>
+                <Help />
+                <span style={{ margin: 5 }}>Esqueceu a senha?</span>
+              </Button>
+            </div>
+  
           </div>
-
         </div>
-      </div>
-    </ThemeProvider>
-  );
+      </ThemeProvider>
+    );
+  }
 };
 
-export default LoginPage;
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(userActions, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

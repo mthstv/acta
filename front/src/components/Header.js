@@ -9,11 +9,14 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import ReplyRoundedIcon from '@material-ui/icons/ReplyRounded';
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Badge from "@material-ui/core/Badge";
 import { Toolbar } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
+
+import { logout } from '../services/auth'
 
 const styles = theme => ({
   appBar: {
@@ -127,6 +130,11 @@ class Header extends React.Component {
     this.setState({ mobileMoreAnchorEl: null });
   };
 
+  handleLogout = () => {
+    logout()
+    this.props.history.push('/login')
+  }
+
   render() {
     const { handleChangeNavDrawer, classes, navDrawerOpen } = this.props;
 
@@ -236,14 +244,12 @@ class Header extends React.Component {
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
-              {/* <IconButton
-                aria-owns={isMenuOpen ? "material-appbar" : null}
-                aria-haspopup="true"
-                onClick={this.handleProfileMenuOpen}
+              <IconButton
+                onClick={this.handleLogout}
                 color="inherit"
               >
-                <AccountCircle />
-              </IconButton> */}
+                <ReplyRoundedIcon />
+              </IconButton>
             </div>
             <div className={classes.sectionMobile}>
               <IconButton

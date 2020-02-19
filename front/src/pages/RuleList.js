@@ -19,9 +19,7 @@ class RuleList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-  }
 
-  componentDidMount() {
     api.get('/rule')
     .then((res) => {
       this.setState({ rules: res.data.data });
@@ -31,7 +29,6 @@ class RuleList extends React.Component {
   render() {
     // const { classes } = this.props;
     const { rules } = this.state;
-    console.log(rules)
     return (
       <>
         <div>

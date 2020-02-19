@@ -17,7 +17,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import defaultTheme, { customTheme } from "../theme";
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { isAuthenticated } from '../services/auth';
+import { isAuthenticated, logout } from '../services/auth';
 import { bindActionCreators } from 'redux';
 import api from '../services/api';
 
@@ -68,20 +68,22 @@ class App extends React.Component {
 
     this.handleChangeNavDrawer = this.handleChangeNavDrawer.bind(this);
     this.handleChangeTheme = this.handleChangeTheme.bind(this);
+  }
 
+  async componentDidMount () {
     // Get user data
-    api.get('/user/by-token')
-      .then((res) => {
-        this.props.SaveUserData(res.data.data)
-        localStorage.setItem('token', res.data.data.auth_token)
-        delete res.data.data.auth_token
-        localStorage.setItem('user', JSON.stringify(res.data.data))
-      })
-      .catch((err) => {
-        console.log('token expired')
-      })
-
-    console.log(this.props.user)
+    await api.get('/user/by-token')
+    .then((res) => {
+      this.props.SaveUserData(res.data.data)
+      localStorage.setItem('token', res.data.data.auth_token)
+      delete res.data.data.auth_token
+      localStorage.setItem('user', JSON.stringify(res.data.data))
+    })
+    .catch((err) => {
+      logout()
+      this.props.history.push('/login')
+      console.log('token expired')
+    })
   }
 
   handleChangeNavDrawer() {
@@ -105,10 +107,9 @@ class App extends React.Component {
 
     return (
       <ThemeProvider theme={theme}>
-        <Header handleChangeNavDrawer={this.handleChangeNavDrawer} navDrawerOpen={navDrawerOpen} />
-
+        <Header handleChangeNavDrawer={this.handleChangeNavDrawer} navDrawerOpen={navDrawerOpen} history={this.props.history}/>
         <LeftDrawer
-          userName={this.props.user.name}
+          user={this.props.user}
           isLogged={isAuthenticated()}
           navDrawerOpen={navDrawerOpen}
           handleChangeNavDrawer={this.handleChangeNavDrawer}
