@@ -34,7 +34,7 @@ class RulePage extends React.Component {
       )))
     }
 
-    //É preciso fazer ao contrario, peimeiro line, depois incise, depois , montar as funções para serem reexecutadas em uma chain
+    //É preciso fazer ao contrario, primeiro item e line, depois incise, etc., montar as funções para serem reexecutadas em uma chain
                     
     render() {
       const { rule } = this.state;
