@@ -23,7 +23,6 @@ import * as userActions from '../../_actions/user'
 class LoginPage extends Component {
   constructor(props) {
     super(props);
-
   }
   state = {
     email: '',

@@ -22,8 +22,9 @@ render(
       <Router history={history}>
         <Switch>
           <Route
+            exact={!isAuthenticated()}
             path="/"
-            render={ (props) => ( isAuthenticated() ? <App {...props} /> : <Redirect to='/login'/> ) }
+            render={ (props) => ( isAuthenticated() ? <App {...props} /> : <Redirect from="/" to="/login" /> ) }
           />
           <Route exact path="/login" component={Login} />
           <Route path="/registrar" component={Register} />
