@@ -11,6 +11,7 @@ import App from "./pages/App";
 import Login from "./pages/Login/LoginPage";
 import Register from "./pages/Register/RegisterPage";
 import store from './store';
+import AppSnackbar from './components/AppSnackbar'
 
 import { isAuthenticated } from './services/auth'
 
@@ -18,23 +19,26 @@ const history = createBrowserHistory();
 
 console.log(isAuthenticated())
 render(
-    <Provider store={store}>
-      <Router history={history}>
-        <Switch>
-          <Route
-            exact={!isAuthenticated()}
-            path="/"
-            render={ (props) => (
-              isAuthenticated()
-              ? <App {...props} />
-              : window.location.href = '/login'// <Redirect from="/" to="/login" /> 
-            ) }
-          />
-          <Route exact path="/login" component={Login} />
-          <Route path="/registrar" component={Register} />
-        </Switch>
-      </Router>
-    </Provider>,
+    <div>
+      <Provider store={store}>
+        <AppSnackbar />
+        <Router history={history}>
+          <Switch>
+            <Route
+              exact={!isAuthenticated()}
+              path="/"
+              render={ (props) => (
+                isAuthenticated()
+                ? <App {...props} />
+                : window.location.href = '/login'// <Redirect from="/" to="/login" /> 
+              ) }
+            />
+            <Route exact path="/login" component={Login} />
+            <Route path="/registrar" component={Register} />
+          </Switch>
+        </Router>
+      </Provider>
+    </div>,
     document.getElementById('root')
 )
 registerServiceWorker();

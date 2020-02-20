@@ -45,7 +45,7 @@ class UserController extends Controller
                     'email'=>$user->email
                 ]
             ];
-            return response()->json($response, 201);
+            return response()->json($response, 200);
         } else {
             $response = ['success'=>false, 'data'=>[], 'message'=>'Record doesnt exists'];
             return response()->json($response, 400);
@@ -68,7 +68,7 @@ class UserController extends Controller
             
             $token = self::getToken($request->email, $request->password); // generate user token
             
-            if (!is_string($token))  return response()->json(['success'=>false,'data'=>'Token generation failed'], 201);
+            if (!is_string($token))  return response()->json(['success'=>false,'data'=>'Token generation failed'], 401);
             
             $user = User::where('email', $request->email)->get()->first();
             

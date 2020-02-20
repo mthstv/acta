@@ -12,17 +12,19 @@ import theme from "../../theme";
 import styles from './styles';
 
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 
 import api from '../../services/api';
 import { isAuthenticated, login } from '../../services/auth';
 
 import * as userActions from '../../_actions/user'
+import * as snackbarActions from '../../_actions/snackbar'
 
 
 class LoginPage extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
   }
   state = {
     email: '',
@@ -32,7 +34,7 @@ class LoginPage extends Component {
   LoginUser = () => {
     api.post('/user/login', this.state)
     .then(async (res) => {
-      await this.props.SaveUserData(res.data.data);
+      await this.props.userActions.SaveUserData(res.data.data);
       login(res.data.data)
       // this.props.history.push('/');
       window.location.href = '/'
@@ -43,6 +45,11 @@ class LoginPage extends Component {
         console.log(err.response.data.message)
       }
     })
+  }
+
+  handleForgotPass = () => {
+    // console.log(this.props.snackbarActions)
+   this.props.snackbarActions.showSnackbar('11');
   }
 
   render() {
@@ -95,7 +102,9 @@ class LoginPage extends Component {
                 <span style={{ margin: 5 }}>Registrar</span>
               </Button>
   
-              <Button href="/" style={styles.flatButton}>
+              <Button 
+                style={styles.flatButton}
+                onClick={this.handleForgotPass}>
                 <Help />
                 <span style={{ margin: 5 }}>Esqueceu a senha?</span>
               </Button>
@@ -112,7 +121,11 @@ const mapStateToProps = state => ({
   user: state.user,
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(userActions, dispatch);
+function mapDispatchToProps (dispatch) {
+  return {
+      userActions: bindActionCreators(userActions, dispatch),
+      snackbarActions: bindActionCreators(snackbarActions, dispatch),
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
