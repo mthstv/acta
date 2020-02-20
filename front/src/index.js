@@ -24,7 +24,11 @@ render(
           <Route
             exact={!isAuthenticated()}
             path="/"
-            render={ (props) => ( isAuthenticated() ? <App {...props} /> : <Redirect from="/" to="/login" /> ) }
+            render={ (props) => (
+              isAuthenticated()
+              ? <App {...props} />
+              : window.location.href = '/login'// <Redirect from="/" to="/login" /> 
+            ) }
           />
           <Route exact path="/login" component={Login} />
           <Route path="/registrar" component={Register} />

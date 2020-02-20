@@ -31,7 +31,8 @@ class RegisterPage extends Component {
     .then((res) => {
       this.props.SaveUserData(res.data.data);
       login(res.data.data)
-      this.props.history.push('/');
+      // this.props.history.push('/');
+      window.location.href = '/'
     })
   };
 

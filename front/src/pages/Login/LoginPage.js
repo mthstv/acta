@@ -31,10 +31,12 @@ class LoginPage extends Component {
 
   LoginUser = () => {
     api.post('/user/login', this.state)
-    .then((res) => {
-      this.props.SaveUserData(res.data.data);
+    .then(async (res) => {
+      await this.props.SaveUserData(res.data.data);
       login(res.data.data)
-      this.props.history.push('/');
+      // this.props.history.push('/');
+      window.location.href = '/'
+      
     })
     .catch((err) => {
       if(err.response) {
