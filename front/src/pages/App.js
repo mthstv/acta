@@ -7,9 +7,10 @@ import Header from "../components/Header";
 import LeftDrawer from "../components/LeftDrawer";
 import Data from "../data";
 import Dashboard from "./Dashboard/DashboardPage";
-import Home from "./RuleList";
+import Home from "./Rule/RuleList";
 import Form from "./Form/FormPage";
-import Rule from "./RulePage";
+import Rule from "./Rule/RulePage";
+import CreateRule from "./Rule/CreateRule/CreateRule";
 import BasicTable from "./Table/BasicTables";
 import DataTable from "./Table/DataTables";
 import NotFound from "./NotFoundPage";
@@ -121,6 +122,7 @@ class App extends React.Component {
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/form" component={Form} />
             <Route path="/regra/:rule" component={Rule} />
+            <Route path="/criar-regra" component={CreateRule} />
             <Route path="/table/basic" component={BasicTable} />
             <Route path="/table/data" component={DataTable} />
             <Route component={NotFound} />

@@ -1,7 +1,7 @@
 import React from "react";
-import HomeCard from "../components/HomeCard";
+import HomeCard from "../../components/HomeCard";
 import { Row, Col } from "react-bootstrap";
-import api from "../services/api";
+import api from "../../services/api";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
@@ -44,7 +44,12 @@ class RuleList extends React.Component {
             </Row>
           )}
         </div>
-        <Fab color="primary" style={styles.fab} aria-label="add">
+        <Fab 
+          color="primary" 
+          style={styles.fab} 
+          aria-label="add"
+          onClick={() => this.props.history.push('/criar-regra')}
+          >
           <AddIcon />
         </Fab>
       </>
