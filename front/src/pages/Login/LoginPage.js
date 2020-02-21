@@ -11,11 +11,11 @@ import { Link } from "react-router-dom";
 import theme from "../../theme";
 import styles from './styles';
 
-import { bindActionCreators } from 'redux';
-import { connect, useDispatch } from 'react-redux';
-
 import api from '../../services/api';
 import { isAuthenticated, login } from '../../services/auth';
+
+import { bindActionCreators } from 'redux';
+import { connect, useDispatch } from 'react-redux';
 
 import * as userActions from '../../_actions/user'
 import * as snackbarActions from '../../_actions/snackbar'
@@ -31,7 +31,9 @@ class LoginPage extends Component {
     password: ''
   }
 
-  LoginUser = () => {
+  LoginUser = (e) => {
+    e.preventDefault();
+
     api.post('/user/login', this.state)
     .then(async (res) => {
       await this.props.userActions.SaveUserData(res.data.data);
@@ -49,7 +51,7 @@ class LoginPage extends Component {
 
   handleForgotPass = () => {
     // console.log(this.props.snackbarActions)
-   this.props.snackbarActions.showSnackbar('11');
+   this.props.snackbarActions.showSnackbar('Teste! Tudo funcionando!');
   }
 
   render() {
@@ -57,11 +59,8 @@ class LoginPage extends Component {
       <ThemeProvider theme={theme}>
         <div>
           <div style={styles.loginContainer}>
-            <Button href="/" style={styles.flatButton}>
-              Voltar
-            </Button>
             <Paper style={styles.paper}>
-              <form>
+              <form onSubmit={this.LoginUser}>
                 <TextField 
                   label="E-mail" 
                   fullWidth={true} 
@@ -85,11 +84,11 @@ class LoginPage extends Component {
                     }
                     label="Lembre de mim"
                   />
-                  <Button 
+                  <Button
+                    type="submit"
                     variant="contained" 
                     color="primary" 
-                    style={styles.loginBtn}
-                    onClick={this.LoginUser}>
+                    style={styles.loginBtn}>
                     Login
                   </Button>
                 </div>

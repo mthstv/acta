@@ -1,64 +1,65 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
-import Divider from "@material-ui/core/Divider";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
 import PageBase from "../../../components/PageBase";
 import styles from './styles';
 
+import api from '../../../services/api';
+
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as snackbarActions from '../../../_actions/snackbar'
+
 class FormPage extends Component {
     constructor(props) {
-        super(props)
+      super(props)
+    }
+
+    state = {
+      title: '',
+      description: '',
+      preamble: ''
+    }
+
+    handleSubmit = (e) => {
+      e.preventDefault()
+      this.props.snackbarActions.showSnackbar('Regra criada com sucesso');
+      console.log(this.state)
     }
 
   render() {
     return (
         <PageBase title="Criar nova regra">
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <TextField
-            label="Título"
+            label="Título *"
             fullWidth={true}
             margin="normal"
+            value={this.state.title}
+            onChange={(e) => this.setState({title: e.target.value})}
             />
-            <FormControl fullWidth={true}>
-              <InputLabel htmlFor="City">City</InputLabel>
-              <Select
-                inputProps={{
-                  name: "City",
-                  id: "City"
-                }}
-                fullWidth={true}
-                margin="normal"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={"London"}>London</MenuItem>
-                  <MenuItem value={"Paris"}>Paris</MenuItem>
-                  <MenuItem value={"Rome"}>Rome</MenuItem>
-              </Select>
-            </FormControl>
 
-            <TextField
-              id="expirationDate"
-              label="Expiration Date"
-              type="date"
-              InputLabelProps={{
-                  shrink: true
-              }}
-              margin="normal"
-              fullWidth={true}
-              />
-            <div style={styles.toggleDiv}>
-              <FormControlLabel control={<Switch />} label="Disabled" />
-            </div>
-            <Divider />
+          <TextField
+            label="Descrição"
+            fullWidth={true}
+            margin="normal"
+            multiline
+            rows={2}
+            value={this.state.description}
+            onChange={(e) => this.setState({description: e.target.value})}
+            />
+
+          <TextField
+            label="Preâmbulo"
+            fullWidth={true}
+            margin="normal"
+            multiline
+            rows={4}
+            value={this.state.preamble}
+            onChange={(e) => this.setState({preamble: e.target.value})}
+            />
 
             <div style={styles.buttons}>
               <Link to="/">
@@ -80,4 +81,15 @@ class FormPage extends Component {
   }
 };
 
-export default FormPage;
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+function mapDispatchToProps (dispatch) {
+  return {
+      snackbarActions: bindActionCreators(snackbarActions, dispatch),
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormPage);

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use JWTAuth;
 use JWTAuthException;
+use App\Http\Requests\UserValidation;
+
 class UserController extends Controller
 {
     private function getToken($email, $password)
@@ -53,7 +55,7 @@ class UserController extends Controller
 
         
     }
-    public function register(Request $request)
+    public function register(UserValidation $request)
     { 
         $payload = [
             'password'=>\Hash::make($request->password),

@@ -19,9 +19,10 @@ export default function AppSnackbar() {
 
   return (
     <Snackbar
+      bodyStyle={{ backgroundColor: 'white', color: 'black' }}
       anchorOrigin={{
-        vertical: "top",
-        horizontal: "right"
+        vertical: "bottom",
+        horizontal: "left"
       }}
       open={snackbarOpen}
       autoHideDuration={4000}

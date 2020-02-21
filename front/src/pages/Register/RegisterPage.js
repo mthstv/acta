@@ -26,7 +26,9 @@ class RegisterPage extends Component {
     password: ''
   }
 
-  registerUser = () => {
+  registerUser = (e) => {
+    e.preventDefault();
+
     api.post('/user/register', this.state)
     .then((res) => {
       this.props.SaveUserData(res.data.data);
@@ -41,11 +43,8 @@ class RegisterPage extends Component {
     <ThemeProvider theme={theme}>
       <div>
         <div style={styles.loginContainer}>
-          <Button href="/" style={styles.flatButton}>
-            Voltar
-          </Button>
           <Paper style={styles.paper}>
-            <form>
+            <form onSubmit={this.registerUser}>
               <TextField 
                 label="Nome" 
                 fullWidth={true}
@@ -68,10 +67,10 @@ class RegisterPage extends Component {
               
               <div style={{ marginTop: 10 }}>
                   <Button 
+                    type="submit"
                     variant="contained" 
                     color="primary" 
-                    style={styles.loginBtn}
-                    onClick={this.registerUser}>
+                    style={styles.loginBtn}>
                     Registrar
                   </Button>
               </div>

@@ -12,7 +12,7 @@ import Dashboard from "./Dashboard/DashboardPage";
 import BasicTable from "./Table/BasicTables";
 import DataTable from "./Table/DataTables";
 import NotFound from "./NotFoundPage";
-import Home from "./Rule/RuleList";
+import Rules from "./Rule/RuleList";
 import Form from "./Form/FormPage";
 import Rule from "./Rule/RulePage";
 import CreateRule from "./Rule/CreateRule/CreateRule";
@@ -118,7 +118,7 @@ class App extends React.Component {
         />
         <div className={classNames(classes.container, !navDrawerOpen && classes.containerFull)}>
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={Rules} />
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/form" component={Form} />
             <Route path="/regra/:rule" component={Rule} />

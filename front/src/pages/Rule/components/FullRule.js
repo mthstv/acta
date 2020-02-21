@@ -53,9 +53,9 @@ export const getArticleList = (list) => {
         <div style={{textAlign: 'left'}} key={article.id}>
         Art. {article.number < 10 ? article.number+'º' : article.number } - {article.text}
         </div>
-        {getParagraphList(article.paragraphs)}
         {getInciseList(article.incises)}
         {getLineList(article.lines)}
+        {getParagraphList(article.paragraphs)}
       </div>
     )))
 }
@@ -89,7 +89,7 @@ export const getChapterList = (list) => {
     return (list.map((chapter) => (
       <div key={chapter.id}>
         <div style={{textAlign: 'center'}} key={chapter.id}>
-          Capítulo {chapter.number}<br/> 
+          Capítulo {Romanize(chapter.number)}<br/> 
           {chapter.name}
         </div>
         {getArticleList(chapter.articles)}
@@ -102,7 +102,7 @@ export const getTitleList = (list) => {
     return (list.map((title) => (
       <div key={title.id}>
         <div style={{textAlign: 'center'}} key={title.id}>
-          Título {title.number}<br/>
+          Título {Romanize(title.number)}<br/>
           {title.name}
         </div>
         {getArticleList(title.articles)}
@@ -115,7 +115,7 @@ export const getBookList = (list) => {
     return (list.map((book) => (
       <div key={book.id}>
         <div style={{textAlign: 'center'}} key={book.id}>
-          Livro {book.number}<br/> 
+          Livro {Romanize(book.number)}<br/> 
           {book.name}
         </div>
         {getTitleList(book.titles)}
