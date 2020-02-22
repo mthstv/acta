@@ -12,21 +12,34 @@ import { connect } from 'react-redux';
 
 import * as snackbarActions from '../../../_actions/snackbar'
 
-class FormPage extends Component {
+class RuleEditor extends Component {
     constructor(props) {
       super(props)
+      this.getRuleData()
     }
 
+    ruleID = this.props.match.params.rule
+
     state = {
-      title: '',
+      rule_title: '',
       description: '',
       preamble: ''
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = async (e) => {
       e.preventDefault()
-      this.props.snackbarActions.showSnackbar('Regra criada com sucesso');
-      console.log(this.state)
+
+      await api.patch('/rule', this.state)
+      .then((res) =>{
+        this.props.snackbarActions.showSnackbar('Registro alterado com sucesso');
+      })
+    }
+
+    getRuleData = async () => {
+      await api.get(`/rule/${this.ruleID}`)
+        .then((res) => { 
+          this.setState(res.data.data);
+        })
     }
 
   render() {
@@ -37,8 +50,8 @@ class FormPage extends Component {
             label="Título *"
             fullWidth={true}
             margin="normal"
-            value={this.state.title}
-            onChange={(e) => this.setState({title: e.target.value})}
+            value={this.state.rule_title}
+            onChange={(e) => this.setState({rule_title: e.target.value})}
             />
 
           <TextField
@@ -47,7 +60,7 @@ class FormPage extends Component {
             margin="normal"
             multiline
             rows={2}
-            value={this.state.description}
+            value={this.state.description ? this.state.description : ''}
             onChange={(e) => this.setState({description: e.target.value})}
             />
 
@@ -57,13 +70,13 @@ class FormPage extends Component {
             margin="normal"
             multiline
             rows={4}
-            value={this.state.preamble}
+            value={this.state.preamble ? this.state.preamble : ''}
             onChange={(e) => this.setState({preamble: e.target.value})}
             />
 
             <div style={styles.buttons}>
               <Link to="/">
-                  <Button variant="contained">Cancel</Button>
+                  <Button variant="contained">Cancelar</Button>
               </Link>
 
               <Button
@@ -72,7 +85,7 @@ class FormPage extends Component {
                 type="submit"
                 color="primary"
                 >
-                  Save
+                  Salvar
               </Button>
             </div>
         </form>
@@ -92,4 +105,4 @@ function mapDispatchToProps (dispatch) {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormPage);
+export default connect(mapStateToProps, mapDispatchToProps)(RuleEditor);

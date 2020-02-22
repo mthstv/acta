@@ -15,7 +15,8 @@ import NotFound from "./NotFoundPage";
 import Rules from "./Rule/RuleList";
 import Form from "./Form/FormPage";
 import Rule from "./Rule/RulePage";
-import CreateRule from "./Rule/CreateRule/CreateRule";
+import RuleCreator from "./Rule/RuleCreator/RuleCreator";
+import RuleEditor from "./Rule/RuleEditor/RuleEditor";
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { isAuthenticated, logout } from '../services/auth';
@@ -122,7 +123,8 @@ class App extends React.Component {
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/form" component={Form} />
             <Route path="/regra/:rule" component={Rule} />
-            <Route path="/criar-regra" component={CreateRule} />
+            <Route path="/criar-regra" component={RuleCreator} />
+            <Route path="/editar-regra/:rule" component={RuleEditor} />
             <Route path="/table/basic" component={BasicTable} />
             <Route path="/table/data" component={DataTable} />
             <Route component={NotFound} />
