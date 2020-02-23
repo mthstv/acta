@@ -11,14 +11,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import api from '../../services/api';
-import { isAuthenticated, login } from '../../services/auth';
+import { login } from '../../services/auth';
 
 import * as userActions from '../../_actions/user'
 
 class RegisterPage extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   state = {
     name: '',

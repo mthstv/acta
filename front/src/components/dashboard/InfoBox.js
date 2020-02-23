@@ -6,7 +6,7 @@ import { grey } from "@material-ui/core/colors";
 
 class InfoBox extends React.Component {
   render() {
-    const { color, title, value, Icon } = this.props;
+    const { color, title, Icon } = this.props;
     const styles = {
       content: {
         padding: "5px 10px",

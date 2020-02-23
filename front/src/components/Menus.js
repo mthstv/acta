@@ -186,6 +186,7 @@ NestedMenuItem.propTypes = {
 const StyledNestMenuItem = withStyles(styles, { withTheme: true })(NestedMenuItem);
 const Menus = props =>
   props.menus.map((menu, index) => <StyledNestMenuItem key={index} menu={menu} navDrawerOpen={props.navDrawerOpen} />);
+
 Menus.propTypes = {
   menus: PropTypes.array,
   navDrawerOpen: PropTypes.bool

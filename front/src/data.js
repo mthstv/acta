@@ -1,43 +1,45 @@
 import React from "react";
 import Faker from "faker";
-import Assessment from "@material-ui/icons/Assessment";
-import GridOn from "@material-ui/icons/GridOn";
+// import Assessment from "@material-ui/icons/Assessment";
+// import GridOn from "@material-ui/icons/GridOn";
 import PermIdentity from "@material-ui/icons/PermIdentity";
-import Web from "@material-ui/icons/Web";
-import Home from "@material-ui/icons/Home";
+// import Web from "@material-ui/icons/Web";
+// import Home from "@material-ui/icons/Home";
 import MenuBook from '@material-ui/icons/MenuBook';
-import BorderClear from "@material-ui/icons/BorderClear";
-import BorderOuter from "@material-ui/icons/BorderOuter";
-import api from "./services/api"
+// import BorderClear from "@material-ui/icons/BorderClear";
+// import BorderOuter from "@material-ui/icons/BorderOuter";
+// import api from "./services/api"
 
 const data = {
   menus: [
-    { text: "Home", icon: <MenuBook />, link: "/" },
-    { text: "DashBoard", icon: <Assessment />, link: "/dashboard" },
-    { text: "Form Page", icon: <Web />, link: "/form" },
-    {
-      text: "Table Page",
-      icon: <GridOn />,
-      // link: "/table",
-      subMenus: [
-        {
-          text: "Basic Table",
-          icon: <BorderClear />,
-          link: "/table/basic"
-        },
-        {
-          text: "Data Table",
-          icon: <BorderOuter />,
-          link: "/table/data"
-        }
-      ]
-    },
+    { text: "Regras", icon: <MenuBook />, link: "/" },
+    { text: "Usuários", icon: <PermIdentity />, link: "/usuarios" },
+    // { text: "DashBoard", icon: <Assessment />, link: "/dashboard" },
+    // { text: "Form Page", icon: <Web />, link: "/form" },
+    // {
+    //   text: "Table Page",
+    //   icon: <GridOn />,
+    //   // link: "/table",
+    //   subMenus: [
+    //     {
+    //       text: "Basic Table",
+    //       icon: <BorderClear />,
+    //       link: "/table/basic"
+    //     },
+    //     {
+    //       text: "Data Table",
+    //       icon: <BorderOuter />,
+    //       link: "/table/data"
+    //     }
+    //   ]
+    // },
     // { text: "Login Page", icon: <PermIdentity />, link: "/login" }
+
   ],
   isLoggedIn: false,
   user: {
     userName: `${Faker.name.firstName()} ${Faker.name.lastName()}`,
-    avatar: null // 'https://secure.gravatar.com/avatar/6a892a927dfbe1345572ab1e34780f0a?s=800&d=identicon'
+    avatar: null,// 'https://secure.gravatar.com/avatar/6a892a927dfbe1345572ab1e34780f0a?s=800&d=identicon'
   },
   tablePage: {
     items: Array.from({ length: 105 }, (item, index) => ({

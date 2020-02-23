@@ -1,5 +1,5 @@
 import React from "react";
-import HomeCard from "../../components/HomeCard";
+import RuleCard from "../../components/RuleCard";
 import { Row, Col } from "react-bootstrap";
 import api from "../../services/api";
 import Fab from '@material-ui/core/Fab';
@@ -35,10 +35,11 @@ class RuleList extends React.Component {
           {rules && rules.map((item) =>
               <Row key={item.id}>
               <Col md={12}>
-                <HomeCard
+                <RuleCard
+                  history={this.props.history}
                   title={ item.rule_title }
                   text={ item.description }
-                  linkToRedirect={`/regra/${item.id}`}
+                  ruleId={item.id}
                 />
               </Col>
             </Row>

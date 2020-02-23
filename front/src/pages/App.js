@@ -8,15 +8,16 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import Header from "../components/Header";
 import LeftDrawer from "../components/LeftDrawer";
 import Data from "../data";
-import Dashboard from "./Dashboard/DashboardPage";
-import BasicTable from "./Table/BasicTables";
-import DataTable from "./Table/DataTables";
+// import Dashboard from "./Dashboard/DashboardPage";
+// import Form from "./Form/FormPage";
+// import BasicTable from "./Table/BasicTables";
+// import DataTable from "./Table/DataTables";
 import NotFound from "./NotFoundPage";
 import Rules from "./Rule/RuleList";
-import Form from "./Form/FormPage";
 import Rule from "./Rule/RulePage";
 import RuleCreator from "./Rule/RuleCreator/RuleCreator";
 import RuleEditor from "./Rule/RuleEditor/RuleEditor";
+import UserList from "./User/UserList/UserList";
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { isAuthenticated, logout } from '../services/auth';
@@ -120,13 +121,14 @@ class App extends React.Component {
         <div className={classNames(classes.container, !navDrawerOpen && classes.containerFull)}>
           <Switch>
             <Route exact path="/" component={Rules} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/form" component={Form} />
+            {/* <Route path="/dashboard" component={Dashboard} /> */}
+            {/* <Route path="/form" component={Form} /> */}
             <Route path="/regra/:rule" component={Rule} />
             <Route path="/criar-regra" component={RuleCreator} />
             <Route path="/editar-regra/:rule" component={RuleEditor} />
-            <Route path="/table/basic" component={BasicTable} />
-            <Route path="/table/data" component={DataTable} />
+            <Route path="/usuarios" component={UserList} />
+            {/* <Route path="/table/basic" component={BasicTable} />
+            <Route path="/table/data" component={DataTable} /> */}
             <Route component={NotFound} />
           </Switch>
         </div>

@@ -7,15 +7,14 @@ import PersonAdd from "@material-ui/icons/PersonAdd";
 import Help from "@material-ui/icons/Help";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { Link } from "react-router-dom";
 import theme from "../../theme";
 import styles from './styles';
 
 import api from '../../services/api';
-import { isAuthenticated, login } from '../../services/auth';
+import { login } from '../../services/auth';
 
 import { bindActionCreators } from 'redux';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 
 import * as userActions from '../../_actions/user'
 import * as snackbarActions from '../../_actions/snackbar'

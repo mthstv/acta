@@ -13,9 +13,9 @@ import { connect } from 'react-redux';
 import * as snackbarActions from '../../../_actions/snackbar'
 
 class RuleCreator extends Component {
-    constructor(props) {
-      super(props)
-    }
+    // constructor(props) {
+    //   super(props)
+    // }
 
     state = {
       rule_title: '',

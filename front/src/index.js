@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import { Provider } from 'react-redux';
 import { createBrowserHistory } from "history";
 import registerServiceWorker from "./registerServiceWorker";
@@ -17,7 +17,7 @@ import { isAuthenticated } from './services/auth'
 
 const history = createBrowserHistory();
 
-console.log(isAuthenticated())
+// console.log(isAuthenticated())
 render(
     <div>
       <Provider store={store}>

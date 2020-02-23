@@ -5,7 +5,7 @@ import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import Avatar from "@material-ui/core/Avatar";
 import { withStyles } from "@material-ui/core/styles";
-import { ReactComponent as Logo } from '../images/book_shelf.svg';
+// import { ReactComponent as Logo } from '../images/book_shelf.svg';
 
 import Menus from "./Menus";
 import data from "../data";
@@ -73,7 +73,7 @@ function handleRedirect () {
 }
 
 const LeftDrawer = props => {
-  let { navDrawerOpen, classes, theme, handleChangeNavDrawer, isLogged } = props;
+  let { navDrawerOpen, classes, theme, handleChangeNavDrawer } = props;
 
   const drawerContent = () => (
     <div>
@@ -82,7 +82,9 @@ const LeftDrawer = props => {
         ACTA
       </div>
       <div className={classNames(classes.avatarRoot, !navDrawerOpen && classes.avatarRootMini)} onClick={handleRedirect}>
-        <Avatar src={data.user.avatar} size={navDrawerOpen ? 48 : 32} classes={{ root: classes }} />
+        <Avatar src={data.user.avatar} size={navDrawerOpen ? 48 : 32} 
+          // classes={{ root: classes }} 
+        />
         <span className={classes.avatarSpan}> { props.isLogged ? props.user.name : 'Entrar' } </span>
       </div>
       <Menus menus={props.menus} navDrawerOpen={navDrawerOpen} />
