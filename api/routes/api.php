@@ -24,7 +24,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
         $users = App\Models\User::all();
         
         $response = ['success'=>true, 'data'=>$users];
-        return response()->json($response, 201);
+        return response()->json($response, 200);
     });
 });
 

@@ -67,6 +67,8 @@ class UserController extends Controller
         $user = new User($payload);
         if ($user->save())
         {
+            // Attaching consultant role
+            $user->role()->attach(2);
             
             $token = self::getToken($request->email, $request->password); // generate user token
             

@@ -23,5 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call(IncisesTableSeeder::class);
         $this->call(ItemsTableSeeder::class);
         $this->call(LinesTableSeeder::class);
+        $this->call(RolesTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(UserRoleTableSeeder::class);
     }
 }

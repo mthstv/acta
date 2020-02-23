@@ -17,8 +17,15 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'auth_token'
+        'name', 'email', 'avatar_url', 'password', 'auth_token'
     ];
+    
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['role'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -42,7 +49,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function role()
     {
-        return $this->belongsToMany('App\Models\Role', 'role_user', 'user_id', 'role_id');
+        return $this->belongsToMany('App\Models\Role', 'user_role', 'user_id', 'role_id');
     }
 
     //hasmany
@@ -70,5 +77,11 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function getRoleAttribute()
+    {
+        $roles = $this->role()->first();
+        return $this->attributes['role'] = $roles->label;
     }
 }

@@ -238,7 +238,7 @@ class Header extends React.Component {
               <IconButton color="inherit">
                 <Badge
                   className={classes.margin}
-                  badgeContent={17}
+                  badgeContent={1}
                   color="secondary"
                 >
                   <NotificationsIcon />

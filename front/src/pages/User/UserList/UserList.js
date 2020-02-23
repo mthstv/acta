@@ -9,12 +9,14 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Checkbox from "@material-ui/core/Checkbox";
-import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import ContentCreate from "@material-ui/icons/Create";
 
-import EnhancedTableHead from "../../../components/DataTables/EnhancedTableHead";
-import EnhancedTableToolbar from "../../../components/DataTables/EnhancedTableToolbar";
-import tableData from "../../../data";
+import EnhancedTableHead from "./DataTables/EnhancedTableHead";
+import EnhancedTableToolbar from "./DataTables/EnhancedTableToolbar";
+// import tableData from "../../../data";
+
+import api from '../../../services/api';
 
 const desc = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) {
@@ -56,14 +58,30 @@ const styles = theme => ({
 });
 
 class UserTable extends React.Component {
+    constructor(props) {
+      super(props);
+      this.getUserData();
+    }
+
   state = {
     order: "asc",
     orderBy: "id",
     selected: [],
-    data: tableData.tablePage.items,
+    data: [],
     page: 0,
     rowsPerPage: 10
   };
+
+  getUserData = () => {
+    api.get('/users/list')
+      .then((res) => {
+        console.log(res);
+        this.setState({ data: res.data.data });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
 
   handleRequestSort = (event, property) => {
     const orderBy = property;
@@ -123,7 +141,7 @@ class UserTable extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} selected={selected} />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
@@ -152,22 +170,14 @@ class UserTable extends React.Component {
                       <TableCell padding="checkbox">
                         <Checkbox checked={isSelected} />
                       </TableCell>
-                      {/* <TableCell component="th" scope="row" padding="none">
-                        {n.name}
-                      </TableCell>
-                      <TableCell align="right">{n.calories}</TableCell>
-                      <TableCell align="right">{n.fat}</TableCell>
-                      <TableCell align="right">{n.carbs}</TableCell>
-                      <TableCell align="right">{n.protein}</TableCell> */}
-                      <TableCell>{n.id}</TableCell>
                       <TableCell>{n.name}</TableCell>
-                      <TableCell>{n.price}</TableCell>
-                      <TableCell>{n.category}</TableCell>
+                      <TableCell>{n.email}</TableCell>
+                      <TableCell>{n.role}</TableCell>
                       <TableCell>
                         <Link className="button" to="/form">
-                          <Button>
+                          <IconButton>
                             <ContentCreate />
-                          </Button>
+                          </IconButton>
                         </Link>
                       </TableCell>
                     </TableRow>
