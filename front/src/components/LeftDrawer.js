@@ -68,12 +68,14 @@ const drawStyles = theme => {
   };
 };
 
-function handleRedirect () {
-  window.location.href = '/login'
-}
-
 const LeftDrawer = props => {
   let { navDrawerOpen, classes, theme, handleChangeNavDrawer } = props;
+
+
+  function handleRedirect () {
+    props.history.push(`/perfil/${props.user.id}`)
+    // window.location.href = '/login'
+  }
 
   const drawerContent = () => (
     <div>

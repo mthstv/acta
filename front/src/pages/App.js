@@ -18,6 +18,7 @@ import Rule from "./Rule/RulePage";
 import RuleCreator from "./Rule/RuleCreator/RuleCreator";
 import RuleEditor from "./Rule/RuleEditor/RuleEditor";
 import UserList from "./User/UserList/UserList";
+import UserProfile from "./User/UserProfile/UserProfile";
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { isAuthenticated, logout } from '../services/auth';
@@ -75,7 +76,7 @@ class App extends React.Component {
 
   async componentDidMount () {
     // Get user data
-    await api.get('/user/by-token')
+    await api.get('/auth/by-token')
     .then((res) => {
       this.props.SaveUserData(res.data.data)
       localStorage.setItem('token', res.data.data.auth_token)
@@ -113,6 +114,7 @@ class App extends React.Component {
         <Header handleChangeNavDrawer={this.handleChangeNavDrawer} navDrawerOpen={navDrawerOpen} history={this.props.history}/>
         <LeftDrawer
           user={this.props.user}
+          history={this.props.history}
           isLogged={isAuthenticated()}
           navDrawerOpen={navDrawerOpen}
           handleChangeNavDrawer={this.handleChangeNavDrawer}
@@ -127,6 +129,7 @@ class App extends React.Component {
             <Route path="/criar-regra" component={RuleCreator} />
             <Route path="/editar-regra/:rule" component={RuleEditor} />
             <Route path="/usuarios" component={UserList} />
+            <Route path="/perfil/:user" component={UserProfile} />
             {/* <Route path="/table/basic" component={BasicTable} />
             <Route path="/table/data" component={DataTable} /> */}
             <Route component={NotFound} />

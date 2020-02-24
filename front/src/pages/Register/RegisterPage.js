@@ -29,7 +29,7 @@ class RegisterPage extends Component {
   registerUser = (e) => {
     e.preventDefault();
 
-    api.post('/user/register', this.state)
+    api.post('/auth/register', this.state)
     .then((res) => {
       this.props.SaveUserData(res.data.data);
       login(res.data.data)

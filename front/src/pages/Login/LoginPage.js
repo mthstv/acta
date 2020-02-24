@@ -33,7 +33,7 @@ class LoginPage extends Component {
   LoginUser = (e) => {
     e.preventDefault();
 
-    api.post('/user/login', this.state)
+    api.post('/auth/login', this.state)
     .then(async (res) => {
       await this.props.userActions.SaveUserData(res.data.data);
       login(res.data.data)
