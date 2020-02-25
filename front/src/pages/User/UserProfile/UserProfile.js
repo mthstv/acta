@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import { handleRole } from '../../../helpers';
 
 import * as snackbarActions from '../../../_actions/snackbar'
+import * as userActions from '../../../_actions/user'
 
 class UserProfile extends Component {
     constructor(props) {
@@ -20,28 +21,36 @@ class UserProfile extends Component {
     }
 
     state = {
-      userIsAuth: false,
+      is_auth: false,
       name: '',
       email: '',
       role: ''
   }
     componentDidMount() {
-      if(parseInt(this.props.user.id) === parseInt(this.props.match.params.user)) {       
-        this.setState(this.props.user);
-        this.setState({is_auth: true});
-      } else {
-        this.setState({is_auth: false});
-      }
+      this.setState({is_auth: parseInt(this.props.user.id) === parseInt(this.props.match.params.user)});
+      
+      api.get(`/user/${parseInt(this.props.match.params.user)}`, this.state)
+      .then((res) =>{
+        this.setState(res.data.data);
+      })
     }
 
     handleSubmit = async (e) => {
       e.preventDefault()
 
-      // await api.post('/rule', this.state)
-      // .then((res) =>{
-      //   this.props.snackbarActions.showSnackbar('Registro criada com sucesso');
-      //   this.props.history.push('/');
-      // })
+      if(this.state.is_auth) {
+        await api.patch('/user/auth-update', this.state)
+        .then((res) =>{
+          this.props.userActions.SaveUserData(res.data.data);
+          this.props.snackbarActions.showSnackbar('Dados alterados com sucesso');
+        })
+      } else {
+        delete this.state.auth_token
+        await api.patch(`/user/${this.state.id}`, this.state)
+        .then((res) =>{
+          this.props.snackbarActions.showSnackbar('Usuário alterado com sucesso');
+        })
+      }
     }
 
   render() {
@@ -83,7 +92,7 @@ class UserProfile extends Component {
                 type="submit"
                 color="primary"
                 >
-                  Salvar
+                  {this.state.is_auth ? 'Salvar' : 'Alterar' }
               </Button>
               {/* <Button
                 style={styles.saveButton}
@@ -105,6 +114,7 @@ const mapStateToProps = state => ({
 
 function mapDispatchToProps (dispatch) {
   return {
+      userActions: bindActionCreators(userActions, dispatch),
       snackbarActions: bindActionCreators(snackbarActions, dispatch),
   }
 }

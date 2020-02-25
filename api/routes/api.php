@@ -23,7 +23,9 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     //     $response = ['success'=>true, 'data'=>$users];
     //     return response()->json($response, 200);
     // });
+    Route::patch('user/auth-update', 'UserController@updateAuthenticated');
     Route::resource('user', 'UserController');
+
 });
 
 Route::group(['middleware' => 'api-header'], function () {

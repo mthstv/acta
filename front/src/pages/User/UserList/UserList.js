@@ -73,7 +73,7 @@ class UserTable extends React.Component {
   };
 
   getUserData = () => {
-    api.get('/users/list')
+    api.get('/user')
       .then((res) => {
         console.log(res);
         this.setState({ data: res.data.data });

@@ -19,7 +19,7 @@ export default function AppSnackbar() {
 
   return (
     <Snackbar
-      bodyStyle={{ backgroundColor: 'white', color: 'black' }}
+      // bodyStyle={{ backgroundColor: 'white', color: 'black' }}
       anchorOrigin={{
         vertical: "bottom",
         horizontal: "left"

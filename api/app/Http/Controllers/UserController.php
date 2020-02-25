@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use JWTAuth;
 
 class UserController extends Controller
 {
@@ -14,7 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return response()->json(['success' => true, 'data' => $users]);
     }
 
     /**
@@ -35,7 +37,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $user = new User;
+        $user->fill($data);
+        $user->save();
+        return response()->json(['success' => true, 'data' => $user]);
     }
 
     /**
@@ -46,7 +52,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+       return response()->json(['success' => true, 'data' => $user]);
     }
 
     /**
@@ -69,7 +75,22 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $user->update($request->all());
+        return response()->json(['success' => true, 'data' => $user]);
+    }
+
+    /**
+     * Update the Authenticated user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function updateAuthenticated(Request $request)
+    {
+        $user = JWTAuth::parseToken()->toUser();
+        $user->update($request->all());
+        return response()->json(['success' => true, 'data' => $user]);
     }
 
     /**
@@ -80,6 +101,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return response()->json(['success' => true, 'data' => trans('api.user.delete')]);
     }
 }
