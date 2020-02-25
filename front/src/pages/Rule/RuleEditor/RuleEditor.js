@@ -33,12 +33,22 @@ class RuleEditor extends Component {
       .then((res) =>{
         this.props.snackbarActions.showSnackbar('Registro alterado com sucesso');
       })
+      .catch((err) => {
+        if(err.response.status === 401) {
+          window.location.href = '/login'
+        }
+      })
     }
 
     getRuleData = async () => {
       await api.get(`/rule/${this.ruleID}`)
         .then((res) => { 
           this.setState(res.data.data);
+        })
+        .catch((err) => {
+          if(err.response.status === 401) {
+            window.location.href = '/login'
+          }
         })
     }
 

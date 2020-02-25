@@ -14,6 +14,11 @@ class RulePage extends React.Component {
       .then((res) => {
         this.setState({ rule: res.data.data });
       })
+      .catch((err) => {
+        if(err.response.status === 401) {
+          window.location.href = '/login'
+        }
+      })
     }
 
                     

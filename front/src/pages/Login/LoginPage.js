@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
 import PersonAdd from "@material-ui/icons/PersonAdd";
 import Help from "@material-ui/icons/Help";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+// import Checkbox from "@material-ui/core/Checkbox";
+// import FormControlLabel from "@material-ui/core/FormControlLabel";
 import theme from "../../theme";
 import styles from './styles';
 
@@ -21,10 +21,11 @@ import * as snackbarActions from '../../_actions/snackbar'
 
 
 class LoginPage extends Component {
-  constructor(props) {
-    super(props);
-    console.log(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  //   // console.log(props);
+  // }
+
   state = {
     email: '',
     password: ''
@@ -74,7 +75,7 @@ class LoginPage extends Component {
                 </div>
   
                 <div style={{ marginTop: 10 }}>
-                  <FormControlLabel
+                  {/* <FormControlLabel
                     control={
                       <Checkbox
                         label="Lembre de mim"
@@ -82,7 +83,7 @@ class LoginPage extends Component {
                       />
                     }
                     label="Lembre de mim"
-                  />
+                  /> */}
                   <Button
                     type="submit"
                     variant="contained" 

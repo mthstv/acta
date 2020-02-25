@@ -50,7 +50,7 @@ const styles = theme => ({
     marginTop: theme.spacing(3)
   },
   table: {
-    minWidth: 1020
+    minWidth: 650
   },
   tableWrapper: {
     overflowX: "auto"
@@ -75,11 +75,13 @@ class UserTable extends React.Component {
   getUserData = () => {
     api.get('/user')
       .then((res) => {
-        console.log(res);
         this.setState({ data: res.data.data });
       })
       .catch((err) => {
         console.log(err);
+        if(err.response.status === 401) {
+          window.location.href = '/login'
+        }
       })
   }
 
@@ -174,7 +176,7 @@ class UserTable extends React.Component {
                       <TableCell>{n.email}</TableCell>
                       <TableCell>{n.role}</TableCell>
                       <TableCell>
-                        <Link className="button" to="/form">
+                        <Link className="button" to={`/perfil/${n.id}`}>
                           <IconButton>
                             <ContentCreate />
                           </IconButton>

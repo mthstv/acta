@@ -16,9 +16,9 @@ import * as snackbarActions from '../../../_actions/snackbar'
 import * as userActions from '../../../_actions/user'
 
 class UserProfile extends Component {
-    constructor(props) {
-      super(props)
-    }
+    // constructor(props) {
+    //   super(props)
+    // }
 
     state = {
       is_auth: false,
@@ -33,6 +33,11 @@ class UserProfile extends Component {
       .then((res) =>{
         this.setState(res.data.data);
       })
+      .catch((err) => {
+        if(err.response.status === 401) {
+          window.location.href = '/login'
+        }
+      })
     }
 
     handleSubmit = async (e) => {
@@ -44,12 +49,24 @@ class UserProfile extends Component {
           this.props.userActions.SaveUserData(res.data.data);
           this.props.snackbarActions.showSnackbar('Dados alterados com sucesso');
         })
+        .catch((err) => {
+          if(err.response.status === 401) {
+            window.location.href = '/login'
+          }
+        })
+
       } else {
         delete this.state.auth_token
         await api.patch(`/user/${this.state.id}`, this.state)
         .then((res) =>{
           this.props.snackbarActions.showSnackbar('Usuário alterado com sucesso');
         })
+        .catch((err) => {
+          if(err.response.status === 401) {
+            window.location.href = '/login'
+          }
+        })
+
       }
     }
 
@@ -82,8 +99,8 @@ class UserProfile extends Component {
             />
 
             <div style={styles.buttons}>
-              <Link to="/">
-                  <Button variant="contained">Cancelar</Button>
+              <Link to={this.state.is_auth ? '/' : '/usuarios'}>
+                  <Button variant="contained">Voltar</Button>
               </Link>
 
               <Button

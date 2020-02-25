@@ -31,6 +31,11 @@ class RuleCreator extends Component {
         this.props.snackbarActions.showSnackbar('Registro criada com sucesso');
         this.props.history.push('/');
       })
+      .catch((err) => {
+        if(err.response.status === 401) {
+          window.location.href = '/login'
+        }
+      })
     }
 
   render() {
