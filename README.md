@@ -1,6 +1,11 @@
 # Frontend
 [Template](https://dali110.github.io/react-material-admin/)
 
+Copy environment example file
+```
+cp .env.example .env
+```
+
 Build Dockerfile
 ```
 docker build -t acta-frontend
