@@ -8,7 +8,7 @@ cp .env.example .env
 
 Build Dockerfile
 ```
-docker build -t acta-frontend
+docker build -t acta-frontend .
 ```
 
 Run Dockerfile
