@@ -28,7 +28,9 @@ class LoginPage extends Component {
 
   state = {
     email: '',
-    password: ''
+    password: '',
+    error: false,
+    errorMessage: ''
   }
 
   LoginUser = (e) => {
@@ -44,7 +46,7 @@ class LoginPage extends Component {
     })
     .catch((err) => {
       if(err.response) {
-        console.log(err.response.data.message)
+        this.setState({ error: true, errorMessage: err.response.data.message });
       }
     })
   }
@@ -63,15 +65,20 @@ class LoginPage extends Component {
               <form onSubmit={this.LoginUser}>
                 <TextField 
                   label="E-mail" 
-                  fullWidth={true} 
-                  onChange={(e) => this.setState({email: e.target.value})}/>
+                  fullWidth={true}
+                  required
+                  error={this.state.error}
+                  helperText={this.state.errorMessage}
+                  onChange={(e) => this.setState({ email: e.target.value, error: false, errorMessage: '' })}/>
                 
                 <div style={{ marginTop: 16 }}>
                   <TextField 
                     label="Senha" 
                     fullWidth={true} 
+                    required
+                    error={this.state.error}
                     type="password" 
-                    onChange={(e) => this.setState({password: e.target.value})}/>
+                    onChange={(e) => this.setState({ password: e.target.value, error: false, errorMessage: '' })}/>
                 </div>
   
                 <div style={{ marginTop: 10 }}>

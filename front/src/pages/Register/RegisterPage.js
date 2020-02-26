@@ -23,7 +23,9 @@ class RegisterPage extends Component {
   state = {
     name: '',
     email: '',
-    password: ''
+    password: '',
+    error: false,
+    errorMessages: {}
   }
 
   registerUser = (e) => {
@@ -35,6 +37,12 @@ class RegisterPage extends Component {
       login(res.data.data)
       // this.props.history.push('/');
       window.location.href = '/'
+    })
+    .catch((err) => {
+      if(err.response) {
+        this.setState({ error: true, errorMessages: err.response.data.errors });
+      }
+      console.log(this.state.errorMessages);
     })
   };
 
@@ -48,12 +56,17 @@ class RegisterPage extends Component {
               <TextField 
                 label="Nome" 
                 fullWidth={true}
+                required
+                error={this.state.error}
                 onChange={(e) => this.setState({ name: e.target.value })}/>
              
               <div style={{ marginTop: 16 }}>
                 <TextField 
                   label="E-mail" 
                   fullWidth={true}
+                  required
+                  error={this.state.error}
+                  helperText={this.state.errorMessages.email ? this.state.errorMessages.email[0] : ''}
                   onChange={(e) => this.setState({ email: e.target.value })}/>
               </div>
              
@@ -61,6 +74,9 @@ class RegisterPage extends Component {
                 <TextField
                   label="Senha"
                   fullWidth={true}
+                  required
+                  error={this.state.error}
+                  helperText={this.state.errorMessages.password ? this.state.errorMessages.password[0] : ''}
                   type="password"
                   onChange={(e) => this.setState({ password: e.target.value })}/>
               </div>
