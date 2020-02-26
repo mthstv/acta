@@ -1,17 +1,17 @@
 # Frontend
 [Template](https://dali110.github.io/react-material-admin/)
 
-Install node_modules
+Build Dockerfile
 ```
-npm install
-```
-
-Run development server
-```
-npm start
+docker build -t acta-frontend
 ```
 
-The app will be hosted on http://localhost:3000
+Run Dockerfile
+```
+docker run --name acta-frontend -p 80:80 -d acta-frontend
+```
+
+The app will be hosted on http://localhost
 
 # Backend
 
