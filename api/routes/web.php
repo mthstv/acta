@@ -11,7 +11,6 @@
 |
 */
 Route::get('/', function () {
-    // return view('app');
     return
     [
         "data" => [

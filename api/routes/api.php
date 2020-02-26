@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,26 +11,23 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['middleware' => ['jwt.auth','api-header']], function () {
-  
-    // all routes to protected resources are registered here  
-
-    // Route::get('users/list', function(){
-    //     $users = App\Models\User::all();
-        
-    //     $response = ['success'=>true, 'data'=>$users];
-    //     return response()->json($response, 200);
-    // });
-    Route::patch('user/auth-update', 'UserController@updateAuthenticated');
-    Route::resource('user', 'UserController');
-
-});
-
 Route::group(['middleware' => 'api-header'], function () {
+
+    // all routes that doesnt require authentication are registered here  
 
     Route::post('auth/login', 'AuthController@login');
     Route::post('auth/register', 'AuthController@register');
     Route::get('auth/by-token', 'AuthController@getUserByToken');
+});
+
+Route::group(['middleware' => ['jwt.auth','api-header']], function () {
+  
+    // all routes to protected resources are registered here  
+
+    Route::patch('user/auth-update', 'UserController@updateAuthenticated');
+    Route::resource('user', 'UserController');
+
+
     /**
      * /rule        => 'GET'    @ index()
      * /rule        => 'POST'   @ store()
@@ -152,4 +147,5 @@ Route::group(['middleware' => 'api-header'], function () {
      *
      */
     Route::resource('item', 'ItemController');
+
 });
