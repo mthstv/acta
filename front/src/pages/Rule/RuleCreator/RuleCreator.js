@@ -43,9 +43,10 @@ class RuleCreator extends Component {
         <PageBase title="Criar nova regra">
         <form onSubmit={this.handleSubmit}>
           <TextField
-            label="Título *"
+            label="Título"
             fullWidth={true}
             margin="normal"
+            required
             value={this.state.rule_title}
             onChange={(e) => this.setState({rule_title: e.target.value})}
             />

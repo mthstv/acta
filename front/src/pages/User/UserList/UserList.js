@@ -18,6 +18,14 @@ import EnhancedTableToolbar from "./DataTables/EnhancedTableToolbar";
 
 import api from '../../../services/api';
 
+import { compose } from 'redux';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import * as snackbarActions from '../../../_actions/snackbar'
+import * as userActions from '../../../_actions/user'
+
+
 const desc = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -72,19 +80,7 @@ class UserTable extends React.Component {
     rowsPerPage: 10
   };
 
-  getUserData = () => {
-    api.get('/user')
-      .then((res) => {
-        this.setState({ data: res.data.data });
-      })
-      .catch((err) => {
-        console.log(err);
-        if(err.response.status === 401) {
-          window.location.href = '/login'
-        }
-      })
-  }
-
+  // TABLE CONFIGURATIONS
   handleRequestSort = (event, property) => {
     const orderBy = property;
     let order = "desc";
@@ -135,6 +131,38 @@ class UserTable extends React.Component {
 
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
+  // USER RELATED METHODS
+
+  getUserData = () => {
+    api.get('/user')
+      .then((res) => {
+        this.setState({ data: res.data.data });
+      })
+      .catch((err) => {
+        console.log(err);
+        if(err.response.status === 401) {
+          window.location.href = '/login'
+        }
+      })
+  }
+
+  deleteUser = () => {
+    this.state.selected.map(async (userId) => {
+      await api.delete(`/user/${userId}`)
+        .then((res) => {
+          this.props.snackbarActions.showSnackbar(this.state.selected.length > 1 ?'Usuários excluídos com sucesso' : 'Usuário excluído com sucesso')
+          this.getUserData()
+          console.log(res)
+        })
+        .catch((err) => {
+          this.props.snackbarActions.showSnackbar('Houve um problema ao realizar esta ação')
+          this.getUserData()
+          console.log(err)
+        })
+    })
+    this.setState({selected: []})
+  }
+
   render() {
     const { classes } = this.props;
     const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
@@ -143,7 +171,10 @@ class UserTable extends React.Component {
 
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} selected={selected} />
+        <EnhancedTableToolbar 
+          numSelected={selected.length}
+          onDeleteConfirmation={this.deleteUser}
+        />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
@@ -162,7 +193,7 @@ class UserTable extends React.Component {
                   return (
                     <TableRow
                       hover
-                      onClick={event => this.handleClick(event, n.id)}
+                      onClick={this.props.user.id !== n.id ? event => this.handleClick(event, n.id) : null}
                       role="checkbox"
                       aria-checked={isSelected}
                       tabIndex={-1}
@@ -170,7 +201,7 @@ class UserTable extends React.Component {
                       selected={isSelected}
                     >
                       <TableCell padding="checkbox">
-                        <Checkbox checked={isSelected} />
+                        <Checkbox checked={isSelected} disabled={this.props.user.id === n.id} />
                       </TableCell>
                       <TableCell>{n.name}</TableCell>
                       <TableCell>{n.email}</TableCell>
@@ -217,4 +248,17 @@ UserTable.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(UserTable);
+
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+
+function mapDispatchToProps (dispatch) {
+  return {
+      userActions: bindActionCreators(userActions, dispatch),
+      snackbarActions: bindActionCreators(snackbarActions, dispatch),
+  }
+}
+
+export default compose( withStyles(styles), connect(mapStateToProps, mapDispatchToProps) )(UserTable);

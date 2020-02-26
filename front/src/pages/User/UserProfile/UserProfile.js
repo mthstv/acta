@@ -4,13 +4,12 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import PageBase from "../../../components/PageBase";
 import styles from './styles';
+import { handleRole } from '../../../helpers';
 
 import api from '../../../services/api';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
-import { handleRole } from '../../../helpers';
 
 import * as snackbarActions from '../../../_actions/snackbar'
 import * as userActions from '../../../_actions/user'
