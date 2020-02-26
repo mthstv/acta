@@ -6,16 +6,6 @@ Copy environment example file
 cp .env.example .env
 ```
 
-Build Dockerfile
-```
-docker build -t acta-frontend .
-```
-
-Run Dockerfile
-```
-docker run --name acta-frontend -p 80:80 -d acta-frontend
-```
-
 The app will be hosted on http://localhost
 
 # Backend
@@ -41,6 +31,10 @@ docker-compose exec app php artisan migrate:refresh
 Generate the jwt key
 ```
 docker-compose exec app php artisan jwt:secret
+```
+
+```
+docker exec -ti acta_app /bin/bash
 ```
 
 The app will be hosted on http://localhost:8080
