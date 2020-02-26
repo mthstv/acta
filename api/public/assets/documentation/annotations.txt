@@ -12,6 +12,7 @@ subsection
 article
 paragraph
 incise
+line
 item
 
 rules
@@ -24,4 +25,5 @@ sub_sections
 articles
 paragraphs
 incises
+lines
 items

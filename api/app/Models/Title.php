@@ -56,6 +56,4 @@ class Title extends Model
     {
         return $this->hasMany('App\Models\Article');
     }
-
-    //scopes
 }

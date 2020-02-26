@@ -27,6 +27,17 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     Route::patch('user/auth-update', 'UserController@updateAuthenticated');
     Route::resource('user', 'UserController');
 
+    /**
+     * /element        => 'GET'    @ index()
+     * /element        => 'POST'   @ store()
+     * /element/{id}   => 'GET'    @ show()
+     * /element/{id}   => 'PATCH'  @ update()
+     * /element/{id}   => 'DELETE' @ destroy()
+     *
+     * /element/by-label/{label} => 'GET'  @ findByLabel()
+     */
+    Route::get('element/by-label/{label}', 'ElementController@findByLabel');
+    Route::resource('element', 'ElementController');
 
     /**
      * /rule        => 'GET'    @ index()
