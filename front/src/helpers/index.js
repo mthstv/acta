@@ -22,3 +22,34 @@ export const handleRole = (role) => {
       return '';
   }
 }
+
+export const handleElement = (element) => {
+  switch(element.toLowerCase()) {
+    case 'rule':
+      return 'Regra';
+    case 'part':
+      return 'Parte';
+    case 'book':
+      return 'Livro';
+    case 'title':
+      return 'Título';
+    case 'chapter':
+      return 'Capítulo';
+    case 'section':
+      return 'Seção';
+    case 'subsection':
+      return 'Subseção';
+    case 'article':
+      return 'Artigo';
+    case 'paragraph':
+      return 'Parágrafo';
+    case 'incise':
+      return 'Inciso';
+    case 'line':
+      return 'Alínea';
+    case 'item':
+      return 'Item';
+    default:
+      return '';
+  }
+}

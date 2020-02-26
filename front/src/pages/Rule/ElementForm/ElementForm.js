@@ -28,7 +28,9 @@ class ElementForm extends Component {
       rule_title: '',
       description: '',
       preamble: '',
-      element:''
+
+      element:'',
+      parentElements: ''
     }
 
     handleSubmit = async (e) => {
@@ -46,9 +48,12 @@ class ElementForm extends Component {
       // })
     }
 
-    handleElement = (element) => {
-      this.setState({ element: element })
-      setTimeout(() => console.log(this.state.element), 0)
+    handleElement = async (element) => {
+      await this.setState({ element })
+      await api.get(`/element/by-label/${element}`)
+        .then((res) => this.setState({ parentElements: res.data.data.parent }) )
+      console.log('element', this.state.element)
+      console.log('parents', this.state.parentElements)
     }
 
   render() {
