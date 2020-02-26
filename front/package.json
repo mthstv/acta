@@ -30,7 +30,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && rm -rf ../api/public/assets/js && cp -r build ../api/public/assets/js",
+    "build": "rm -rf .env && cp .env.dev .env && react-scripts build && rm -rf ../api/public/assets/js && cp -r build ../api/public/assets/js && cp .env.example .env",
     "test": "react-scripts test --env=jsdom",
     "test:ci": "CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
