@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { Row, Col } from "react-bootstrap";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+
 import PageBase from "../../../components/PageBase";
 import styles from './styles';
 
@@ -12,6 +18,7 @@ import { connect } from 'react-redux';
 
 import * as snackbarActions from '../../../_actions/snackbar'
 
+import ElementSelect from './components/ElementSelect';
 class ElementForm extends Component {
     // constructor(props) {
     //   super(props)
@@ -20,33 +27,64 @@ class ElementForm extends Component {
     state = {
       rule_title: '',
       description: '',
-      preamble: ''
+      preamble: '',
+      element:''
     }
 
     handleSubmit = async (e) => {
       e.preventDefault()
 
-      await api.post('/rule', this.state)
-      .then((res) =>{
-        this.props.snackbarActions.showSnackbar('Registro criada com sucesso');
-        this.props.history.push('/');
-      })
-      .catch((err) => {
-        if(err.response.status === 401) {
-          window.location.href = '/login'
-        }
-      })
+      // await api.post('/rule', this.state)
+      // .then((res) =>{
+      //   this.props.snackbarActions.showSnackbar('Registro criada com sucesso');
+      //   this.props.history.push('/');
+      // })
+      // .catch((err) => {
+      //   if(err.response.status === 401) {
+      //     window.location.href = '/login'
+      //   }
+      // })
+    }
+
+    handleElement = (element) => {
+      this.setState({ element: element })
+      setTimeout(() => console.log(this.state.element), 0)
     }
 
   render() {
     return (
         <PageBase title="Adicionar Elemento">
+        {/* criar 2 selects, um para elemento e outro para elemento pai onde esse elemento criado irá ser adicionado */}
         <form onSubmit={this.handleSubmit}>
+        <Row>
+          <Col sm={6} md={6} lg={6}>
+            <ElementSelect
+             onElementChange={this.handleElement}/>
+          </Col>
+        </Row>
+        {/* 
+          <FormControl fullWidth={true}>
+            <InputLabel htmlFor="City">City</InputLabel>
+            <Select
+              inputProps={{
+                name: "City",
+                id: "City"
+              }}
+              fullWidth={true}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={"London"}>London</MenuItem>
+              <MenuItem value={"Paris"}>Paris</MenuItem>
+              <MenuItem value={"Rome"}>Rome</MenuItem>
+            </Select>
+          </FormControl> */}
+
           <TextField
             label="Título"
             fullWidth={true}
             margin="normal"
-            required
             value={this.state.rule_title}
             onChange={(e) => this.setState({rule_title: e.target.value})}
             />

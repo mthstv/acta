@@ -4,6 +4,7 @@ import classNames from "classnames";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import Menu from "@material-ui/core/Menu";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 // import AccountCircle from "@material-ui/icons/AccountCircle";
@@ -15,6 +16,11 @@ import Badge from "@material-ui/core/Badge";
 import { Toolbar } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
+import MenuItem from "@material-ui/core/MenuItem";
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+
+
 
 import { logout } from '../services/auth'
 
@@ -42,7 +48,7 @@ const styles = theme => ({
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20
+    marginRight: 10
   },
   title: {
     display: "none",
@@ -57,16 +63,17 @@ const styles = theme => ({
     "&:hover": {
       backgroundColor: fade(theme.palette.common.white, 0.25)
     },
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(),
     marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto"
-    }
+    transition: 'width 500ms ease-in-out'
+    // width: "100%",
+    // [theme.breakpoints.up("sm")]: {
+    //   marginLeft: theme.spacing(),
+    //   width: "auto"
+    // }
   },
   searchIcon: {
-    width: theme.spacing(9),
+    width: theme.spacing(5),
     height: "100%",
     position: "absolute",
     pointerEvents: "none",
@@ -76,17 +83,16 @@ const styles = theme => ({
   },
   inputRoot: {
     color: "inherit",
-    width: "100%"
+    // width: "auto"
   },
   inputInput: {
     paddingTop: theme.spacing(),
     paddingRight: theme.spacing(),
     paddingBottom: theme.spacing(),
-    paddingLeft: theme.spacing(10),
+    paddingLeft: theme.spacing(5),
     transition: theme.transitions.create("width"),
-    width: "100%",
     [theme.breakpoints.up("md")]: {
-      width: 200
+      width: 'auto'
     }
   },
   sectionDesktop: {
@@ -109,7 +115,8 @@ class Header extends React.Component {
 
     this.state = {
       anchorEl: null,
-      mobileMoreAnchorEl: null
+      mobileMoreAnchorEl: null,
+      searchBarWidth: '30%'
     };
   }
 
@@ -140,7 +147,7 @@ class Header extends React.Component {
 
     // const { anchorEl } = this.state;
     // const isMenuOpen = Boolean(anchorEl);
-    // const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    const isMobileMenuOpen = Boolean(this.state.mobileMoreAnchorEl);
 
     // const renderMenu = (
     //   <Menu
@@ -155,49 +162,42 @@ class Header extends React.Component {
     //   </Menu>
     // );
 
-    // const renderMobileMenu = (
-    //   <Menu
-    //     anchorEl={mobileMoreAnchorEl}
-    //     anchorOrigin={{ vertical: "top", horizontal: "right" }}
-    //     transformOrigin={{ vertical: "top", horizontal: "right" }}
-    //     open={isMobileMenuOpen}
-    //     onClose={this.handleMobileMenuClose}
-    //   >
-    //     <MenuItem>
-    //       <IconButton color="inherit">
-    //         <Badge
-    //           className={classes.margin}
-    //           badgeContent={4}
-    //           color="secondary"
-    //         >
-    //           <MailIcon />
-    //         </Badge>
-    //       </IconButton>
-    //       <p>Messages</p>
-    //     </MenuItem>
-    //     <MenuItem>
-    //       <IconButton color="inherit">
-    //         <Badge
-    //           className={classes.margin}
-    //           badgeContent={11}
-    //           color="secondary"
-    //         >
-    //           <NotificationsIcon />
-    //         </Badge>
-    //       </IconButton>
-    //       <p>Notifications</p>
-    //     </MenuItem>
-    //     <MenuItem onClick={this.handleProfileMenuOpen}>
-    //       <IconButton color="inherit">
-    //         <AccountCircle />
-    //       </IconButton>
-    //       <p>Profile</p>
-    //     </MenuItem>
-    //   </Menu>
-    // );
-
     return (
       <div>
+        <Menu
+          anchorEl={this.state.mobileMoreAnchorEl}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          transformOrigin={{ vertical: "top", horizontal: "right" }}
+          open={isMobileMenuOpen}
+          onClose={this.handleMobileMenuClose}
+        >
+          <MenuItem>
+            <ListItemIcon>
+              <Badge
+                className={classes.margin}
+                badgeContent={1}
+                color="secondary"
+              >
+                <NotificationsIcon />
+              </Badge>
+            </ListItemIcon>
+            <ListItemText primary="Notificações" />
+          </MenuItem>
+
+          {/* <MenuItem
+            onClick={this.handleLogout}>
+            <ReplyRoundedIcon />
+            <p style={{marginLeft: 20}}>Sair</p>
+          </MenuItem> */}
+          <MenuItem>
+            <ListItemIcon>
+              <ReplyRoundedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Sair" />
+          </MenuItem>
+
+        </Menu>
+
         <AppBar
           className={classNames(classes.appBar, {
             [classes.appBarShift]: navDrawerOpen
@@ -212,21 +212,27 @@ class Header extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <div className={classes.search}>
+
+            {/* SEARCHBAR */}
+            <div className={classes.search} style={{width: this.state.searchBarWidth}}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="Search…"
+                placeholder="Busca..."
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput
                 }}
+                fullWidth={true}
+                onFocus={() => this.setState({ searchBarWidth: '100%' })}
+                onBlur={() => this.setState({ searchBarWidth: '30%' })}
               />
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              {/* <IconButton color="inherit">
+
+              {/* <IconButtotransition: width 100ms ease-in-out;n color="inherit">
                 <Badge
                   className={classes.margin}
                   badgeContent={4}
@@ -235,6 +241,8 @@ class Header extends React.Component {
                   <MailIcon />
                 </Badge>
               </IconButton> */}
+
+              {/* NOTIFICATIONS */}
               <IconButton color="inherit">
                 <Badge
                   className={classes.margin}
@@ -244,6 +252,8 @@ class Header extends React.Component {
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
+
+              {/* LOGOUT */}
               <IconButton
                 onClick={this.handleLogout}
                 color="inherit"
