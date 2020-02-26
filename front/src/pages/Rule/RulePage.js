@@ -2,7 +2,19 @@ import React from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import api from "../../services/api";
 import { getSingleRule } from './components/FullRule'
+import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
+import Fab from '@material-ui/core/Fab';
 
+const styles = {
+  fab: {
+    margin: 0,
+    top: 'auto',
+    right: 20,
+    bottom: 20,
+    left: 'auto',
+    position: 'fixed',
+  }
+};
 class RulePage extends React.Component {
     constructor(props) {
       super(props);
@@ -24,9 +36,9 @@ class RulePage extends React.Component {
                     
     render() {
       const { rule } = this.state;
-      console.log(rule)
       return (
         rule ?
+        <>
           <Row>
             <Col md={12}>
               <Card>
@@ -36,6 +48,15 @@ class RulePage extends React.Component {
               </Card>
             </Col>
           </Row>
+          <Fab 
+            color="primary" 
+            style={styles.fab} 
+            aria-label="add"
+            onClick={() => this.props.history.push(`/criar-elemento`)}
+          >
+            <AddToPhotosIcon />
+          </Fab>
+        </>
         :
         <div/>
       );

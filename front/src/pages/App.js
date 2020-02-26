@@ -17,12 +17,14 @@ import Rules from "./Rule/RuleList";
 import Rule from "./Rule/RulePage";
 import RuleCreator from "./Rule/RuleCreator/RuleCreator";
 import RuleEditor from "./Rule/RuleEditor/RuleEditor";
+import ElementForm from "./Rule/ElementForm/ElementForm";
 import UserList from "./User/UserList/UserList";
 import UserProfile from "./User/UserProfile/UserProfile";
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { isAuthenticated, logout } from '../services/auth';
 import { bindActionCreators } from 'redux';
+
+import { isAuthenticated, logout } from '../services/auth';
 import api from '../services/api';
 
 import * as userActions from '../_actions/user'
@@ -128,6 +130,7 @@ class App extends React.Component {
             <Route path="/regra/:rule" component={Rule} />
             <Route path="/criar-regra" component={RuleCreator} />
             <Route path="/editar-regra/:rule" component={RuleEditor} />
+            <Route path="/criar-elemento" component={ElementForm} />
             <Route path="/usuarios" component={UserList} />
             <Route path="/perfil/:user" component={UserProfile} />
             {/* <Route path="/table/basic" component={BasicTable} />
@@ -153,4 +156,4 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(userActions, dispatch);
 
 
-export default compose( withStyles(styles), connect(mapStateToProps, mapDispatchToProps) )(App);;
+export default compose( withStyles(styles), connect(mapStateToProps, mapDispatchToProps) )(App);
