@@ -10,8 +10,8 @@ import SearchIcon from "@material-ui/icons/Search";
 // import AccountCircle from "@material-ui/icons/AccountCircle";
 // import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import ReplyRoundedIcon from '@material-ui/icons/ReplyRounded';
-import MoreIcon from "@material-ui/icons/MoreVert";
+// import ReplyRoundedIcon from '@material-ui/icons/ReplyRounded';
+// import MoreIcon from "@material-ui/icons/MoreVert";
 import Badge from "@material-ui/core/Badge";
 import { Toolbar } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
@@ -19,8 +19,6 @@ import { withStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-
-
 
 import { logout } from '../services/auth'
 
@@ -115,8 +113,8 @@ class Header extends React.Component {
 
     this.state = {
       anchorEl: null,
-      mobileMoreAnchorEl: null,
-      searchBarWidth: '30%'
+      notificationMoreAnchorEl: null,
+      searchBarWidth: '40%'
     };
   }
 
@@ -126,15 +124,15 @@ class Header extends React.Component {
 
   handleMenuClose = () => {
     this.setState({ anchorEl: null });
-    this.handleMobileMenuClose();
+    this.handleNotificationMenuClose();
   };
 
-  handleMobileMenuOpen = event => {
-    this.setState({ mobileMoreAnchorEl: event.currentTarget });
+  handleNotificationMenuOpen = event => {
+    this.setState({ notificationMoreAnchorEl: event.currentTarget });
   };
 
-  handleMobileMenuClose = () => {
-    this.setState({ mobileMoreAnchorEl: null });
+  handleNotificationMenuClose = () => {
+    this.setState({ notificationMoreAnchorEl: null });
   };
 
   handleLogout = () => {
@@ -146,8 +144,8 @@ class Header extends React.Component {
     const { handleChangeNavDrawer, classes, navDrawerOpen } = this.props;
 
     // const { anchorEl } = this.state;
-    // const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(this.state.mobileMoreAnchorEl);
+    // const isMenuOpen = Boolean(this.state.a1anchorEl);
+    const isMobileMenuOpen = Boolean(this.state.notificationMoreAnchorEl);
 
     // const renderMenu = (
     //   <Menu
@@ -165,35 +163,17 @@ class Header extends React.Component {
     return (
       <div>
         <Menu
-          anchorEl={this.state.mobileMoreAnchorEl}
+          anchorEl={this.state.notificationMoreAnchorEl}
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
           transformOrigin={{ vertical: "top", horizontal: "right" }}
           open={isMobileMenuOpen}
-          onClose={this.handleMobileMenuClose}
+          onClose={this.handleNotificationMenuClose}
         >
           <MenuItem>
             <ListItemIcon>
-              <Badge
-                className={classes.margin}
-                badgeContent={1}
-                color="secondary"
-              >
-                <NotificationsIcon />
-              </Badge>
+              <NotificationsIcon />
             </ListItemIcon>
-            <ListItemText primary="Notificações" />
-          </MenuItem>
-
-          {/* <MenuItem
-            onClick={this.handleLogout}>
-            <ReplyRoundedIcon />
-            <p style={{marginLeft: 20}}>Sair</p>
-          </MenuItem> */}
-          <MenuItem>
-            <ListItemIcon>
-              <ReplyRoundedIcon />
-            </ListItemIcon>
-            <ListItemText primary="Sair" />
+            <ListItemText primary="Nenhuma notificação" />
           </MenuItem>
 
         </Menu>
@@ -226,7 +206,7 @@ class Header extends React.Component {
                 }}
                 fullWidth={true}
                 onFocus={() => this.setState({ searchBarWidth: '100%' })}
-                onBlur={() => this.setState({ searchBarWidth: '30%' })}
+                onBlur={() => this.setState({ searchBarWidth: '40%' })}
               />
             </div>
             <div className={classes.grow} />
@@ -243,7 +223,7 @@ class Header extends React.Component {
               </IconButton> */}
 
               {/* NOTIFICATIONS */}
-              <IconButton color="inherit">
+              <IconButton color="inherit" onClick={this.handleNotificationMenuOpen}>
                 <Badge
                   className={classes.margin}
                   badgeContent={1}
@@ -252,22 +232,17 @@ class Header extends React.Component {
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
-
-              {/* LOGOUT */}
-              <IconButton
-                onClick={this.handleLogout}
-                color="inherit"
-              >
-                <ReplyRoundedIcon />
-              </IconButton>
             </div>
             <div className={classes.sectionMobile}>
-              <IconButton
-                aria-haspopup="true"
-                onClick={this.handleMobileMenuOpen}
-                color="inherit"
-              >
-                <MoreIcon />
+              {/* NOTIFICATIONS */}
+              <IconButton color="inherit" onClick={this.handleNotificationMenuOpen}>
+                <Badge
+                  className={classes.margin}
+                  badgeContent={1}
+                  color="secondary"
+                >
+                  <NotificationsIcon />
+                </Badge>
               </IconButton>
             </div>
           </Toolbar>

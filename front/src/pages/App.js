@@ -20,6 +20,7 @@ import RuleEditor from "./Rule/RuleEditor/RuleEditor";
 import ElementForm from "./Rule/ElementForm/ElementForm";
 import UserList from "./User/UserList/UserList";
 import UserProfile from "./User/UserProfile/UserProfile";
+import Logout from './Logout';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -135,6 +136,7 @@ class App extends React.Component {
             <Route path="/perfil/:user" component={UserProfile} />
             {/* <Route path="/table/basic" component={BasicTable} />
             <Route path="/table/data" component={DataTable} /> */}
+            <Route path="/logout" component={Logout} />
             <Route component={NotFound} />
           </Switch>
         </div>
