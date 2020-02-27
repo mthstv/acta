@@ -26,7 +26,7 @@ const RuleCard = props => {
     return (
       action === 0 ? props.history.push(`regra/${props.ruleId}`) : '',
       action === 1 ? props.history.push(`editar-regra/${props.ruleId}`) : '',
-      action === 2 ? setModalShow(true) : ''
+      action === 2 ? setTimeout(() => setModalShow(true), 0) : ''
     );
   };
 
