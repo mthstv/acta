@@ -6,9 +6,9 @@ const styles = {
       maxWidth: 400,
       height: "auto",
       position: "absolute",
-      top: "20%",
-      left: 0,
-      right: 0,
+      top: "2%",
+      left: 20,
+      right: 20,
       margin: "auto"
     },
     paper: {

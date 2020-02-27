@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 import * as userActions from '../../_actions/user'
 import * as snackbarActions from '../../_actions/snackbar'
 
+import {ReactComponent as Icon} from '../../images/book_shelf.svg'
 
 class LoginPage extends Component {
   // constructor(props) {
@@ -61,6 +62,12 @@ class LoginPage extends Component {
       <ThemeProvider theme={theme}>
         <div>
           <div style={styles.loginContainer}>
+            <div style={{textAlign: 'center'}}>
+              <Icon style={{height: 100, fill: 'rgb(158, 158, 158)'}} />
+              <b class="customlogo" style={{color: 'rgb(158, 158, 158)', fontSize: 40}}>
+                ACTA
+              </b>
+            </div>
             <Paper style={styles.paper}>
               <form onSubmit={this.LoginUser}>
                 <TextField 
