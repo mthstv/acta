@@ -7,8 +7,8 @@ const styles = {
       height: "auto",
       position: "absolute",
       top: "20%",
-      left: 0,
-      right: 0,
+      left: 20,
+      right: 20,
       margin: "auto"
     },
     paper: {
