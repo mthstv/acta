@@ -19,122 +19,135 @@ import { connect } from 'react-redux';
 import * as snackbarActions from '../../../_actions/snackbar'
 
 import ElementSelect from './components/ElementSelect';
+import { handleElementName } from '../../../helpers';
 class ElementForm extends Component {
-    // constructor(props) {
-    //   super(props)
-    // }
 
     state = {
-      rule_title: '',
-      description: '',
-      preamble: '',
+      ordering: '',
+      name: '',
+      text: '',
 
-      element:'',
-      parentElements: ''
+      selectedElement: '',
+      parentElements: [],
+      selectedParent: ''
     }
 
     handleSubmit = async (e) => {
       e.preventDefault()
-
-      // await api.post('/rule', this.state)
-      // .then((res) =>{
-      //   this.props.snackbarActions.showSnackbar('Registro criada com sucesso');
-      //   this.props.history.push('/');
-      // })
-      // .catch((err) => {
-      //   if(err.response.status === 401) {
-      //     window.location.href = '/login'
-      //   }
-      // })
     }
 
-    handleElement = async (element) => {
-      await this.setState({ element })
+    handleElementChange = async (element) => {
+      await this.setState({ selectedElement: element })
       await api.get(`/element/by-label/${element}`)
         .then((res) => this.setState({ parentElements: res.data.data.parent }) )
-      console.log('element', this.state.element)
+      console.log('selected element', this.state.selectedElement)
       console.log('parents', this.state.parentElements)
+    }
+
+    handleChangeParent = async parent => {
+      await this.setState({ selectedParent: parent })
+      // Listar todos os elementos parentes selecionados da regra
+      // criar um law_id em todos os elementos para filtrar por regra
+      await api.get(`/rule/${this.props.match.params.rule}`)
+        .then((res) => {
+          console.log('rule', res.data.data)
+        })
+      console.log('selected parent', this.state.selectedParent)
     }
 
   render() {
     return (
         <PageBase title="Adicionar Elemento">
-        {/* criar 2 selects, um para elemento e outro para elemento pai onde esse elemento criado irá ser adicionado */}
         <form onSubmit={this.handleSubmit}>
         <Row>
+          {/* Selecionar o tipo de elemento que será criado */}
           <Col sm={6} md={6} lg={6}>
             <ElementSelect
-             onElementChange={this.handleElement}/>
+             onElementChange={this.handleElementChange}/>
+          </Col>
+
+          {/* Selecionar onde este elemento ficará na lei */}
+          <Col sm={6} md={6} lg={6}>
+            <FormControl fullWidth={true}>
+              <InputLabel htmlFor="Element">Agrupar em</InputLabel>
+              <Select
+                value={this.state.selectedParent ? this.state.selectedParent : ''}
+                onChange={(e) => this.handleChangeParent(e.target.value)}
+              >
+                <MenuItem value="">
+                <em>Nenhum</em>
+                </MenuItem>
+                {this.state.parentElements.length > 0 && this.state.parentElements.map((elem, index) => {
+                  return (<MenuItem value={elem} key={index}> {handleElementName(elem)} </MenuItem>);
+                }) }
+              </Select>
+            </FormControl>
           </Col>
         </Row>
-        {/* 
-          <FormControl fullWidth={true}>
-            <InputLabel htmlFor="City">City</InputLabel>
-            <Select
-              inputProps={{
-                name: "City",
-                id: "City"
-              }}
+        {/* Selecionar em qual elemento da lei o elemento criado será adicionado como filho */}
+        <Row>
+          <Col sm={12} md={12} lg={12}>
+            <FormControl fullWidth={true}>
+              <InputLabel htmlFor="Element">Selecionar agrupamento</InputLabel>
+              <Select
+                value={''}
+              >
+                <MenuItem value="">
+                <em>Nenhum</em>
+                </MenuItem>
+                {/* {this.state.parentElements.length > 0 && this.state.parentElements.map((elem, index) => {
+                  return (<MenuItem value={elem} key={index}> {handleElementName(elem)} </MenuItem>);
+                }) } */}
+              </Select>
+            </FormControl>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col sm={2} md={2} lg={2}>
+            <TextField
+              label={this.state.selectedElement === 'line' ? "Letra" : "Numeração"}
               fullWidth={true}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={"London"}>London</MenuItem>
-              <MenuItem value={"Paris"}>Paris</MenuItem>
-              <MenuItem value={"Rome"}>Rome</MenuItem>
-            </Select>
-          </FormControl> */}
+              margin="normal"
+              type={this.state.selectedElement === 'line' ? "text" : "number"}
+              value={this.state.ordering}
+              onChange={(e) => this.setState({ordering: e.target.value})}
+              />
+          </Col>
+          <Col sm={10} md={10} lg={10}>
+            <TextField
+              label="Nome"
+              fullWidth={true}
+              margin="normal"
+              value={this.state.name}
+              onChange={(e) => this.setState({name: e.target.value})}
+              />
+          </Col>
+        </Row>
+        <TextField
+          label="Texto"
+          fullWidth={true}
+          margin="normal"
+          multiline
+          rows={3}
+          value={this.state.text}
+          onChange={(e) => this.setState({text: e.target.value})}
+          />
 
-          <TextField
-            label="Título"
-            fullWidth={true}
-            margin="normal"
-            value={this.state.rule_title}
-            onChange={(e) => this.setState({rule_title: e.target.value})}
-            />
+          <div style={styles.buttons}>
+            <Link to="/">
+                <Button variant="contained">Cancelar</Button>
+            </Link>
 
-          <TextField
-            label="Descrição"
-            fullWidth={true}
-            margin="normal"
-            multiline
-            rows={2}
-            value={this.state.description}
-            onChange={(e) => this.setState({description: e.target.value})}
-            />
-
-          <TextField
-            label="Preâmbulo"
-            fullWidth={true}
-            margin="normal"
-            multiline
-            rows={4}
-            value={this.state.preamble}
-            onChange={(e) => this.setState({preamble: e.target.value})}
-            />
-
-            <div style={styles.buttons}>
-              <Link to="/">
-                  <Button variant="contained">Cancelar</Button>
-              </Link>
-
-              <Button
-                style={styles.saveButton}
-                variant="contained"
-                type="submit"
-                color="primary"
-                >
-                  Criar
-              </Button>
-              {/* <Button
-                style={styles.saveButton}
-                variant="contained"
-                color="secondary"
-                >
-                  Criar e adicionar elementos
-              </Button> */}
-            </div>
+            <Button
+              style={styles.saveButton}
+              variant="contained"
+              type="submit"
+              color="primary"
+              >
+                Criar
+            </Button>
+          </div>
         </form>
       </PageBase>
     );

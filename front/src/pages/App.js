@@ -131,7 +131,7 @@ class App extends React.Component {
             <Route path="/regra/:rule" component={Rule} />
             <Route path="/criar-regra" component={RuleCreator} />
             <Route path="/editar-regra/:rule" component={RuleEditor} />
-            <Route path="/criar-elemento" component={ElementForm} />
+            <Route path="/criar-elemento/regra/:rule" component={ElementForm} />
             <Route path="/usuarios" component={UserList} />
             <Route path="/perfil/:user" component={UserProfile} />
             {/* <Route path="/table/basic" component={BasicTable} />

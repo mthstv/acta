@@ -23,7 +23,7 @@ export const handleRole = (role) => {
   }
 }
 
-export const handleElement = (element) => {
+export const handleElementName = (element) => {
   switch(element.toLowerCase()) {
     case 'rule':
       return 'Regra';

@@ -19,7 +19,7 @@ const ElementSelect = props => {
     >
       <InputLabel htmlFor="Element">Elemento</InputLabel>
       <Select
-        value={selected}
+        value={selected ? selected : ''}
         onChange={(e) => handleChange(e.target.value)}
       >
         <MenuItem value="">

@@ -52,7 +52,7 @@ class RulePage extends React.Component {
             color="primary" 
             style={styles.fab} 
             aria-label="add"
-            onClick={() => this.props.history.push(`/criar-elemento`)}
+            onClick={() => this.props.history.push(`/criar-elemento/regra/${rule.id}`)}
           >
             <AddToPhotosIcon />
           </Fab>
