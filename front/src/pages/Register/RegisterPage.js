@@ -57,17 +57,17 @@ class RegisterPage extends Component {
                 label="Nome" 
                 fullWidth={true}
                 required
-                error={this.state.error}
-                onChange={(e) => this.setState({ name: e.target.value })}/>
+                error={Boolean(this.state.errorMessages.name)}
+                onChange={(e) => this.setState({ name: e.target.value, errorMessages: {} })}/>
              
               <div style={{ marginTop: 16 }}>
                 <TextField 
                   label="E-mail" 
                   fullWidth={true}
                   required
-                  error={this.state.error}
+                  error={Boolean(this.state.errorMessages.email)}
                   helperText={this.state.errorMessages.email ? this.state.errorMessages.email[0] : ''}
-                  onChange={(e) => this.setState({ email: e.target.value })}/>
+                  onChange={(e) => this.setState({ email: e.target.value, errorMessages: {} })}/>
               </div>
              
               <div style={{ marginTop: 16 }}>
@@ -75,10 +75,10 @@ class RegisterPage extends Component {
                   label="Senha"
                   fullWidth={true}
                   required
-                  error={this.state.error}
+                  error={Boolean(this.state.errorMessages.password)}
                   helperText={this.state.errorMessages.password ? this.state.errorMessages.password[0] : ''}
                   type="password"
-                  onChange={(e) => this.setState({ password: e.target.value })}/>
+                  onChange={(e) => this.setState({ password: e.target.value, errorMessages: {} })}/>
               </div>
               
               <div style={{ marginTop: 10 }}>
