@@ -25,6 +25,7 @@ import { connect } from 'react-redux';
 import * as snackbarActions from '../../../_actions/snackbar'
 import * as userActions from '../../../_actions/user'
 
+import { handleRole } from '../../../helpers';
 
 const desc = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) {
@@ -205,7 +206,7 @@ class UserTable extends React.Component {
                       </TableCell>
                       <TableCell>{n.name}</TableCell>
                       <TableCell>{n.email}</TableCell>
-                      <TableCell>{n.role}</TableCell>
+                      <TableCell>{handleRole(n.role)}</TableCell>
                       <TableCell>
                         <Link className="button" to={`/perfil/${n.id}`}>
                           <IconButton>
