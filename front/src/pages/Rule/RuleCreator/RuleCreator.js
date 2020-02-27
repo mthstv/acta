@@ -55,6 +55,7 @@ class RuleCreator extends Component {
             label="Descrição"
             fullWidth={true}
             margin="normal"
+            required
             multiline
             rows={2}
             value={this.state.description}

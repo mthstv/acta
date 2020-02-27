@@ -29,9 +29,10 @@ class RuleEditor extends Component {
     handleSubmit = async (e) => {
       e.preventDefault()
 
-      await api.patch('/rule', this.state)
+      await api.patch(`/rule/${this.ruleID}`, this.state)
       .then((res) =>{
         this.props.snackbarActions.showSnackbar('Registro alterado com sucesso');
+        this.props.history.push('/');
       })
       .catch((err) => {
         if(err.response.status === 401) {
