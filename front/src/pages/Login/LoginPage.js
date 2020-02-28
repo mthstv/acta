@@ -8,18 +8,18 @@ import TextField from "@material-ui/core/TextField";
 // import Checkbox from "@material-ui/core/Checkbox";
 // import FormControlLabel from "@material-ui/core/FormControlLabel";
 import theme from "../../theme";
-import styles from './styles';
+import styles from "./styles";
 
-import api from '../../services/api';
-import { login } from '../../services/auth';
+import api from "../../services/api";
+import { login } from "../../services/auth";
 
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-import * as userActions from '../../_actions/user'
-import * as snackbarActions from '../../_actions/snackbar'
+import * as userActions from "../../_actions/user";
+import * as snackbarActions from "../../_actions/snackbar";
 
-import {ReactComponent as Icon} from '../../images/book_shelf.svg'
+import {ReactComponent as Icon} from "../../images/book_shelf.svg";
 
 class LoginPage extends Component {
   // constructor(props) {
@@ -28,33 +28,33 @@ class LoginPage extends Component {
   // }
 
   state = {
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     error: false,
-    errorMessage: ''
+    errorMessage: ""
   }
 
   LoginUser = (e) => {
     e.preventDefault();
 
-    api.post('/auth/login', this.state)
-    .then(async (res) => {
-      await this.props.userActions.SaveUserData(res.data.data);
-      login(res.data.data)
-      // this.props.history.push('/');
-      window.location.href = '/'
+    api.post("/auth/login", this.state)
+      .then(async (res) => {
+        await this.props.userActions.SaveUserData(res.data.data);
+        login(res.data.data);
+        // this.props.history.push('/');
+        window.location.href = "/";
       
-    })
-    .catch((err) => {
-      if(err.response) {
-        this.setState({ error: true, errorMessage: err.response.data.message });
-      }
-    })
+      })
+      .catch((err) => {
+        if(err.response) {
+          this.setState({ error: true, errorMessage: err.response.data.message });
+        }
+      });
   }
 
   handleForgotPass = () => {
     // console.log(this.props.snackbarActions)
-   this.props.snackbarActions.showSnackbar('Teste! Tudo funcionando!');
+    this.props.snackbarActions.showSnackbar("Teste! Tudo funcionando!");
   }
 
   render() {
@@ -62,9 +62,9 @@ class LoginPage extends Component {
       <ThemeProvider theme={theme}>
         <div>
           <div style={styles.loginContainer}>
-            <div style={{textAlign: 'center'}}>
-              <Icon style={{height: 100, fill: 'rgb(158, 158, 158)'}} />
-              <b className="customlogo" style={{color: 'rgb(158, 158, 158)', fontSize: 40}}>
+            <div style={{textAlign: "center"}}>
+              <Icon style={{height: 100, fill: "rgb(158, 158, 158)"}} />
+              <b className="customlogo" style={{color: "rgb(158, 158, 158)", fontSize: 40}}>
                 ACTA
               </b>
             </div>
@@ -76,7 +76,7 @@ class LoginPage extends Component {
                   required
                   error={this.state.error}
                   helperText={this.state.errorMessage}
-                  onChange={(e) => this.setState({ email: e.target.value, error: false, errorMessage: '' })}/>
+                  onChange={(e) => this.setState({ email: e.target.value, error: false, errorMessage: "" })}/>
                 
                 <div style={{ marginTop: 16 }}>
                   <TextField 
@@ -85,7 +85,7 @@ class LoginPage extends Component {
                     required
                     error={this.state.error}
                     type="password" 
-                    onChange={(e) => this.setState({ password: e.target.value, error: false, errorMessage: '' })}/>
+                    onChange={(e) => this.setState({ password: e.target.value, error: false, errorMessage: "" })}/>
                 </div>
   
                 <div style={{ marginTop: 10 }}>
@@ -136,9 +136,9 @@ const mapStateToProps = state => ({
 
 function mapDispatchToProps (dispatch) {
   return {
-      userActions: bindActionCreators(userActions, dispatch),
-      snackbarActions: bindActionCreators(snackbarActions, dispatch),
-  }
+    userActions: bindActionCreators(userActions, dispatch),
+    snackbarActions: bindActionCreators(snackbarActions, dispatch),
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

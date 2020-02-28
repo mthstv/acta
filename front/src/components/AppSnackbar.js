@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Snackbar from "@material-ui/core/Snackbar";
 // import Slide from '@material-ui/core/Slide';
 import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from '@material-ui/icons/Close';
+import CloseIcon from "@material-ui/icons/Close";
 import { clearSnackbar } from "../_actions/snackbar";
 
 export default function AppSnackbar() {

@@ -1,54 +1,54 @@
 import React from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import api from "../../services/api";
-import { getSingleRule } from './components/FullRule'
-import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
-import Fab from '@material-ui/core/Fab';
-import EditIcon from '@material-ui/icons/Edit';
+import { getSingleRule } from "./components/FullRule";
+import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
+import Fab from "@material-ui/core/Fab";
+import EditIcon from "@material-ui/icons/Edit";
 
 const styles = {
   createFab: {
     margin: 0,
-    top: 'auto',
+    top: "auto",
     right: 20,
     bottom: 20,
-    left: 'auto',
-    position: 'fixed',
+    left: "auto",
+    position: "fixed",
   },
   editFab: {
     margin: 0,
-    top: 'auto',
+    top: "auto",
     right: 90,
     bottom: 20,
-    left: 'auto',
-    position: 'fixed',
+    left: "auto",
+    position: "fixed",
   }
 };
 class RulePage extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        editorMode: false
-      };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      editorMode: false
+    };
+  }
   
-    componentDidMount() {
-      api.get(`/rule/${this.props.match.params.rule}`)
+  componentDidMount() {
+    api.get(`/rule/${this.props.match.params.rule}`)
       .then((res) => {
         this.setState({ rule: res.data.data });
       })
       .catch((err) => {
         if(err.response.status === 401) {
-          window.location.href = '/login'
+          window.location.href = "/login";
         }
-      })
-    }
+      });
+  }
 
                     
-    render() {
-      const { rule } = this.state;
-      return (
-        rule ?
+  render() {
+    const { rule } = this.state;
+    return (
+      rule ?
         <>
           <Row>
             <Col md={12}>
@@ -80,8 +80,8 @@ class RulePage extends React.Component {
         </>
         :
         <div/>
-      );
-    }
+    );
   }
+}
   
-  export default RulePage;
+export default RulePage;

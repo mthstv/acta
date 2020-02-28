@@ -11,7 +11,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import FilterListIcon from "@material-ui/icons/FilterList";
 import { lighten } from "@material-ui/core/styles/colorManipulator";
 
-import ConfirmationModal from '../../../../components/ConfirmationModal';
+import ConfirmationModal from "../../../../components/ConfirmationModal";
 
 
 const toolbarStyles = theme => ({
@@ -46,16 +46,16 @@ let EnhancedTableToolbar = props => {
 
   const handleConfirmation = (verification) => {
     if(verification) {
-      props.onDeleteConfirmation()
-      setModalShow(false)
+      props.onDeleteConfirmation();
+      setModalShow(false);
     } else {
-      setModalShow(false)
+      setModalShow(false);
     }
-  }
+  };
 
   return (
     <>
-     <ConfirmationModal
+      <ConfirmationModal
         show={modalShow}
         onHide={handleConfirmation}
         confirmcolor="red"

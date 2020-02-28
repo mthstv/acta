@@ -1,5 +1,5 @@
-import React from 'react';
-import Modal from 'react-bootstrap/Modal';
+import React from "react";
+import Modal from "react-bootstrap/Modal";
 import Button from "@material-ui/core/Button";
 
 export default function ConfirmationModal(props) {
@@ -27,12 +27,12 @@ export default function ConfirmationModal(props) {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal">
-          { props.title ? props.title : 'Confirmação' }
+          { props.title ? props.title : "Confirmação" }
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <p>
-        { props.body ? props.body : 'Tem certeza que deseja fazer isso?' }
+          { props.body ? props.body : "Tem certeza que deseja fazer isso?" }
         </p>
       </Modal.Body>
       <Modal.Footer>
@@ -44,8 +44,8 @@ export default function ConfirmationModal(props) {
             type="submit"
             color="primary"
             onClick={() => props.onHide(true)}
-            >
-            { props.confirmtext ? props.confirmtext : 'Confirmar' }
+          >
+            { props.confirmtext ? props.confirmtext : "Confirmar" }
           </Button>
         </div>
       </Modal.Footer>

@@ -16,16 +16,16 @@ import EnhancedTableHead from "./DataTables/EnhancedTableHead";
 import EnhancedTableToolbar from "./DataTables/EnhancedTableToolbar";
 // import tableData from "../../../data";
 
-import api from '../../../services/api';
+import api from "../../../services/api";
 
-import { compose } from 'redux';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { compose } from "redux";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-import * as snackbarActions from '../../../_actions/snackbar'
-import * as userActions from '../../../_actions/user'
+import * as snackbarActions from "../../../_actions/snackbar";
+import * as userActions from "../../../_actions/user";
 
-import { handleRole } from '../../../helpers';
+import { handleRole } from "../../../helpers";
 
 const desc = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) {
@@ -67,10 +67,10 @@ const styles = theme => ({
 });
 
 class UserTable extends React.Component {
-    constructor(props) {
-      super(props);
-      this.getUserData();
-    }
+  constructor(props) {
+    super(props);
+    this.getUserData();
+  }
 
   state = {
     order: "asc",
@@ -135,33 +135,33 @@ class UserTable extends React.Component {
   // USER RELATED METHODS
 
   getUserData = () => {
-    api.get('/user')
+    api.get("/user")
       .then((res) => {
         this.setState({ data: res.data.data });
       })
       .catch((err) => {
         console.log(err);
         if(err.response.status === 401) {
-          window.location.href = '/login'
+          window.location.href = "/login";
         }
-      })
+      });
   }
 
   deleteUser = () => {
     this.state.selected.map(async (userId) => {
       await api.delete(`/user/${userId}`)
         .then((res) => {
-          this.props.snackbarActions.showSnackbar(this.state.selected.length > 1 ?'Usuários excluídos com sucesso' : 'Usuário excluído com sucesso')
-          this.getUserData()
-          console.log(res)
+          this.props.snackbarActions.showSnackbar(this.state.selected.length > 1 ?"Usuários excluídos com sucesso" : "Usuário excluído com sucesso");
+          this.getUserData();
+          console.log(res);
         })
         .catch((err) => {
-          this.props.snackbarActions.showSnackbar('Houve um problema ao realizar esta ação')
-          this.getUserData()
-          console.log(err)
-        })
-    })
-    this.setState({selected: []})
+          this.props.snackbarActions.showSnackbar("Houve um problema ao realizar esta ação");
+          this.getUserData();
+          console.log(err);
+        });
+    });
+    this.setState({selected: []});
   }
 
   render() {
@@ -257,9 +257,9 @@ const mapStateToProps = state => ({
 
 function mapDispatchToProps (dispatch) {
   return {
-      userActions: bindActionCreators(userActions, dispatch),
-      snackbarActions: bindActionCreators(snackbarActions, dispatch),
-  }
+    userActions: bindActionCreators(userActions, dispatch),
+    snackbarActions: bindActionCreators(snackbarActions, dispatch),
+  };
 }
 
 export default compose( withStyles(styles), connect(mapStateToProps, mapDispatchToProps) )(UserTable);

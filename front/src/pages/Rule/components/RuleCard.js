@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import IconButton from "@material-ui/core/IconButton";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
-import ConfirmationModal from '../../../components/ConfirmationModal';
+import ConfirmationModal from "../../../components/ConfirmationModal";
 
 const cardStyle = {
-    marginBottom: 15
-}
+  marginBottom: 15
+};
 
 const RuleCard = props => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -24,9 +24,9 @@ const RuleCard = props => {
   const handleMenuClose = (action = null) => {
     setAnchorEl(null);
     return (
-      action === 0 ? props.history.push(`regra/${props.ruleId}`) : '',
-      action === 1 ? props.history.push(`editar-regra/${props.ruleId}`) : '',
-      action === 2 ? setTimeout(() => setModalShow(true), 0) : ''
+      action === 0 ? props.history.push(`regra/${props.ruleId}`) : "",
+      action === 1 ? props.history.push(`editar-regra/${props.ruleId}`) : "",
+      action === 2 ? setTimeout(() => setModalShow(true), 0) : ""
     );
   };
 
@@ -35,10 +35,10 @@ const RuleCard = props => {
    */
   const handleConfirmation = async verification => {
     if(verification) {
-      props.handleDelete(props.ruleId)
-      setModalShow(false)
+      props.handleDelete(props.ruleId);
+      setModalShow(false);
     } else {
-      setModalShow(false)
+      setModalShow(false);
     }
   };
 
@@ -52,13 +52,13 @@ const RuleCard = props => {
       />
       <Card style={cardStyle}>
         <CardHeader
-            action={
+          action={
             <IconButton className="rule-options" aria-label="more" aria-controls="rule-edit-menu" aria-haspopup="true" onClick={handleMenuClick}>
               <MoreVertIcon/>
             </IconButton>
-            }
-            title={ props.title }
-            subheader={ props.text }
+          }
+          title={ props.title }
+          subheader={ props.text }
         />
       </Card>
       <Menu
@@ -74,5 +74,5 @@ const RuleCard = props => {
       </Menu>
     </div>
   );
-}
+};
 export default RuleCard;

@@ -6,12 +6,12 @@ import InputLabel from "@material-ui/core/InputLabel";
 
 const ElementSelect = props => {
 
-  const [selected, setSelected] = useState('')
+  const [selected, setSelected] = useState("");
 
   const handleChange = (value) => {
-    setSelected(value)
-    props.onElementChange(value)
-  }
+    setSelected(value);
+    props.onElementChange(value);
+  };
 
   return (
     <FormControl 
@@ -19,11 +19,11 @@ const ElementSelect = props => {
     >
       <InputLabel htmlFor="Element">Elemento</InputLabel>
       <Select
-        value={selected ? selected : ''}
+        value={selected ? selected : ""}
         onChange={(e) => handleChange(e.target.value)}
       >
         <MenuItem value="">
-        <em>Nenhum</em>
+          <em>Nenhum</em>
         </MenuItem>
         <MenuItem value={"part"}> Parte </MenuItem>
         <MenuItem value={"book"}> Livro </MenuItem>

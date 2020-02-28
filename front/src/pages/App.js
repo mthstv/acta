@@ -20,15 +20,15 @@ import RuleEditor from "./Rule/RuleEditor/RuleEditor";
 import ElementForm from "./Rule/ElementForm/ElementForm";
 import UserList from "./User/UserList/UserList";
 import UserProfile from "./User/UserProfile/UserProfile";
-import Logout from './Logout';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import Logout from "./Logout";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import { isAuthenticated, logout } from '../services/auth';
-import api from '../services/api';
+import { isAuthenticated, logout } from "../services/auth";
+import api from "../services/api";
 
-import * as userActions from '../_actions/user'
+import * as userActions from "../_actions/user";
 
 const styles = () => ({
   container: {
@@ -79,18 +79,18 @@ class App extends React.Component {
 
   async componentDidMount () {
     // Get user data
-    await api.get('/auth/by-token')
-    .then((res) => {
-      this.props.SaveUserData(res.data.data)
-      localStorage.setItem('token', res.data.data.auth_token)
-      delete res.data.data.auth_token
-      localStorage.setItem('user', JSON.stringify(res.data.data))
-    })
-    .catch((err) => {
-      logout()
-      this.props.history.push('/login')
-      console.log('token expired')
-    })
+    await api.get("/auth/by-token")
+      .then((res) => {
+        this.props.SaveUserData(res.data.data);
+        localStorage.setItem("token", res.data.data.auth_token);
+        delete res.data.data.auth_token;
+        localStorage.setItem("user", JSON.stringify(res.data.data));
+      })
+      .catch((err) => {
+        logout();
+        this.props.history.push("/login");
+        console.log("token expired");
+      });
   }
 
   handleChangeNavDrawer() {

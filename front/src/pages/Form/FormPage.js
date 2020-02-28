@@ -10,7 +10,7 @@ import Divider from "@material-ui/core/Divider";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import PageBase from "../../components/PageBase";
-import styles from './styles';
+import styles from "./styles";
 
 const FormPage = () => {
 

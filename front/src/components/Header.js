@@ -17,10 +17,10 @@ import { Toolbar } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 
-import { logout } from '../services/auth'
+import { logout } from "../services/auth";
 
 const styles = theme => ({
   appBar: {
@@ -63,7 +63,7 @@ const styles = theme => ({
     },
     marginRight: theme.spacing(),
     marginLeft: 0,
-    transition: 'width 500ms ease-in-out'
+    transition: "width 500ms ease-in-out"
     // width: "100%",
     // [theme.breakpoints.up("sm")]: {
     //   marginLeft: theme.spacing(),
@@ -90,7 +90,7 @@ const styles = theme => ({
     paddingLeft: theme.spacing(5),
     transition: theme.transitions.create("width"),
     [theme.breakpoints.up("md")]: {
-      width: 'auto'
+      width: "auto"
     }
   },
   sectionDesktop: {
@@ -114,7 +114,7 @@ class Header extends React.Component {
     this.state = {
       anchorEl: null,
       notificationMoreAnchorEl: null,
-      searchBarWidth: '40%'
+      searchBarWidth: "40%"
     };
   }
 
@@ -136,8 +136,8 @@ class Header extends React.Component {
   };
 
   handleLogout = () => {
-    logout()
-    this.props.history.push('/login')
+    logout();
+    this.props.history.push("/login");
   }
 
   render() {
@@ -205,8 +205,8 @@ class Header extends React.Component {
                   input: classes.inputInput
                 }}
                 fullWidth={true}
-                onFocus={() => this.setState({ searchBarWidth: '100%' })}
-                onBlur={() => this.setState({ searchBarWidth: '40%' })}
+                onFocus={() => this.setState({ searchBarWidth: "100%" })}
+                onBlur={() => this.setState({ searchBarWidth: "40%" })}
               />
             </div>
             <div className={classes.grow} />

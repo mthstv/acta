@@ -40,7 +40,7 @@ const drawStyles = theme => {
     avatarRoot: {
       padding: "16px 0 10px 15px",
       backgroundImage: null, // "url(" + require("../images/material_bg.png") + ")",
-      backgroundColor: '#444444',
+      backgroundColor: "#444444",
       cursor: "pointer",
       height: 70,
       display: "flex"
@@ -73,7 +73,7 @@ const LeftDrawer = props => {
 
 
   function handleRedirect () {
-    props.history.push(`/perfil/${props.user.id}`)
+    props.history.push(`/perfil/${props.user.id}`);
     // window.location.href = '/login'
   }
 
@@ -87,7 +87,7 @@ const LeftDrawer = props => {
         <Avatar src={data.user.avatar} size={navDrawerOpen ? 48 : 32} 
           // classes={{ root: classes }} 
         />
-        <span className={classes.avatarSpan}> { props.isLogged ? props.user.name : 'Entrar' } </span>
+        <span className={classes.avatarSpan}> { props.isLogged ? props.user.name : "Entrar" } </span>
       </div>
       <Menus menus={props.menus} navDrawerOpen={navDrawerOpen} />
     </div>

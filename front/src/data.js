@@ -5,8 +5,8 @@ import Faker from "faker";
 import PermIdentity from "@material-ui/icons/PermIdentity";
 // import Web from "@material-ui/icons/Web";
 // import Home from "@material-ui/icons/Home";
-import MenuBook from '@material-ui/icons/MenuBook';
-import ReplyRoundedIcon from '@material-ui/icons/ReplyRounded';
+import MenuBook from "@material-ui/icons/MenuBook";
+import ReplyRoundedIcon from "@material-ui/icons/ReplyRounded";
 // import BorderClear from "@material-ui/icons/BorderClear";
 // import BorderOuter from "@material-ui/icons/BorderOuter";
 // import api from "./services/api"
