@@ -19,6 +19,7 @@ class CreateSubSectionTable extends Migration
             $table->string('name',100);
             $table->bigInteger('section_id')->unsigned()->nullable();
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
+            $table->integer('rule_reference')->index();
             $table->timestamps();
         });
     }

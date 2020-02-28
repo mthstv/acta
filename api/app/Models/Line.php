@@ -12,7 +12,7 @@ class Line extends Model
      * @var array
      */
     protected $fillable = [
-        'letter', 'text'
+        'letter', 'text', 'rule_reference'
 
     ];
 

@@ -23,6 +23,7 @@ class ChaptersTableSeeder extends Seeder
                 'number' => 1,
                 'name' => 'Da Personalidade e da Capacidade',
                 'title_id' => 3,
+                'rule_reference' => 2,
                 'created_at' => '2020-02-15 05:26:45',
                 'updated_at' => '2020-02-15 05:26:45',
             ),

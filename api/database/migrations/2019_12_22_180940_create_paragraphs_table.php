@@ -19,6 +19,7 @@ class CreateParagraphsTable extends Migration
             $table->longText('text');
             $table->bigInteger('article_id')->unsigned()->nullable();
             $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+            $table->integer('rule_reference')->index();
             $table->timestamps();
         });
     }

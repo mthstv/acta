@@ -24,6 +24,7 @@ class BooksTableSeeder extends Seeder
                 'name' => 'DAS PESSOAS',
                 'rule_id' => NULL,
                 'part_id' => 2,
+                'rule_reference' => 2,
                 'created_at' => '2020-02-15 05:24:19',
                 'updated_at' => '2020-02-15 05:24:19',
             ),

@@ -21,6 +21,7 @@ class CreateIncisesTable extends Migration
             $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
             $table->bigInteger('paragraph_id')->unsigned()->nullable();
             $table->foreign('paragraph_id')->references('id')->on('paragraphs')->onDelete('cascade');
+            $table->integer('rule_reference')->index();
             $table->timestamps();
         });
     }

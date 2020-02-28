@@ -12,7 +12,7 @@ class Paragraph extends Model
      * @var array
      */
     protected $fillable = [
-        'number', 'text'
+        'number', 'text', 'rule_reference'
 
     ];
 

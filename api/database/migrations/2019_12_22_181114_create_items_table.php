@@ -19,6 +19,7 @@ class CreateItemsTable extends Migration
             $table->longText('text');
             $table->bigInteger('line_id')->unsigned();
             $table->foreign('line_id')->references('id')->on('lines')->onDelete('cascade');
+            $table->integer('rule_reference')->index();
             $table->timestamps();
         });
     }

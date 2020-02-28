@@ -19,6 +19,7 @@ class CreatePartsTable extends Migration
             $table->string('name', 100);
             $table->bigInteger('rule_id')->unsigned();
             $table->foreign('rule_id')->references('id')->on('rules')->onDelete('cascade');
+            $table->integer('rule_reference')->index();
             $table->timestamps();
         });
     }

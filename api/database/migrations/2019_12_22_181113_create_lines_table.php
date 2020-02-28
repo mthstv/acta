@@ -23,6 +23,7 @@ class CreateLinesTable extends Migration
             $table->foreign('paragraph_id')->references('id')->on('paragraphs')->onDelete('cascade');
             $table->bigInteger('incise_id')->unsigned()->nullable();
             $table->foreign('incise_id')->references('id')->on('incises')->onDelete('cascade');
+            $table->integer('rule_reference')->index();
             $table->timestamps();
         });
     }

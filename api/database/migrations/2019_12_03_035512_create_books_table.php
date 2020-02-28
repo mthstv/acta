@@ -21,6 +21,7 @@ class CreateBooksTable extends Migration
             $table->foreign('rule_id')->references('id')->on('rules')->onDelete('cascade');
             $table->bigInteger('part_id')->unsigned()->nullable();
             $table->foreign('part_id')->references('id')->on('parts')->onDelete('cascade');
+            $table->integer('rule_reference')->index();
             $table->timestamps();
         });
     }
