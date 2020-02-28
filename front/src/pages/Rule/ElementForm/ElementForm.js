@@ -7,6 +7,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 import PageBase from "../../../components/PageBase";
 import styles from './styles';
@@ -19,44 +20,75 @@ import { connect } from 'react-redux';
 import * as snackbarActions from '../../../_actions/snackbar'
 
 import ElementSelect from './components/ElementSelect';
-import { handleElementName } from '../../../helpers';
+import { elementToString, handleElementName } from '../../../helpers';
 class ElementForm extends Component {
 
     state = {
-      ordering: '',
+      number: '',
+      letter: '',
       name: '',
       text: '',
+      rule_reference: '',
 
       selectedElement: '',
       parentElements: [],
-      selectedParent: ''
+      selectedParent: '',
+      availableParents: [],
+      selectedAvailableParent: '',
+      parentsEmpty: false 
     }
 
-    handleSubmit = async (e) => {
-      e.preventDefault()
+    componentDidMount() {
+      this.setState({ rule_reference: this.props.match.params.rule })
     }
 
+    
     handleElementChange = async (element) => {
       await this.setState({ selectedElement: element })
+      await this.setState({ selectedParent: '' })
+      await this.setState({ selectedAvailableParent: '' })
+      
       await api.get(`/element/by-label/${element}`)
-        .then((res) => this.setState({ parentElements: res.data.data.parent }) )
-      console.log('selected element', this.state.selectedElement)
-      console.log('parents', this.state.parentElements)
+      .then((res) => this.setState({ parentElements: res.data.data.parent }) )
+      // Limpando a lista de parentes ao alterar o elemento
     }
-
+    
     handleChangeParent = async parent => {
       await this.setState({ selectedParent: parent })
-      // Listar todos os elementos parentes selecionados da regra
-      // criar um law_id em todos os elementos para filtrar por regra
-      await api.get(`/rule/${this.props.match.params.rule}`)
-        .then((res) => {
-          console.log('rule', res.data.data)
-        })
-      console.log('selected parent', this.state.selectedParent)
+      await this.setState({parentsEmpty: false})
+      await this.setState({ selectedAvailableParent: '' })
+      // Se a referencia retornar vazia, é porque não há nenhum pai para agrupar o elemento, exibir uma mensagem vermelha
+      // para adicionar o pai antes do filho
+      await api.get(`/${this.state.selectedParent}?rule_reference=${this.props.match.params.rule}`)
+      .then((res) => this.setState({availableParents: res.data.data}))
+      
+      if(this.state.availableParents.length === 0) {
+        this.setState({parentsEmpty: true})
+      }
     }
-
-  render() {
-    return (
+    
+    handleChangeAvailableParent = (parentElementId) => {
+      this.setState({ selectedAvailableParent: parentElementId })
+    }
+ 
+    handleSubmit = async (e) => {
+      e.preventDefault()
+      let elementData = this.state;
+      // If is adding to the own rule
+      if(this.state.selectedParent === 'rule') {
+        elementData['rule'] = this.state.rule_reference;
+      } else {
+        elementData[`${this.state.selectedParent}`] = this.state.selectedAvailableParent;
+      }
+      await api.post(`/${this.state.selectedElement}`, elementData)
+        .then((res) => {
+          this.props.snackbarActions.showSnackbar('Elemento adicionado com sucesso');
+          this.props.history.push(`/regra/${this.state.rule_reference}`);
+        })
+    }
+    
+    render() {
+      return (
         <PageBase title="Adicionar Elemento">
         <form onSubmit={this.handleSubmit}>
         <Row>
@@ -83,59 +115,81 @@ class ElementForm extends Component {
               </Select>
             </FormControl>
           </Col>
+
         </Row>
-        {/* Selecionar em qual elemento da lei o elemento criado será adicionado como filho */}
-        <Row>
-          <Col sm={12} md={12} lg={12}>
-            <FormControl fullWidth={true}>
-              <InputLabel htmlFor="Element">Selecionar agrupamento</InputLabel>
-              <Select
-                value={''}
-              >
-                <MenuItem value="">
-                <em>Nenhum</em>
-                </MenuItem>
-                {/* {this.state.parentElements.length > 0 && this.state.parentElements.map((elem, index) => {
-                  return (<MenuItem value={elem} key={index}> {handleElementName(elem)} </MenuItem>);
-                }) } */}
-              </Select>
-            </FormControl>
-          </Col>
-        </Row>
+        {/* Se o elemento for adicionado a própria lei, não há elemento para agrupar */}
+        {this.state.selectedParent !== 'rule' && 
+          <Row>
+            {/* Selecionar em qual elemento da lei o elemento criado será adicionado como filho */}
+            <Col sm={12} md={12} lg={12}>
+              <FormControl
+              error={this.state.parentsEmpty}
+              fullWidth={true}>
+                <InputLabel htmlFor="Element">Selecionar agrupamento</InputLabel>
+                <Select
+                  value={this.state.selectedAvailableParent ? this.state.selectedAvailableParent : ''}
+                  onChange={(e) => this.handleChangeAvailableParent(e.target.value)}
+                >
+                  <MenuItem value="">
+                  <em>Nenhum</em>
+                  </MenuItem>
+                  {this.state.availableParents.length > 0 && this.state.availableParents.map((elem, index) => {
+                    return (<MenuItem value={elem.id} key={index}> { elementToString(this.state.selectedParent, elem) }</MenuItem>);
+                  }) }
+                </Select>
+                {this.state.parentsEmpty && <FormHelperText>Nenhum(a) {handleElementName(this.state.selectedParent)} disponível</FormHelperText>}
+              </FormControl>
+            </Col>
+          </Row>
+        }
 
         <Row>
           <Col sm={2} md={2} lg={2}>
+          {this.state.selectedElement === 'line' ?
             <TextField
-              label={this.state.selectedElement === 'line' ? "Letra" : "Numeração"}
+              label={"Letra"}
               fullWidth={true}
               margin="normal"
-              type={this.state.selectedElement === 'line' ? "text" : "number"}
-              value={this.state.ordering}
-              onChange={(e) => this.setState({ordering: e.target.value})}
+              type={"text"}
+              value={this.state.letter}
+              onChange={(e) => this.setState({letter: e.target.value})}
               />
+            :
+            <TextField
+              label={"Numeração"}
+              fullWidth={true}
+              margin="normal"
+              type={"number"}
+              value={this.state.number}
+              onChange={(e) => this.setState({number: e.target.value})}
+              />
+          }
           </Col>
           <Col sm={10} md={10} lg={10}>
+          {['part','book','title','chapter','section','subsection'].includes(this.state.selectedElement) ?
             <TextField
               label="Nome"
               fullWidth={true}
               margin="normal"
               value={this.state.name}
               onChange={(e) => this.setState({name: e.target.value})}
-              />
+            />
+          :
+            <TextField
+              label="Texto"
+              fullWidth={true}
+              margin="normal"
+              multiline
+              rows={3}
+              value={this.state.text}
+              onChange={(e) => this.setState({text: e.target.value})}
+            />
+          }
           </Col>
         </Row>
-        <TextField
-          label="Texto"
-          fullWidth={true}
-          margin="normal"
-          multiline
-          rows={3}
-          value={this.state.text}
-          onChange={(e) => this.setState({text: e.target.value})}
-          />
 
           <div style={styles.buttons}>
-            <Link to="/">
+            <Link to={`/regra/${this.state.rule_reference}`}>
                 <Button variant="contained">Cancelar</Button>
             </Link>
 

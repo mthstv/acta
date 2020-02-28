@@ -84,6 +84,7 @@ class RuleList extends Component {
           style={styles.fab} 
           aria-label="add"
           onClick={() => this.props.history.push('/criar-regra')}
+          title="Adicionar regra"
           >
           <AddIcon />
         </Fab>

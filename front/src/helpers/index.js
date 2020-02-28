@@ -53,3 +53,32 @@ export const handleElementName = (element) => {
       return '';
   }
 }
+
+export const elementToString = (elementName, element) => {
+  switch(elementName.toLowerCase()) {
+    case 'part':
+      return element.name;
+    case 'book':
+      return `Livro ${Romanize(element.number)} - ${element.name}`;
+    case 'title':
+      return `Título ${Romanize(element.number)} - ${element.name}`;
+    case 'chapter':
+      return `Capítulo ${Romanize(element.number)} - ${element.name}`;
+    case 'section':
+      return `Seção ${Romanize(element.number)} - ${element.name}`;
+    case 'subsection':
+      return `Subseção ${Romanize(element.number)} - ${element.name}`;
+    case 'article':
+      return `Art. ${element.number < 10 ? element.number+'º' : element.number } - ${element.text}`;
+    case 'paragraph':
+      return `§ ${element.number}º - ${element.text}`;
+    case 'incise':
+      return `${Romanize(element.number)} - ${element.text}`;
+    case 'line':
+      return `${element.letter}) ${element.text}`;
+    case 'item':
+      return `${element.number}. ${element.text}`;
+    default:
+      return '';
+  }
+}

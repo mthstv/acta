@@ -2,9 +2,24 @@ import React from 'react'
 import { Card } from "react-bootstrap";
 import { Romanize } from "../../../helpers"
 
+const styles = {
+  textFields: {
+    textAlign: 'left',
+    "&:hover": {
+      backgroundColor: "#777777"
+    },
+  },
+  nameFields: {
+    textAlign: 'center',
+    "&:hover": {
+      backgroundColor: "#777777"
+    },
+  }
+}
+
 export const getItemList = (list) => {
     return (list.map((item) => (
-        <div style={{textAlign: 'left'}} key={item.id}>
+        <div style={styles.textFields} key={item.id}>
             {item.number}. {item.text}
         </div>
     )))
@@ -13,7 +28,7 @@ export const getItemList = (list) => {
 export const getLineList = (list) => {
     return (list.map((line) => (
       <div key={line.id}>
-        <div style={{textAlign: 'left'}} key={line.id}>
+        <div style={styles.textFields} key={line.id}>
           {line.letter}) {line.text}
         </div>
         {getItemList(line.items)}
@@ -24,7 +39,7 @@ export const getLineList = (list) => {
 export const getInciseList = (list) => {
     return (list.map((incise) => (
       <div key={incise.id}>
-        <div style={{textAlign: 'left'}} key={incise.id}>
+        <div style={styles.textFields} key={incise.id}>
           {Romanize(incise.number)} - {incise.text}
         </div>
         {getLineList(incise.lines)}
@@ -35,7 +50,7 @@ export const getInciseList = (list) => {
 export const getParagraphList = (list) => {
     return (list.map((paragraph) => (
       <div key={paragraph.id}>
-        <div style={{textAlign: 'left'}} key={paragraph.id}>
+        <div style={styles.textFields} key={paragraph.id}>
           {list.length === 1 
             ? `Parágrafo único - ${paragraph.text}` 
             : `§ ${paragraph.number}º - ${paragraph.text}`
@@ -50,7 +65,7 @@ export const getParagraphList = (list) => {
 export const getArticleList = (list) => {
     return (list.map((article) => (
       <div key={article.id}>
-        <div style={{textAlign: 'left'}} key={article.id}>
+        <div style={styles.textFields} key={article.id}>
         Art. {article.number < 10 ? article.number+'º' : article.number } - {article.text}
         </div>
         {getInciseList(article.incises)}
@@ -63,7 +78,7 @@ export const getArticleList = (list) => {
 export const getSubSectionList = (list) => {
     return (list.map((subSection) => (
       <div key={subSection.id}>
-        <div style={{textAlign: 'left'}} key={subSection.id}>
+        <div style={styles.textFields} key={subSection.id}>
           Subseção {Romanize(subSection.number)}<br/>
           {subSection.name}
         </div>
@@ -75,7 +90,7 @@ export const getSubSectionList = (list) => {
 export const getSectionList = (list) => {
     return (list.map((section) => (
       <div key={section.id}>
-        <div style={{textAlign: 'center'}} key={section.id}>
+        <div style={styles.nameFields} key={section.id}>
           Seção {Romanize(section.number)}<br/>
           {section.name}
         </div>
@@ -88,7 +103,7 @@ export const getSectionList = (list) => {
 export const getChapterList = (list) => {
     return (list.map((chapter) => (
       <div key={chapter.id}>
-        <div style={{textAlign: 'center'}} key={chapter.id}>
+        <div style={styles.nameFields} key={chapter.id}>
           Capítulo {Romanize(chapter.number)}<br/> 
           {chapter.name}
         </div>
@@ -101,7 +116,7 @@ export const getChapterList = (list) => {
 export const getTitleList = (list) => {
     return (list.map((title) => (
       <div key={title.id}>
-        <div style={{textAlign: 'center'}} key={title.id}>
+        <div style={styles.nameFields} key={title.id}>
           Título {Romanize(title.number)}<br/>
           {title.name}
         </div>
@@ -114,7 +129,7 @@ export const getTitleList = (list) => {
 export const getBookList = (list) => {
     return (list.map((book) => (
       <div key={book.id}>
-        <div style={{textAlign: 'center'}} key={book.id}>
+        <div style={styles.nameFields} key={book.id}>
           Livro {Romanize(book.number)}<br/> 
           {book.name}
         </div>
@@ -126,7 +141,7 @@ export const getBookList = (list) => {
 export const getPartList = (list) => {
     return (list.map((part) => (
       <div key={part.id}>
-        <div style={{textAlign: 'center'}} key={part.id}>
+        <div style={styles.nameFields} key={part.id}>
           {part.name}
         </div>
         {getBookList(part.books)}
