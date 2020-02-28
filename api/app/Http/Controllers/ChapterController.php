@@ -6,27 +6,14 @@ use App\Models\Chapter;
 use Illuminate\Http\Request;
 use App\Http\Requests\NumberNameValidation;
 
-class ChapterController extends Controller
+class ChapterController extends ElementsAbstractController
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Define the Model for abstract Element Controller
      */
-    public function index()
+    protected function getModel()
     {
-        $chapters = Chapter::all();
-        return response()->json(['success' => true, 'data' => $chapters]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Chapter::class;
     }
 
     /**
@@ -43,52 +30,5 @@ class ChapterController extends Controller
         $chapter->fill($data);
         $chapter->save();
         return response()->json(['success' => true, 'data' => $chapter]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Chapter  $chapter
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Chapter $chapter)
-    {
-        return response()->json(['success' => true, 'data' => $chapter]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Chapter  $chapter
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Chapter $chapter)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Chapter  $chapter
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Chapter $chapter)
-    {
-        $chapter->update($request->all());
-        return response()->json(['success' => true, 'data' => $chapter]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Chapter  $chapter
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Chapter $chapter)
-    {
-        $chapter->delete();
-        return response()->json(['success' => true, 'data' => trans('api.chapter.delete')]);
     }
 }

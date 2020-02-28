@@ -6,27 +6,14 @@ use App\Models\Part;
 use Illuminate\Http\Request;
 use App\Http\Requests\NumberNameValidation;
 
-class PartController extends Controller
+class PartController extends ElementsAbstractController
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Define the Model for abstract Element Controller
      */
-    public function index()
+    protected function getModel()
     {
-        $parts = Part::all();
-        return response()->json(['success' => true, 'data' => $parts]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Part::class;
     }
 
     /**
@@ -43,52 +30,5 @@ class PartController extends Controller
         $part->fill($data);
         $part->save();
         return response()->json(['success' => true, 'data' => $part]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Part  $part
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Part $part)
-    {
-        return response()->json(['success' => true, 'data' => $part]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Part  $part
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Part $part)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Part  $part
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Part $part)
-    {
-        $part->update($request->all());
-        return response()->json(['success' => true, 'data' => $part]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Part  $part
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Part $part)
-    {
-        $part->delete();
-        return response()->json(['success' => true, 'data' => trans('api.part.delete')]);
     }
 }

@@ -6,27 +6,14 @@ use App\Models\Paragraph;
 use Illuminate\Http\Request;
 use App\Http\Requests\NumberTextValidation;
 
-class ParagraphController extends Controller
+class ParagraphController extends ElementsAbstractController
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Define the Model for abstract Element Controller
      */
-    public function index()
+    protected function getModel()
     {
-        $paragraphs = Paragraph::all();
-        return response()->json(['success' => true, 'data' => $paragraphs]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Paragraph::class;
     }
 
     /**
@@ -43,52 +30,5 @@ class ParagraphController extends Controller
         $paragraph->fill($data);
         $paragraph->save();
         return response()->json(['success' => true, 'data' => $paragraph]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Paragraph  $paragraph
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Paragraph $paragraph)
-    {
-        return response()->json(['success' => true, 'data' => $paragraph]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Paragraph  $paragraph
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Paragraph $paragraph)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Paragraph  $paragraph
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Paragraph $paragraph)
-    {
-        $paragraph->update($request->all());
-        return response()->json(['success' => true, 'data' => $paragraph]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Paragraph  $paragraph
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Paragraph $paragraph)
-    {
-        $paragraph->delete();
-        return response()->json(['success' => true, 'data' => trans('api.paragraph.delete')]);
     }
 }

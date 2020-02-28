@@ -6,27 +6,14 @@ use App\Models\Item;
 use Illuminate\Http\Request;
 use App\Http\Requests\NumberTextValidation;
 
-class ItemController extends Controller
+class ItemController extends ElementsAbstractController
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Define the Model for abstract Element Controller
      */
-    public function index()
+    protected function getModel()
     {
-        $items = Item::all();
-        return response()->json(['success' => true, 'data' => $items]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Item::class;
     }
 
     /**
@@ -43,52 +30,5 @@ class ItemController extends Controller
         $item->fill($data);
         $item->save();
         return response()->json(['success' => true, 'data' => $item]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Item $item)
-    {
-        return response()->json(['success' => true, 'data' => $item]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Item $item)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Item $item)
-    {
-        $item->update($request->all());
-        return response()->json(['success' => true, 'data' => $item]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Item $item)
-    {
-        $item->delete();
-        return response()->json(['success' => true, 'data' => trans('api.item.delete')]);
     }
 }

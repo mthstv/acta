@@ -6,27 +6,14 @@ use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Http\Requests\NumberNameValidation;
 
-class BookController extends Controller
+class BookController extends ElementsAbstractController
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Define the Model for abstract Element Controller
      */
-    public function index()
+    protected function getModel()
     {
-        $books = Book::all();
-        return response()->json(['success' => true, 'data' => $books]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Book::class;
     }
 
     /**
@@ -44,52 +31,5 @@ class BookController extends Controller
         $book->fill($data);
         $book->save();
         return response()->json(['success' => true, 'data' => $book]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Book $book)
-    {
-        return response()->json(['success' => true, 'data' => $book]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Book $book)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Book $book)
-    {
-        $book->update($request->all());
-        return response()->json(['success' => true, 'data' => $book]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Book $book)
-    {
-        $book->delete();
-        return response()->json(['success' => true, 'data' => trans('api.book.delete')]);
     }
 }

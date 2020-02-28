@@ -6,27 +6,14 @@ use App\Models\Line;
 use Illuminate\Http\Request;
 use App\Http\Requests\LetterTextValidation;
 
-class LineController extends Controller
+class LineController extends ElementsAbstractController
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Define the Model for abstract Element Controller
      */
-    public function index()
+    protected function getModel()
     {
-        $lines = Line::all();
-        return response()->json(['success' => true, 'data' => $lines]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Line::class;
     }
 
     /**
@@ -45,52 +32,5 @@ class LineController extends Controller
         $line->fill($data);
         $line->save();
         return response()->json(['success' => true, 'data' => $line]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Line  $line
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Line $line)
-    {
-        return response()->json(['success' => true, 'data' => $line]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Line  $line
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Line $line)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Line  $line
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Line $line)
-    {
-        $line->update($request->all());
-        return response()->json(['success' => true, 'data' => $line]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Line  $line
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Line $line)
-    {
-        $line->delete();
-        return response()->json(['success' => true, 'data' => trans('api.line.delete')]);
     }
 }
