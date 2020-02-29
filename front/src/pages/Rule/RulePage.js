@@ -18,8 +18,8 @@ const styles = {
   editFab: {
     margin: 0,
     top: "auto",
-    right: 90,
-    bottom: 20,
+    right: 20,
+    bottom: 90,
     left: "auto",
     position: "fixed",
   }
@@ -38,7 +38,7 @@ class RulePage extends React.Component {
         this.setState({ rule: res.data.data });
       })
       .catch((err) => {
-        if(err.response.status === 401) {
+        if(err.response && err.response.status === 401) {
           window.location.href = "/login";
         }
       });
