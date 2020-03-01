@@ -8,7 +8,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import { withStyles } from "@material-ui/core/styles";
 import Collapse from "@material-ui/core/Collapse";
 import List from "@material-ui/core/List";
-import { fade } from "@material-ui/core/styles/colorManipulator";
+// import { fade } from "@material-ui/core/styles/colorManipulator";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 
@@ -38,8 +38,11 @@ const styles = theme => {
         },
         "&:active": {
           backgroundColor: theme.palette.secondary.main,
-
         }
+      },
+      "&:hover": {
+        backgroundColor: '#676767',
+        important: 'true'
       }
     },
     miniMenuItem: {
@@ -51,14 +54,15 @@ const styles = theme => {
         "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
           color: theme.palette.common.white
         }
+      },
+      "&:hover": {
+        backgroundColor: '#565656',
+        important: 'true'
       }
     },
     miniIcon: {
       margin: "0 auto",
       color: "white",
-      "&:hover": {
-        backgroundColor: fade(theme.palette.common.white, 0.5)
-      },
       minWidth: "24px"
     }
   };

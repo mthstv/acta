@@ -36,7 +36,7 @@ const styles = {
   },
   hoverCircle: {
     marginTop: 20,
-    marginLeft: 30,
+    marginLeft: 10,
     marginBottom: 30,
     borderRadius: '50%',
     cursor: 'pointer',
@@ -46,7 +46,7 @@ const styles = {
     backgroundColor: 'white',
     opacity: 0.3,
     zIndex: 20,
-    width: '65%',
+    width: '85%',
     height: '80%',
   }
 };

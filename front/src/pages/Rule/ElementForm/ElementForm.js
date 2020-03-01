@@ -82,7 +82,7 @@ class ElementForm extends Component {
       }
       await api.post(`/${this.state.selectedElement}`, elementData)
         .then((res) => {
-          this.props.snackbarActions.showSnackbar("Elemento adicionado com sucesso");
+          this.props.snackbarActions.showSnackbar(`${handleElementName(this.state.selectedElement)} adicionado com sucesso`);
           this.props.history.push(`/regra/${this.state.rule_reference}`);
         });
     }
@@ -176,6 +176,7 @@ class ElementForm extends Component {
                   />
                   :
                   <TextField
+                    key="element-text"
                     label="Texto"
                     fullWidth={true}
                     margin="normal"

@@ -40,6 +40,9 @@ class UserProfile extends Component {
           if(err.response.status === 401) {
             window.location.href = "/login";
           }
+          if(err.response && err.response.status === 404) {
+            this.props.history.push('/404');
+          }
         });
     }
 
@@ -99,8 +102,9 @@ class UserProfile extends Component {
                     {/* Avatar div */}
                     <div style={styles.userAvatar}>
                       <img 
-                        src={this.state.avatar_url ? this.state.avatar_url : require('../../../images/user-profile.png')}
                         style={styles.avatarImg}
+                        alt="user-profile"
+                        src={this.state.avatar_url ? this.state.avatar_url : require('../../../images/user-profile.png')}
                         onMouseEnter={() => { return this.state.is_auth ? this.setState({ avatarHover: true }) : null}}
                       />
                     </div>

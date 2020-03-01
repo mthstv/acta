@@ -8,7 +8,6 @@ import { withStyles } from "@material-ui/core/styles";
 // import { ReactComponent as Logo } from '../images/book_shelf.svg';
 
 import Menus from "./Menus";
-import data from "../data";
 
 const drawStyles = theme => {
   return {
@@ -43,7 +42,10 @@ const drawStyles = theme => {
       backgroundColor: "#444444",
       cursor: "pointer",
       height: 70,
-      display: "flex"
+      display: "flex",
+      "&:hover": {
+        backgroundColor: '#111111'
+      }
     },
     avatarRootMini: {
       padding: "15px 0 10px 10px"

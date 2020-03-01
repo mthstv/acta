@@ -12,7 +12,7 @@ import Data from "../data";
 // import Form from "./Form/FormPage";
 // import BasicTable from "./Table/BasicTables";
 // import DataTable from "./Table/DataTables";
-import NotFound from "./NotFoundPage";
+import NotFound from "./NotFoundPage/NotFoundPage";
 import Rules from "./Rule/RuleList";
 import Rule from "./Rule/RulePage";
 import RuleCreator from "./Rule/RuleCreator/RuleCreator";

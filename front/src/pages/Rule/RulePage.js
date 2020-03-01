@@ -16,9 +16,10 @@ const styles = {
     position: "fixed",
   },
   editFab: {
+    display: 'flex',
     margin: 0,
     top: "auto",
-    right: 20,
+    right: 28,
     bottom: 90,
     left: "auto",
     position: "fixed",
@@ -40,6 +41,9 @@ class RulePage extends React.Component {
       .catch((err) => {
         if(err.response && err.response.status === 401) {
           window.location.href = "/login";
+        }
+        if(err.response && err.response.status === 404) {
+          this.props.history.push('/404');
         }
       });
   }
@@ -70,6 +74,7 @@ class RulePage extends React.Component {
           </Fab>
           <Fab 
             color="secondary" 
+            size="small"
             style={styles.editFab} 
             aria-label="edit"
             onClick={() => this.setState({editorMode: true})}
