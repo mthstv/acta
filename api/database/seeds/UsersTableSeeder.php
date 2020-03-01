@@ -20,6 +20,7 @@ class UsersTableSeeder extends Seeder
                 'name' => 'Acta Admin',
                 'email' => 'admin@acta.tech',
                 'password' => \Hash::make('1234'),
+                'avatar_url' => 'https://pbs.twimg.com/profile_images/1233968586538000386/O8YabEGa_400x400.jpg',
                 'auth_token' => '',
                 'created_at' => '2020-02-15 04:28:14',
                 'updated_at' => '2020-02-15 04:31:03',

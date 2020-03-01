@@ -5,7 +5,7 @@ export const availableThemes = [
   {
     title: "Default",
     primary: blue,
-    secondary: pink
+    secondary: grey
   },
   {
     title: "Sunset",
@@ -19,7 +19,7 @@ export const availableThemes = [
   },
   {
     title: "Beach",
-    primary: grey,
+    primary: pink,
     secondary: amber
   },
   {

@@ -5,6 +5,8 @@ import TextField from "@material-ui/core/TextField";
 import PageBase from "../../../components/PageBase";
 import styles from "./styles";
 import { handleRole } from "../../../helpers";
+import { Row, Col } from 'react-bootstrap';
+import CreateIcon from '@material-ui/icons/Create';
 
 import api from "../../../services/api";
 
@@ -23,7 +25,9 @@ class UserProfile extends Component {
       is_auth: false,
       name: "",
       email: "",
-      role: ""
+      role: "",
+      avatar_url: null,
+      avatarHover: false
     }
     componentDidMount() {
       this.setState({is_auth: parseInt(this.props.user.id) === parseInt(this.props.match.params.user)});
@@ -69,33 +73,67 @@ class UserProfile extends Component {
       }
     }
 
+    handleAvatarChange = () => {
+      console.log('change avatar')
+    }
+
     render() {
       return (
         <PageBase title={"Perfil"}>
           <form onSubmit={this.handleSubmit}>
-            <TextField
-              label="Nome"
-              fullWidth={true}
-              margin="normal"
-              value={this.state.name}
-              onChange={(e) => this.setState({name: e.target.value})}
-            />
+            <Row>
+              <Col xs={12} sm={12} md={12} lg={12} >
+                <Row>
+                  <Col xs={12} sm={12} md={4} lg={4}>
+                    {/* Div on avatar hover */}
+                    {this.state.avatarHover && 
+                      <div 
+                        style={styles.hoverCircle} 
+                        onClick={() => { return this.state.is_auth ? this.handleAvatarChange() : null}}
+                        onMouseLeave={() => this.setState({ avatarHover: false })}>
+                        <div style={{marginTop: 70}}>
+                          <CreateIcon fontSize="large" />
+                        </div>
+                      </div> 
+                    }
+                    {/* Avatar div */}
+                    <div style={styles.userAvatar}>
+                      <img 
+                        src={this.state.avatar_url ? this.state.avatar_url : require('../../../images/user-profile.png')}
+                        style={styles.avatarImg}
+                        onMouseEnter={() => { return this.state.is_auth ? this.setState({ avatarHover: true }) : null}}
+                      />
+                    </div>
+                  </Col>
+                  <Col xs={12} sm={12} md={8} lg={8}>
+                  <TextField
+                    label="Nome"
+                    fullWidth={true}
+                    margin="normal"
+                    value={this.state.name}
+                    onChange={(e) => this.setState({name: e.target.value})}
+                  />
 
-            <TextField
-              label="E-mail"
-              fullWidth={true}
-              margin="normal"
-              value={this.state.email}
-              onChange={(e) => this.setState({email: e.target.value})}
-            />
+                  <TextField
+                    label="E-mail"
+                    fullWidth={true}
+                    margin="normal"
+                    value={this.state.email}
+                    onChange={(e) => this.setState({email: e.target.value})}
+                  />
 
-            <TextField
-              label="Nível de permissão"
-              fullWidth={false}
-              margin="normal"
-              value={handleRole(this.state.role)}
-              disabled
-            />
+                  <TextField
+                    label="Nível de permissão"
+                    fullWidth={false}
+                    margin="normal"
+                    value={handleRole(this.state.role)}
+                    disabled
+                  />
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+
 
             <div style={styles.buttons}>
               <Link to={this.state.is_auth ? "/" : "/usuarios"}>
