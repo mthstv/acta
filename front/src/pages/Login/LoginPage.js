@@ -63,6 +63,7 @@ class LoginPage extends Component {
         <div>
           <div style={styles.loginContainer}>
             <div style={{textAlign: "center"}}>
+              {/* <Icon style={{height: 100, fill: '#eeeeee', background: "linear-gradient(#2196F3, #219DF3 50%)", borderRadius: 10, marginLeft: 200, marginBottom: 200}} /> */}
               <Icon style={{height: 100, fill: "rgb(158, 158, 158)"}} />
               <b className="customlogo" style={{color: "rgb(158, 158, 158)", fontSize: 40}}>
                 ACTA
