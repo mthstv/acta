@@ -1,27 +1,28 @@
 {
   "files": {
-    "main.css": "/static/css/main.374d273a.chunk.css",
-    "main.js": "/static/js/main.f22e92a3.chunk.js",
-    "main.js.map": "/static/js/main.f22e92a3.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.89f24a37.js",
-    "runtime-main.js.map": "/static/js/runtime-main.89f24a37.js.map",
+    "main.css": "/static/css/main.729fdc3a.chunk.css",
+    "main.js": "/static/js/main.90cf2c61.chunk.js",
+    "main.js.map": "/static/js/main.90cf2c61.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.46e3b13c.js",
+    "runtime-main.js.map": "/static/js/runtime-main.46e3b13c.js.map",
     "static/css/2.9856cb51.chunk.css": "/static/css/2.9856cb51.chunk.css",
-    "static/js/2.700230da.chunk.js": "/static/js/2.700230da.chunk.js",
-    "static/js/2.700230da.chunk.js.map": "/static/js/2.700230da.chunk.js.map",
+    "static/js/2.5efb44ca.chunk.js": "/static/js/2.5efb44ca.chunk.js",
+    "static/js/2.5efb44ca.chunk.js.map": "/static/js/2.5efb44ca.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.05a307600e09f1ab275ac3fe47a6071d.js": "/precache-manifest.05a307600e09f1ab275ac3fe47a6071d.js",
+    "precache-manifest.479f65f970214288634d73f5f1a8367b.js": "/precache-manifest.479f65f970214288634d73f5f1a8367b.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.9856cb51.chunk.css.map": "/static/css/2.9856cb51.chunk.css.map",
-    "static/css/main.374d273a.chunk.css.map": "/static/css/main.374d273a.chunk.css.map",
-    "static/js/2.700230da.chunk.js.LICENSE.txt": "/static/js/2.700230da.chunk.js.LICENSE.txt",
+    "static/css/main.729fdc3a.chunk.css.map": "/static/css/main.729fdc3a.chunk.css.map",
+    "static/js/2.5efb44ca.chunk.js.LICENSE.txt": "/static/js/2.5efb44ca.chunk.js.LICENSE.txt",
     "static/media/book_shelf.bb1a7024.svg": "/static/media/book_shelf.bb1a7024.svg",
-    "static/media/font-awesome.css": "/static/media/fontawesome-webfont.fee66e71.woff"
+    "static/media/font-awesome.css": "/static/media/fontawesome-webfont.fee66e71.woff",
+    "static/media/user-profile.png": "/static/media/user-profile.95f81f82.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.89f24a37.js",
+    "static/js/runtime-main.46e3b13c.js",
     "static/css/2.9856cb51.chunk.css",
-    "static/js/2.700230da.chunk.js",
-    "static/css/main.374d273a.chunk.css",
-    "static/js/main.f22e92a3.chunk.js"
+    "static/js/2.5efb44ca.chunk.js",
+    "static/css/main.729fdc3a.chunk.css",
+    "static/js/main.90cf2c61.chunk.js"
   ]
 }
