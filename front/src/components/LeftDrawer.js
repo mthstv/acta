@@ -74,9 +74,19 @@ const LeftDrawer = props => {
   let { navDrawerOpen, classes, theme, handleChangeNavDrawer } = props;
 
 
-  function handleRedirect () {
-    props.history.push(`/perfil/${props.user.id}`);
-    // window.location.href = '/login'
+  async function handleRedirect () {
+    const profile = props.history.location.pathname.split('/')
+    // verifying if user is already in a profile to prevent route bug
+    if(props.history.location.pathname.includes('perfil')) {
+      // verifying if user is already in his own profile to prevent too many redirects
+      if(parseInt(profile[2]) !== parseInt(props.user.id)) {
+        await props.history.push(`/perfil`);
+        await props.history.push(`/perfil/${props.user.id}`);
+      }
+    } else {
+      props.history.push(`/perfil/${props.user.id}`);
+
+    }
   }
 
   const drawerContent = () => (
