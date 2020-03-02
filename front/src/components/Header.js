@@ -17,8 +17,8 @@ import { Toolbar } from "@material-ui/core";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+// import ListItemIcon from "@material-ui/core/ListItemIcon";
+// import ListItemText from "@material-ui/core/ListItemText";
 
 import { logout } from "../services/auth";
 
@@ -145,7 +145,7 @@ class Header extends React.Component {
 
     // const { anchorEl } = this.state;
     // const isMenuOpen = Boolean(this.state.a1anchorEl);
-    const isMobileMenuOpen = Boolean(this.state.notificationMoreAnchorEl);
+    const isNotificationMenuOpen = Boolean(this.state.notificationMoreAnchorEl);
 
     // const renderMenu = (
     //   <Menu
@@ -162,22 +162,6 @@ class Header extends React.Component {
 
     return (
       <div>
-        <Menu
-          anchorEl={this.state.notificationMoreAnchorEl}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
-          transformOrigin={{ vertical: "top", horizontal: "right" }}
-          open={isMobileMenuOpen}
-          onClose={this.handleNotificationMenuClose}
-        >
-          <MenuItem>
-            <ListItemIcon>
-              <NotificationsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Nenhuma notificação" />
-          </MenuItem>
-
-        </Menu>
-
         <AppBar
           className={classNames(classes.appBar, {
             [classes.appBarShift]: navDrawerOpen
@@ -226,7 +210,7 @@ class Header extends React.Component {
               <IconButton color="inherit" onClick={this.handleNotificationMenuOpen}>
                 <Badge
                   className={classes.margin}
-                  badgeContent={1}
+                  badgeContent={0}
                   color="secondary"
                 >
                   <NotificationsIcon />
@@ -234,16 +218,33 @@ class Header extends React.Component {
               </IconButton>
             </div>
             <div className={classes.sectionMobile}>
-              {/* NOTIFICATIONS */}
+              {/* NOTIFICATIONS MOBILE */}
               <IconButton color="inherit" onClick={this.handleNotificationMenuOpen}>
                 <Badge
                   className={classes.margin}
-                  badgeContent={1}
+                  badgeContent={0}
                   color="secondary"
                 >
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
+
+              {/* NOTIFICATIONS MENU */}
+              <Menu
+                anchorEl={this.state.notificationMoreAnchorEl}
+                anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                transformOrigin={{ vertical: "top", horizontal: "right" }}
+                open={isNotificationMenuOpen}
+                onClose={this.handleNotificationMenuClose}
+              >
+                <MenuItem>
+                  {/* <ListItemIcon>
+                    <NotificationsIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Nenhuma notificação" /> */}
+                  Nenhuma notificação
+                </MenuItem>
+              </Menu>
             </div>
           </Toolbar>
         </AppBar>

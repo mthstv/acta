@@ -20,7 +20,7 @@ export default function ConfirmationModal(props) {
   return (
     <Modal
       {...props}
-      // { onHide, title, body, confirmcolor, confirmtext }
+      // { onHide(true or false), title, body, confirmcolor, confirmtext }
       size="md"
       aria-labelledby="contained-modal"
       style={{zIndex: 99999}}
