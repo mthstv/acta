@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class SubSectionsTableSeeder extends Seeder
+class SubsectionsTableSeeder extends Seeder
 {
 
     /**
@@ -14,7 +14,7 @@ class SubSectionsTableSeeder extends Seeder
     {
         
 
-        \DB::table('sub_sections')->delete();
+        \DB::table('subsections')->delete();
         
         
         

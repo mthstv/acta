@@ -13,7 +13,7 @@ class CreateSubSectionTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_sections', function (Blueprint $table) {
+        Schema::create('subsections', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('number')->unsigned();
             $table->string('name',100);
@@ -31,6 +31,6 @@ class CreateSubSectionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub_sections');
+        Schema::dropIfExists('subsections');
     }
 }

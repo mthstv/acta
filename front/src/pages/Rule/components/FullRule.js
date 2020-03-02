@@ -75,10 +75,10 @@ export const getArticleList = (list) => {
   )));
 };
 
-export const getSubSectionList = (list) => {
+export const getSubsectionList = (list) => {
   return (list.map((subSection) => (
     <div key={subSection.id}>
-      <div style={styles.textFields} key={subSection.id}>
+      <div style={styles.nameFields} key={subSection.id}>
           Subseção {Romanize(subSection.number)}<br/>
         {subSection.name}
       </div>
@@ -95,7 +95,7 @@ export const getSectionList = (list) => {
         {section.name}
       </div>
       {getArticleList(section.articles)}
-      {getSubSectionList(section.sub_sections)}
+      {getSubsectionList(section.subsections)}
     </div>
   )));
 };

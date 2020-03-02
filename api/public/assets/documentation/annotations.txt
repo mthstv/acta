@@ -21,7 +21,7 @@ books
 titles
 chapters
 sections
-sub_sections
+subsections
 articles
 paragraphs
 incises

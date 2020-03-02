@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TitlesTableSeeder::class);
         $this->call(ChaptersTableSeeder::class);
         $this->call(SectionsTableSeeder::class);
-        $this->call(SubSectionsTableSeeder::class);
+        $this->call(SubsectionsTableSeeder::class);
         $this->call(ArticlesTableSeeder::class);
         $this->call(ParagraphsTableSeeder::class);
         $this->call(IncisesTableSeeder::class);

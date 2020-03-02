@@ -49,9 +49,9 @@ class Article extends Model
         return $this->belongsTo('App\Models\Section')->withDefault();
     }
 
-    public function sub_section()
+    public function subsection()
     {
-        return $this->belongsTo('App\Models\SubSection')->withDefault();
+        return $this->belongsTo('App\Models\Subsection')->withDefault();
     }
 
     //hasmany

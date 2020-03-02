@@ -23,8 +23,8 @@ class CreateArticlesTable extends Migration
             $table->foreign('chapter_id')->references('id')->on('chapters')->onDelete('cascade');
             $table->bigInteger('section_id')->unsigned()->nullable();
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
-            $table->bigInteger('sub_section_id')->unsigned()->nullable();
-            $table->foreign('sub_section_id')->references('id')->on('sub_sections')->onDelete('cascade');
+            $table->bigInteger('subsection_id')->unsigned()->nullable();
+            $table->foreign('subsection_id')->references('id')->on('subsections')->onDelete('cascade');
             $table->integer('rule_reference')->index();
             $table->timestamps();
         });

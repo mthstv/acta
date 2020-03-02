@@ -24,12 +24,12 @@ class ArticleController extends ElementsAbstractController
      */
     public function store(NumberTextValidation $request)
     {
-        $data = $request->except(['title','chapter','section','sub_section']);
+        $data = $request->except(['title','chapter','section','subsection']);
         $article = new Article;
         $request->title ? $article->title()->associate($request->title) : null;
         $request->chapter ? $article->chapter()->associate($request->chapter) : null;
         $request->section ? $article->section()->associate($request->section) : null;
-        $request->sub_section ? $article->sub_section()->associate($request->sub_section) : null;
+        $request->subsection ? $article->subsection()->associate($request->subsection) : null;
         $article->fill($data);
         $article->save();
         return response()->json(['success' => true, 'data' => $article]);

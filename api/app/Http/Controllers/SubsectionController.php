@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SubSection;
+use App\Models\Subsection;
 use Illuminate\Http\Request;
 use App\Http\Requests\NumberNameValidation;
 
-class SubSectionController extends ElementsAbstractController
+class SubsectionController extends ElementsAbstractController
 {
     /**
      * Define the Model for abstract Element Controller
      */
     protected function getModel()
     {
-        return SubSection::class;
+        return Subsection::class;
     }
 
     /**
@@ -25,7 +25,7 @@ class SubSectionController extends ElementsAbstractController
     public function store(NumberNameValidation $request)
     {
         $data = $request->except(['section']);
-        $subSection = new SubSection;
+        $subSection = new Subsection;
         $request->section ? $subSection->section()->associate($request->section) : null;
         $subSection->fill($data);
         $subSection->save();

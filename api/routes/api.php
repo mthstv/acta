@@ -107,7 +107,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
      * /subsection/{id}   => 'DELETE' @ destroy()
      *
      */
-    Route::resource('subsection', 'SubSectionController');
+    Route::resource('subsection', 'SubsectionController');
 
     /**
      * /article        => 'GET'    @ index()

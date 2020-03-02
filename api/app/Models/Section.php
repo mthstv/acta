@@ -21,7 +21,7 @@ class Section extends Model
     *
     * @var array
     */
-    protected $with = ['sub_sections', 'articles'];
+    protected $with = ['subsections', 'articles'];
 
     /**
     * The attributes that should be hidden for arrays.
@@ -39,9 +39,9 @@ class Section extends Model
 
     //hasmany
 
-    public function sub_sections()
+    public function subsections()
     {
-        return $this->hasMany('App\Models\SubSection');
+        return $this->hasMany('App\Models\Subsection');
     }
 
     public function articles()
