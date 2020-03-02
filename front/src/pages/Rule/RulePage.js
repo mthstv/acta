@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import api from "../../services/api";
-import { getSingleRule } from "./components/FullRule";
+import { GetSingleRule } from "./components/FullRule";
 import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import Fab from "@material-ui/core/Fab";
 import EditIcon from "@material-ui/icons/Edit";
@@ -58,7 +58,7 @@ class RulePage extends React.Component {
             <Col md={12}>
               <Card>
                 <Card.Body>
-                  {getSingleRule(rule)}
+                  <GetSingleRule rule={rule} editorMode={this.state.editorMode}/>
                 </Card.Body>
               </Card>
             </Col>
@@ -77,7 +77,7 @@ class RulePage extends React.Component {
             size="small"
             style={styles.editFab} 
             aria-label="edit"
-            onClick={() => this.setState({editorMode: true})}
+            onClick={() => this.setState({editorMode: !this.state.editorMode})}
             title="Modo Editor"
           >
             <EditIcon />
