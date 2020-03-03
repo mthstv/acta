@@ -103,7 +103,7 @@ class UserProfile extends Component {
           this.setState({ uploadModalShow: false })
         
       } else {
-        console.log('cancel')
+        // console.log('cancel')
         this.setState({ uploadModalShow: false })
       }
     }

@@ -153,7 +153,7 @@ class UserTable extends React.Component {
         .then((res) => {
           this.props.snackbarActions.showSnackbar(this.state.selected.length > 1 ?"Usuários excluídos com sucesso" : "Usuário excluído com sucesso");
           this.getUserData();
-          console.log(res);
+          // console.log(res);
         })
         .catch((err) => {
           this.props.snackbarActions.showSnackbar("Houve um problema ao realizar esta ação");
