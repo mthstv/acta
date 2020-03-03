@@ -90,7 +90,7 @@ const styles = theme => ({
     paddingLeft: theme.spacing(5),
     transition: theme.transitions.create("width"),
     [theme.breakpoints.up("md")]: {
-      width: "auto"
+      // width: "auto"
     }
   },
   sectionDesktop: {
