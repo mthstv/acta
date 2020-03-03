@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -17,7 +18,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'avatar_url', 'password', 'auth_token'
+        'name', 'email', 'avatar', 'password', 'auth_token'
     ];
     
     /**
@@ -25,7 +26,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array
      */
-    protected $appends = ['role'];
+    protected $appends = ['role', 'avatar_url'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -83,5 +84,14 @@ class User extends Authenticatable implements JWTSubject
     {
         $roles = $this->role()->first();
         return $this->attributes['role'] = $roles->label;
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        if($this->avatar || $this->avatar !== '') {
+            return env('APP_URL') . Storage::url($this->avatar);
+        } else {
+            return null;
+        }
     }
 }

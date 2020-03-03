@@ -34,10 +34,13 @@ class UserProfile extends Component {
     }
     componentDidMount() {
       this.setState({is_auth: parseInt(this.props.user.id) === parseInt(this.props.match.params.user)});
-      
+      this.getUser()  
+    }
+
+    getUser = () => {
       api.get(`/user/${parseInt(this.props.match.params.user)}`, this.state)
-        .then((res) =>{
-          this.setState(res.data.data);
+      .then((res) =>{
+        this.setState(res.data.data);
         })
         .catch((err) => {
           if(err.response.status === 401) {
@@ -47,7 +50,7 @@ class UserProfile extends Component {
             this.props.history.push('/404');
           }
         });
-    }
+    } 
 
     handleSubmit = async (e) => {
       e.preventDefault();
@@ -88,8 +91,17 @@ class UserProfile extends Component {
      */
     handleUploadSave = async file => {
       if(file) {
-        console.log(file)
-        this.setState({ uploadModalShow: false })
+        const data = new FormData() 
+        data.append('avatar', file)
+
+        await api.post('/user/avatar-upload', data)
+        await api.get('/auth/by-token')
+          .then((res) => {
+            this.props.userActions.SaveUserData(res.data.data)
+            this.getUser()
+          })
+          this.setState({ uploadModalShow: false })
+        
       } else {
         console.log('cancel')
         this.setState({ uploadModalShow: false })
@@ -101,10 +113,12 @@ class UserProfile extends Component {
       return (
         <PageBase title={"Perfil"}>
           <div>
-            { this.state.uploadModalShow && <FileUploadModal
-              show={this.state.uploadModalShow}
-              onHide={this.handleUploadSave}
-            />}
+            { this.state.uploadModalShow && 
+              <FileUploadModal
+                show={this.state.uploadModalShow}
+                onHide={this.handleUploadSave}
+              />
+            }
             <form onSubmit={this.handleSubmit}>
               <Row>
                 <Col xs={12} sm={12} md={12} lg={12} >
@@ -128,6 +142,7 @@ class UserProfile extends Component {
                           alt="user-profile"
                           src={this.state.avatar_url ? this.state.avatar_url : require('../../../images/user-profile.png')}
                           onMouseEnter={() => { return this.state.is_auth ? this.setState({ avatarHover: true }) : null}}
+                          onClick={() => { return this.state.is_auth ? this.handleAvatarChange() : null}}
                         />
                       </div>
                     </Col>
@@ -174,13 +189,6 @@ class UserProfile extends Component {
                 >
                   {this.state.is_auth ? "Salvar" : "Alterar" }
                 </Button>
-                {/* <Button
-                  style={styles.saveButton}
-                  variant="contained"
-                  color="secondary"
-                  >
-                    Criar e adicionar elementos
-                </Button> */}
               </div>
             </form>
           </div>

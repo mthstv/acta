@@ -25,6 +25,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     // all routes to protected resources are registered here  
 
     Route::patch('user/auth-update', 'UserController@updateAuthenticated');
+    Route::post('user/avatar-upload', 'UserController@avatarUpload');
     Route::resource('user', 'UserController');
 
     /**

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use JWTAuth;
 
 class UserController extends Controller
@@ -103,5 +104,26 @@ class UserController extends Controller
     {
         $user->delete();
         return response()->json(['success' => true, 'data' => trans('api.user.delete')]);
+    }
+
+    /**
+     * Store user avatar image.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function avatarUpload(Request $request) 
+    {
+        $user = JWTAuth::parseToken()->toUser();
+        if($request->hasFile('avatar')) {
+            if($user->avatar) {
+                Storage::disk('public')->delete($user->avatar);
+            }
+            $file = Storage::disk('public')->put("images/avatars", $request->avatar);
+            $user->update(['avatar' => $file]);
+            return response()->json(['sucess' => true, 'data'=> []]);
+        } else {
+            return response()->json(['sucess' => false, 'data'=> []], 400);
+        }
     }
 }
