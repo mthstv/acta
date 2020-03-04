@@ -5,6 +5,12 @@ import { GetSingleRule } from "./components/FullSingleRule/FullSingleRule";
 import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import Fab from "@material-ui/core/Fab";
 import EditIcon from "@material-ui/icons/Edit";
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+
+import * as snackbarActions from "../../_actions/snackbar";
 
 const styles = {
   createFab: {
@@ -48,7 +54,11 @@ class RulePage extends React.Component {
       });
   }
 
-                    
+  handleEditorClick = () => {
+    this.props.snackbarActions.showSnackbar(this.state.editorMode ? 'Modo editor desativado' : 'Modo editor ativado, selecione um elemento para editá-lo.' )
+    this.setState({editorMode: !this.state.editorMode})
+
+  }
   render() {
     const { rule } = this.state;
     return (
@@ -58,7 +68,7 @@ class RulePage extends React.Component {
             <Col md={12}>
               <Card>
                 <Card.Body>
-                  <GetSingleRule rule={rule} editorMode={this.state.editorMode}/>
+                  <GetSingleRule rule={rule} editorMode={this.state.editorMode} history={this.props.history}/>
                 </Card.Body>
               </Card>
             </Col>
@@ -77,12 +87,13 @@ class RulePage extends React.Component {
             size="small"
             style={styles.editFab} 
             aria-label="edit"
-            onClick={() => this.setState({editorMode: !this.state.editorMode})}
-            // Modo editor ativado. selecione um elemento para editar
-            // Modo editor desativado.
+            onClick={this.handleEditorClick}
             title="Modo Editor"
           >
-            <EditIcon />
+            {this.state.editorMode 
+            ? <HighlightOffIcon />
+            : <EditIcon />
+            }
           </Fab>
         </>
         :
@@ -90,5 +101,11 @@ class RulePage extends React.Component {
     );
   }
 }
-  
-export default RulePage;
+
+function mapDispatchToProps (dispatch) {
+  return {
+    snackbarActions: bindActionCreators(snackbarActions, dispatch),
+  };
+}
+
+export default connect(null, mapDispatchToProps)(RulePage);

@@ -14,7 +14,7 @@ import { connect } from "react-redux";
 
 import * as snackbarActions from "../../../_actions/snackbar";
 
-import { elementToString, handleElementName } from "../../../helpers";
+import { handleElementName, handleUrlTranslateElement } from "../../../helpers";
 
 class ElementEditor extends Component {
 
@@ -22,20 +22,34 @@ class ElementEditor extends Component {
       number: "",
       letter: "",
       name: "",
-      text: ""
+      text: "",
+      rule_reference: "",
+
+      selectedElement: ""
     }
 
     componentDidMount() {
-      // this.setState({ rule_reference: this.props.match.params.rule });
+      const elementLabel = handleUrlTranslateElement(this.props.match.params.label)
+      const elementId = this.props.match.params.element
+      this.setState({ selectedElement: elementLabel })
+      api.get(`/${elementLabel}/${elementId}`)
+        .then((res) => {
+          this.setState(res.data.data)
+        })
     }
  
     handleSubmit = async (e) => {
       e.preventDefault();
+      api.patch(`/${this.state.selectedElement}/${this.state.id}`, this.state)
+        .then((res) => {
+          this.props.history.push(`/regra/${this.state.rule_reference}`)
+          this.props.snackbarActions.showSnackbar(`${handleElementName(this.state.selectedElement)} alterado(a) com sucesso`)
+        })
     }
     
     render() {
       return (
-        <PageBase title="Editar Elemento">
+        <PageBase title={"Editar " + handleElementName(this.state.selectedElement)}>
           <form onSubmit={this.handleSubmit}>
             <Row>
               <Col sm={2} md={2} lg={2}>
@@ -83,6 +97,10 @@ class ElementEditor extends Component {
               </Col>
             </Row>
 
+            <div style={styles.deleteButton}>
+              <Button variant="contained">Excluir</Button>
+              {/* Modal de confirmação de exclusão */}
+            </div>
             <div style={styles.buttons}>
               <Link to={`/regra/${this.state.rule_reference}`}>
                 <Button variant="contained">Cancelar</Button>
@@ -94,7 +112,7 @@ class ElementEditor extends Component {
                 type="submit"
                 color="primary"
               >
-                Criar
+                Salvar
               </Button>
             </div>
           </form>

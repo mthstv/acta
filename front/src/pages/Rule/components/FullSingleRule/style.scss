@@ -4,9 +4,9 @@
     // border: 0.5px solid black;
     &:hover {
         background-color: #464646 !important;
-        -webkit-transition: background-color 500ms linear;
-        -ms-transition: background-color 500ms linear;
-        transition: background-color 500ms linear;
+        -webkit-transition: background-color 200ms linear;
+        -ms-transition: background-color 200ms linear;
+        transition: background-color 200ms linear;
         color: white !important;
     }
 }

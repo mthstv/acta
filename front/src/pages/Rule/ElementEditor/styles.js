@@ -13,6 +13,10 @@ const styles = {
     marginTop: 30,
     float: "right"
   },
+  deleteButton: {
+    marginTop: 30,
+    float: "left"
+  },
   saveButton: {
     marginLeft: 5
   }

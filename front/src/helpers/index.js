@@ -54,6 +54,37 @@ export const handleElementName = (element) => {
   }
 };
 
+export const handleUrlTranslateElement = (element) => {
+  switch(element.toLowerCase()) {
+  case "regra":
+    return "rule";
+  case "parte":
+    return "part";
+  case "livro":
+    return "book";
+  case "titulo":
+    return "title";
+  case "capitulo":
+    return "chapter";
+  case "secao":
+    return "section";
+  case "subsecao":
+    return "subsection";
+  case "artigo":
+    return "article";
+  case "paragrafo":
+    return "paragraph";
+  case "inciso":
+    return "incise";
+  case "alinea":
+    return "line";
+  case "item":
+    return "item";
+  default:
+    return "";
+  }
+};
+
 export const elementToString = (elementName, element) => {
   switch(elementName.toLowerCase()) {
   case "part":
