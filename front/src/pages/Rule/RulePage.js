@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import api from "../../services/api";
-import { GetSingleRule } from "./components/FullRule";
+import { GetSingleRule } from "./components/FullSingleRule/FullSingleRule";
 import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import Fab from "@material-ui/core/Fab";
 import EditIcon from "@material-ui/icons/Edit";
@@ -78,6 +78,8 @@ class RulePage extends React.Component {
             style={styles.editFab} 
             aria-label="edit"
             onClick={() => this.setState({editorMode: !this.state.editorMode})}
+            // Modo editor ativado. selecione um elemento para editar
+            // Modo editor desativado.
             title="Modo Editor"
           >
             <EditIcon />

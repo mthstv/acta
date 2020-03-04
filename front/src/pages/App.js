@@ -17,7 +17,8 @@ import Rules from "./Rule/RuleList";
 import Rule from "./Rule/RulePage";
 import RuleCreator from "./Rule/RuleCreator/RuleCreator";
 import RuleEditor from "./Rule/RuleEditor/RuleEditor";
-import ElementForm from "./Rule/ElementForm/ElementForm";
+import ElementCreator from "./Rule/ElementCreator/ElementCreator";
+import ElementEditor from "./Rule/ElementEditor/ElementEditor";
 import UserList from "./User/UserList/UserList";
 import UserProfile from "./User/UserProfile/UserProfile";
 import Logout from "./Logout";
@@ -131,7 +132,8 @@ class App extends React.Component {
             <Route path="/regra/:rule" component={Rule} />
             <Route path="/criar-regra" component={RuleCreator} />
             <Route path="/editar-regra/:rule" component={RuleEditor} />
-            <Route path="/criar-elemento/regra/:rule" component={ElementForm} />
+            <Route path="/criar-elemento/regra/:rule" component={ElementCreator} />
+            <Route path="/editar-elemento/:label/:element" component={ElementEditor} />
             <Route path="/usuarios" component={UserList} />
             <Route path="/perfil/:user" component={UserProfile} />
             {/* <Route path="/table/basic" component={BasicTable} />

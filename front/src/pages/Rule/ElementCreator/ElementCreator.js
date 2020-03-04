@@ -21,7 +21,8 @@ import * as snackbarActions from "../../../_actions/snackbar";
 
 import ElementSelect from "./components/ElementSelect";
 import { elementToString, handleElementName } from "../../../helpers";
-class ElementForm extends Component {
+
+class ElementCreator extends Component {
 
     state = {
       number: "",
@@ -220,4 +221,4 @@ function mapDispatchToProps (dispatch) {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ElementForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ElementCreator);

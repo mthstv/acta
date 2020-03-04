@@ -1,6 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
-import { Romanize } from "../../../helpers";
+import { Romanize } from "../../../../helpers";
+import './style.scss';
 
 const styles = {
   textFields: {
@@ -9,24 +10,13 @@ const styles = {
   nameFields: {
     textAlign: "center",
   },
-  editorStyle: {
-    cursor: 'pointer',
-    // backgroundColor: 'white',
-    "&:hover": {
-      backgroundColor: '#343434',
-      color: 'white',
-      important: 'true'
-    },
-    important: 'true'
-  }
 };
 
 export const GetSingleRule = (props) => {
-  console.log(props.editorMode)
 
   const getItemList = (list) => {
     return (list.map((item) => (
-      <div style={styles.textFields} key={item.id}>
+      <div style={styles.textFields} key={item.id} className={props.editorMode ? "editorStyle" : null}>
         {item.number}. {item.text}
       </div>
     )));
@@ -35,7 +25,7 @@ export const GetSingleRule = (props) => {
   const getLineList = (list) => {
     return (list.map((line) => (
       <div key={line.id}>
-        <div style={styles.textFields} key={line.id}>
+        <div style={styles.textFields} key={line.id} className={props.editorMode ? "editorStyle" : null}>
           {line.letter + ')'} {line.text}
         </div>
         {getItemList(line.items)}
@@ -46,7 +36,7 @@ export const GetSingleRule = (props) => {
   const getInciseList = (list) => {
     return (list.map((incise) => (
       <div key={incise.id}>
-        <div style={styles.textFields} key={incise.id}>
+        <div style={styles.textFields} key={incise.id} className={props.editorMode ? "editorStyle" : null}>
           {Romanize(incise.number)} - {incise.text}
         </div>
         {getLineList(incise.lines)}
@@ -57,7 +47,7 @@ export const GetSingleRule = (props) => {
   const getParagraphList = (list) => {
     return (list.map((paragraph) => (
       <div key={paragraph.id}>
-        <div style={styles.textFields} key={paragraph.id}>
+        <div style={styles.textFields} key={paragraph.id} className={props.editorMode ? "editorStyle" : null}>
           {list.length === 1 
             ? `Parágrafo único - ${paragraph.text}` 
             : `§ ${paragraph.number}º - ${paragraph.text}`
@@ -72,7 +62,7 @@ export const GetSingleRule = (props) => {
   const getArticleList = (list) => {
     return (list.map((article) => (
       <div key={article.id}>
-        <div style={styles.textFields} key={article.id}>
+        <div style={styles.textFields} key={article.id} className={props.editorMode ? "editorStyle" : null}>
           Art. {article.number < 10 ? article.number+"º" : article.number } - {article.text}
         </div>
         {getInciseList(article.incises)}
@@ -85,7 +75,7 @@ export const GetSingleRule = (props) => {
   const getSubsectionList = (list) => {
     return (list.map((subSection) => (
       <div key={subSection.id}>
-        <div style={styles.nameFields} key={subSection.id}>
+        <div style={styles.nameFields} key={subSection.id} className={props.editorMode ? "editorStyle" : null}>
             Subseção {Romanize(subSection.number)}<br/>
           {subSection.name}
         </div>
@@ -97,7 +87,7 @@ export const GetSingleRule = (props) => {
   const getSectionList = (list) => {
     return (list.map((section) => (
       <div key={section.id}>
-        <div style={styles.nameFields} key={section.id}>
+        <div style={styles.nameFields} key={section.id} className={props.editorMode ? "editorStyle" : null}>
             Seção {Romanize(section.number)}<br/>
           {section.name}
         </div>
@@ -110,7 +100,7 @@ export const GetSingleRule = (props) => {
   const getChapterList = (list) => {
     return (list.map((chapter) => (
       <div key={chapter.id}>
-        <div style={styles.nameFields} key={chapter.id}>
+        <div style={styles.nameFields} key={chapter.id} className={props.editorMode ? "editorStyle" : null}>
             Capítulo {Romanize(chapter.number)}<br/> 
           {chapter.name}
         </div>
@@ -123,7 +113,7 @@ export const GetSingleRule = (props) => {
   const getTitleList = (list) => {
     return (list.map((title) => (
       <div key={title.id}>
-        <div style={styles.nameFields} key={title.id}>
+        <div style={styles.nameFields} key={title.id} className={props.editorMode ? "editorStyle" : null}>
             Título {Romanize(title.number)}<br/>
           {title.name}
         </div>
@@ -136,7 +126,7 @@ export const GetSingleRule = (props) => {
   const getBookList = (list) => {
     return (list.map((book) => (
       <div key={book.id}>
-        <div style={styles.nameFields} key={book.id}>
+        <div style={styles.nameFields} key={book.id} className={props.editorMode ? "editorStyle" : null}>
             Livro {Romanize(book.number)}<br/> 
           {book.name}
         </div>
@@ -147,8 +137,8 @@ export const GetSingleRule = (props) => {
   
   const getPartList = (list) => {
     return (list.map((part) => (
-      <div key={part.id}>
-        <div style={styles.nameFields} key={part.id}>
+      <div key={part.id} >
+        <div style={styles.nameFields} key={part.id} className={props.editorMode ? "editorStyle" : null}>
           {part.name}
         </div>
         {getBookList(part.books)}
@@ -160,7 +150,9 @@ export const GetSingleRule = (props) => {
   return (
     <>
       <Card.Title>{ props.rule.rule_title }</Card.Title>
-      <div key={props.rule.id} style={styles.editorStyle}>
+      <div 
+        key={props.rule.id}
+        className={props.editorMode ? "editorStyle" : null}>
         { props.rule.preamble }
       </div>
       {getPartList(props.rule.parts)}

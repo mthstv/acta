@@ -1,0 +1,12 @@
+.editorStyle {
+    cursor: pointer;
+    border-radius: 2px;
+    // border: 0.5px solid black;
+    &:hover {
+        background-color: #464646 !important;
+        -webkit-transition: background-color 500ms linear;
+        -ms-transition: background-color 500ms linear;
+        transition: background-color 500ms linear;
+        color: white !important;
+    }
+}
