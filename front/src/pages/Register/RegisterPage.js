@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
@@ -15,96 +15,104 @@ import { login } from "../../services/auth";
 
 import * as userActions from "../../_actions/user";
 
-class RegisterPage extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+function RegisterPage(props) {
 
-  state = {
+  const [user, setUser] = useState({
     name: "",
     email: "",
-    password: "",
-    error: false,
-    errorMessages: {}
-  }
+    password: ""
+  })
+  const [error, setError] = useState({
+    errorMessages:""
+  })
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true)
 
-  registerUser = (e) => {
+  useEffect(() => {
+    if (user.name.trim() && user.email.trim() && user.password.trim()) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }, [user.name, user.email, user.password]);
+
+  const registerUser = (e) => {
     e.preventDefault();
-
-    api.post("/auth/register", this.state)
-      .then((res) => {
-        this.props.SaveUserData(res.data.data);
+    api.post("/auth/register", user)
+      .then(async (res) => {
+        await props.SaveUserData(res.data.data);
         login(res.data.data);
-        // this.props.history.push('/');
         window.location.href = "/";
       })
       .catch((err) => {
         if(err.response) {
-          this.setState({ error: true, errorMessages: err.response.data.errors });
+          setError({ errorMessages: err.response.data.errors });
         }
-        console.log(this.state.errorMessages);
       });
   };
 
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <div>
-          <div style={styles.loginContainer}>
-            <Paper style={styles.paper}>
-              <form onSubmit={this.registerUser}>
+  const handleFieldChange = (field, value) => {
+    setError({errorMessages: {}})
+    setUser({...user,  [field]: value})
+  }
+
+  return (
+    <ThemeProvider theme={theme}>
+      <div>
+        <div style={styles.loginContainer}>
+          <Paper style={styles.paper}>
+            <form onSubmit={registerUser}>
+              <TextField 
+                label="Nome" 
+                fullWidth={true}
+                required
+                error={Boolean(error.errorMessages.name)}
+                onChange={(e) => handleFieldChange('name', e.target.value)}/>
+            
+              <div style={{ marginTop: 16 }}>
                 <TextField 
-                  label="Nome" 
+                  label="E-mail" 
                   fullWidth={true}
                   required
-                  error={Boolean(this.state.errorMessages.name)}
-                  onChange={(e) => this.setState({ name: e.target.value, errorMessages: {} })}/>
-             
-                <div style={{ marginTop: 16 }}>
-                  <TextField 
-                    label="E-mail" 
-                    fullWidth={true}
-                    required
-                    error={Boolean(this.state.errorMessages.email)}
-                    helperText={this.state.errorMessages.email ? this.state.errorMessages.email[0] : ""}
-                    onChange={(e) => this.setState({ email: e.target.value, errorMessages: {} })}/>
-                </div>
-             
-                <div style={{ marginTop: 16 }}>
-                  <TextField
-                    label="Senha"
-                    fullWidth={true}
-                    required
-                    error={Boolean(this.state.errorMessages.password)}
-                    helperText={this.state.errorMessages.password ? this.state.errorMessages.password[0] : ""}
-                    type="password"
-                    onChange={(e) => this.setState({ password: e.target.value, errorMessages: {} })}/>
-                </div>
-              
-                <div style={{ marginTop: 10 }}>
-                  <Button 
-                    type="submit"
-                    variant="contained" 
-                    color="primary" 
-                    style={styles.loginBtn}>
-                    Registrar
-                  </Button>
-                </div>
-              </form>
-            </Paper>
+                  error={Boolean(error.errorMessages.email)}
+                  helperText={error.errorMessages.email ? error.errorMessages.email[0] : ""}
+                  onChange={(e) => handleFieldChange('email', e.target.value)}/>
+              </div>
+            
+              <div style={{ marginTop: 16 }}>
+                <TextField
+                  label="Senha"
+                  fullWidth={true}
+                  required
+                  error={Boolean(error.errorMessages.password)}
+                  helperText={error.errorMessages.password ? error.errorMessages.password[0] : ""}
+                  type="password"
+                  onChange={(e) => handleFieldChange('password', e.target.value)}/>
+              </div>
+            
+              <div style={{ marginTop: 10 }}>
+                <Button 
+                  type="submit"
+                  variant="contained" 
+                  color="primary" 
+                  style={styles.loginBtn}
+                  disabled={isButtonDisabled}>
+                  Registrar
+                </Button>
+              </div>
+            </form>
+          </Paper>
 
-            <div style={styles.buttonsDiv} >
-              <Button href="/login" style={styles.flatButton}>
-                <PersonAdd />
-                <span style={{ margin: 5 }}>Login</span>
-              </Button>
-            </div>
-
+          <div style={styles.buttonsDiv} >
+            <Button href="/login" style={styles.flatButton}>
+              <PersonAdd />
+              <span style={{ margin: 5 }}>Login</span>
+            </Button>
           </div>
+
         </div>
-      </ThemeProvider>
-    );
-  }
+      </div>
+    </ThemeProvider>
+  );
 }
 
 const mapStateToProps = state => ({

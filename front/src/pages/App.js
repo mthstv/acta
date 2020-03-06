@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import defaultTheme, { customTheme } from "../theme";
+import defaultTheme from "../theme";
 import { withStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Header from "../components/Header";
@@ -62,89 +62,79 @@ const styles = () => ({
   }
 });
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    // nav bar default open in desktop screen, and default closed in mobile screen
-    this.state = {
-      theme: defaultTheme,
-      navDrawerOpen:
-        window && window.innerWidth && window.innerWidth >= defaultTheme.breakpoints.values.md
-          ? true
-          : false
-    };
+function App(props) {
 
-    this.handleChangeNavDrawer = this.handleChangeNavDrawer.bind(this);
-    this.handleChangeTheme = this.handleChangeTheme.bind(this);
-  }
+  const [state, setState] = useState({
+    theme: defaultTheme,
+    navDrawerOpen:
+      window && window.innerWidth && window.innerWidth >= defaultTheme.breakpoints.values.md
+        ? true
+        : false
+  })
 
-  async componentDidMount () {
+  const {SaveUserData, history} = props
+  useEffect(() => {
     // Get user data
-    await api.get("/auth/by-token")
-      .then((res) => {
-        this.props.SaveUserData(res.data.data);
+    api.get("/auth/by-token")
+    .then((res) => {
+      SaveUserData(res.data.data);
         localStorage.setItem("token", res.data.data.auth_token);
         delete res.data.data.auth_token;
         localStorage.setItem("user", JSON.stringify(res.data.data));
       })
       .catch((err) => {
         logout();
-        this.props.history.push("/login");
+        history.push("/login");
         console.log("token expired");
       });
-  }
+  },[history, SaveUserData])
 
-  handleChangeNavDrawer() {
-    this.setState({
-      navDrawerOpen: !this.state.navDrawerOpen
+  const handleChangeNavDrawer = () => {
+    setState({
+      theme: defaultTheme,
+      navDrawerOpen: !state.navDrawerOpen
     });
   }
 
-  handleChangeTheme(colorOption) {
-    const theme = customTheme({
-      palette: colorOption
-    });
-    this.setState({
-      theme
-    });
-  }
-
-  render() {
-    const { classes } = this.props;
-    const { navDrawerOpen, theme } = this.state;
-
-    return (
-      <ThemeProvider theme={theme}>
-        <Header handleChangeNavDrawer={this.handleChangeNavDrawer} navDrawerOpen={navDrawerOpen} history={this.props.history}/>
-        <LeftDrawer
-          user={this.props.user}
-          history={this.props.history}
-          isLogged={isAuthenticated()}
-          navDrawerOpen={navDrawerOpen}
-          handleChangeNavDrawer={this.handleChangeNavDrawer}
-          menus={Data.menus}
-        />
-        <div className={classNames(classes.container, !navDrawerOpen && classes.containerFull)}>
-          <Switch>
-            <Route exact path="/" component={Rules} />
-            {/* <Route path="/dashboard" component={Dashboard} /> */}
-            {/* <Route path="/form" component={Form} /> */}
-            <Route path="/regra/:rule" component={Rule} />
-            <Route path="/criar-regra" component={RuleCreator} />
-            <Route path="/editar-regra/:rule" component={RuleEditor} />
-            <Route path="/criar-elemento/regra/:rule" component={ElementCreator} />
-            <Route path="/editar-elemento/:label/:element" component={ElementEditor} />
-            <Route path="/usuarios" component={UserList} />
-            <Route path="/perfil/:user" component={UserProfile} />
-            {/* <Route path="/table/basic" component={BasicTable} />
-            <Route path="/table/data" component={DataTable} /> */}
-            <Route path="/logout" component={Logout} />
-            <Route component={NotFound} />
-          </Switch>
-        </div>
-      </ThemeProvider>
-    );
-  }
+  // const handleChangeTheme = colorOption => {
+  //   const theme = customTheme({
+  //     palette: colorOption
+  //   });
+  //   setState({
+  //     theme
+  //   });
+  // }
+  return (
+    <ThemeProvider theme={state.theme}>
+      <Header handleChangeNavDrawer={handleChangeNavDrawer} navDrawerOpen={state.navDrawerOpen} history={props.history}/>
+      <LeftDrawer
+        user={props.user}
+        history={props.history}
+        isLogged={isAuthenticated()}
+        navDrawerOpen={state.navDrawerOpen}
+        handleChangeNavDrawer={handleChangeNavDrawer}
+        menus={Data.menus}
+      />
+      <div className={classNames(props.classes.container, !state.navDrawerOpen && props.classes.containerFull)}>
+        <Switch>
+          <Route exact path="/" component={Rules} />
+          {/* <Route path="/dashboard" component={Dashboard} /> */}
+          {/* <Route path="/form" component={Form} /> */}
+          <Route path="/regra/:rule" component={Rule} />
+          <Route path="/criar-regra" component={RuleCreator} />
+          <Route path="/editar-regra/:rule" component={RuleEditor} />
+          <Route path="/criar-elemento/regra/:rule" component={ElementCreator} />
+          <Route path="/editar-elemento/:label/:element" component={ElementEditor} />
+          <Route path="/usuarios" component={UserList} />
+          <Route path="/perfil/:user" component={UserProfile} />
+          {/* <Route path="/table/basic" component={BasicTable} />
+          <Route path="/table/data" component={DataTable} /> */}
+          <Route path="/logout" component={Logout} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+    </ThemeProvider>
+  );
 }
 
 App.propTypes = {

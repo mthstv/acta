@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import AppBar from "@material-ui/core/AppBar";
@@ -20,7 +20,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 // import ListItemIcon from "@material-ui/core/ListItemIcon";
 // import ListItemText from "@material-ui/core/ListItemText";
 
-import { logout } from "../services/auth";
 
 const styles = theme => ({
   appBar: {
@@ -64,11 +63,6 @@ const styles = theme => ({
     marginRight: theme.spacing(),
     marginLeft: 0,
     transition: "width 500ms ease-in-out"
-    // width: "100%",
-    // [theme.breakpoints.up("sm")]: {
-    //   marginLeft: theme.spacing(),
-    //   width: "auto"
-    // }
   },
   searchIcon: {
     width: theme.spacing(5),
@@ -81,7 +75,6 @@ const styles = theme => ({
   },
   inputRoot: {
     color: "inherit",
-    // width: "auto"
   },
   inputInput: {
     paddingTop: theme.spacing(),
@@ -107,109 +100,59 @@ const styles = theme => ({
   }
 });
 
-class Header extends React.Component {
-  constructor(props) {
-    super(props);
+function Header(props) {
+  const [notificationMoreAnchorEl, setNotificationMoreAnchorEl] = useState(null)
+  const [searchBarWidth, setSearchBarWidth] = useState("40%")
 
-    this.state = {
-      anchorEl: null,
-      notificationMoreAnchorEl: null,
-      searchBarWidth: "40%"
-    };
-  }
 
-  handleProfileMenuOpen = event => {
-    this.setState({ anchorEl: event.currentTarget });
+  const handleNotificationMenuOpen = event => {
+    setNotificationMoreAnchorEl(event.currentTarget);
   };
 
-  handleMenuClose = () => {
-    this.setState({ anchorEl: null });
-    this.handleNotificationMenuClose();
+  const handleNotificationMenuClose = () => {
+    setNotificationMoreAnchorEl(null);
   };
-
-  handleNotificationMenuOpen = event => {
-    this.setState({ notificationMoreAnchorEl: event.currentTarget });
-  };
-
-  handleNotificationMenuClose = () => {
-    this.setState({ notificationMoreAnchorEl: null });
-  };
-
-  handleLogout = () => {
-    logout();
-    this.props.history.push("/login");
-  }
-
-  render() {
-    const { handleChangeNavDrawer, classes, navDrawerOpen } = this.props;
-
-    // const { anchorEl } = this.state;
-    // const isMenuOpen = Boolean(this.state.a1anchorEl);
-    const isNotificationMenuOpen = Boolean(this.state.notificationMoreAnchorEl);
-
-    // const renderMenu = (
-    //   <Menu
-    //     anchorEl={anchorEl}
-    //     anchorOrigin={{ vertical: "top", horizontal: "right" }}
-    //     transformOrigin={{ vertical: "top", horizontal: "right" }}
-    //     open={isMenuOpen}
-    //     onClose={this.handleMenuClose}
-    //   >
-    //     <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-    //     <MenuItem onClick={this.handleClose}>My account</MenuItem>
-    //   </Menu>
-    // );
 
     return (
       <div>
         <AppBar
-          className={classNames(classes.appBar, {
-            [classes.appBarShift]: navDrawerOpen
+          className={classNames(props.classes.appBar, {
+            [props.classes.appBarShift]: props.navDrawerOpen
           })}
         >
           <Toolbar>
             <IconButton
-              className={classes.menuButton}
+              className={props.classes.menuButton}
               color="inherit"
               aria-label="Open drawer"
-              onClick={handleChangeNavDrawer}
+              onClick={props.handleChangeNavDrawer}
             >
               <MenuIcon />
             </IconButton>
 
             {/* SEARCHBAR */}
-            <div className={classes.search} style={{width: this.state.searchBarWidth}}>
-              <div className={classes.searchIcon}>
+            <div className={props.classes.search} style={{width: searchBarWidth}}>
+              <div className={props.classes.searchIcon}>
                 <SearchIcon />
               </div>
               <InputBase
                 placeholder="Busca..."
                 classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput
+                  root: props.classes.inputRoot,
+                  input: props.classes.inputInput
                 }}
                 fullWidth={true}
-                onFocus={() => this.setState({ searchBarWidth: "100%" })}
-                onBlur={() => this.setState({ searchBarWidth: "40%" })}
+                onFocus={() => setSearchBarWidth("100%")}
+                onBlur={() => setSearchBarWidth("40%")}
               />
             </div>
-            <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-
-              {/* <IconButtotransition: width 100ms ease-in-out;n color="inherit">
-                <Badge
-                  className={classes.margin}
-                  badgeContent={4}
-                  color="secondary"
-                >
-                  <MailIcon />
-                </Badge>
-              </IconButton> */}
+            <div className={props.classes.grow} />
+            <div className={props.classes.sectionDesktop}>
 
               {/* NOTIFICATIONS */}
-              <IconButton color="inherit" onClick={this.handleNotificationMenuOpen}>
+              <IconButton color="inherit" onClick={handleNotificationMenuOpen}>
                 <Badge
-                  className={classes.margin}
+                  className={props.classes.margin}
                   badgeContent={0}
                   color="secondary"
                 >
@@ -217,11 +160,12 @@ class Header extends React.Component {
                 </Badge>
               </IconButton>
             </div>
-            <div className={classes.sectionMobile}>
+            <div className={props.classes.sectionMobile}>
+
               {/* NOTIFICATIONS MOBILE */}
-              <IconButton color="inherit" onClick={this.handleNotificationMenuOpen}>
+              <IconButton color="inherit" onClick={handleNotificationMenuOpen}>
                 <Badge
-                  className={classes.margin}
+                  className={props.classes.margin}
                   badgeContent={0}
                   color="secondary"
                 >
@@ -231,11 +175,11 @@ class Header extends React.Component {
 
               {/* NOTIFICATIONS MENU */}
               <Menu
-                anchorEl={this.state.notificationMoreAnchorEl}
+                anchorEl={notificationMoreAnchorEl}
                 anchorOrigin={{ vertical: "top", horizontal: "right" }}
                 transformOrigin={{ vertical: "top", horizontal: "right" }}
-                open={isNotificationMenuOpen}
-                onClose={this.handleNotificationMenuClose}
+                open={Boolean(notificationMoreAnchorEl)}
+                onClose={handleNotificationMenuClose}
               >
                 <MenuItem>
                   {/* <ListItemIcon>
@@ -250,7 +194,7 @@ class Header extends React.Component {
         </AppBar>
       </div>
     );
-  }
+  // }
 }
 
 Header.propTypes = {

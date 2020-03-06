@@ -5,7 +5,6 @@ import { GetSingleRule } from "./components/FullSingleRule/FullSingleRule";
 import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import Fab from "@material-ui/core/Fab";
 import EditIcon from "@material-ui/icons/Edit";
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -88,12 +87,10 @@ class RulePage extends React.Component {
             style={styles.editFab} 
             aria-label="edit"
             onClick={this.handleEditorClick}
-            title="Modo Editor"
+            title={this.state.editorMode  ? "Desativar Modo Editor" : " Ativar Modo Editor"}
+            className={this.state.editorMode ? "pulse-button" : null}
           >
-            {this.state.editorMode 
-            ? <HighlightOffIcon />
-            : <EditIcon />
-            }
+            <EditIcon />
           </Fab>
         </>
         :

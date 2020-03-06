@@ -1,7 +1,6 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 import { Romanize } from "../../../../helpers";
-import './style.scss';
 
 const styles = {
   textFields: {

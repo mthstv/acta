@@ -8,7 +8,6 @@ import { withStyles } from "@material-ui/core/styles";
 // import { ReactComponent as Logo } from '../images/book_shelf.svg';
 
 import Menus from "./Menus";
-
 const drawStyles = theme => {
   return {
     drawerPaper: {
@@ -96,7 +95,7 @@ const LeftDrawer = props => {
         ACTA
       </div>
       <div className={classNames(classes.avatarRoot, !navDrawerOpen && classes.avatarRootMini)} onClick={handleRedirect}>
-        <Avatar src={props.user.avatar_url} size={navDrawerOpen ? 48 : 32} 
+        <Avatar src={props.user.avatar ? props.user.avatar_url : null} size={navDrawerOpen ? 48 : 32} 
           // classes={{ root: classes }} 
         />
         <span className={classes.avatarSpan}> { props.isLogged ? props.user.name : "Entrar" } </span>

@@ -140,7 +140,7 @@ class UserProfile extends Component {
                         <img 
                           style={styles.avatarImg}
                           alt="user-profile"
-                          src={this.state.avatar_url ? this.state.avatar_url : require('../../../images/user-profile.png')}
+                          src={this.state.avatar ? this.state.avatar_url : require('../../../images/user-profile.png')}
                           onMouseEnter={() => { return this.state.is_auth ? this.setState({ avatarHover: true }) : null}}
                           onClick={() => { return this.state.is_auth ? this.handleAvatarChange() : null}}
                         />

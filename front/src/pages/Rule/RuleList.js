@@ -4,6 +4,7 @@ import { Row, Col } from "react-bootstrap";
 import api from "../../services/api";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import Fade from '@material-ui/core/Fade';
 
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -23,7 +24,9 @@ const styles = {
 class RuleList extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      loaded: false
+    };
 
     this.getRules();
   }
@@ -31,7 +34,7 @@ class RuleList extends Component {
   getRules = () => {
     api.get("/rule")
       .then((res) => {
-        this.setState({ rules: res.data.data });
+        this.setState({ rules: res.data.data, loaded: true });
       })
       .catch((err) => {
         if(err.response.status === 401) {
@@ -59,26 +62,33 @@ class RuleList extends Component {
     const { rules } = this.state;
     return (
       <>
-        <div>
-          {rules && rules.map((item) =>
-            <Row key={item.id}>
-              <Col md={12}>
-                <RuleCard
-                  history={this.props.history}
-                  title={ item.rule_title }
-                  text={ item.description }
-                  ruleId={item.id}
-                  handleDelete={this.handleDelete}
-                />
-              </Col>
-            </Row>
-          )}
-          {rules && rules.length === 0 ?
-            <div style={{textAlign: "center", color: "white"}}>
-              Nenhuma regra encontrada
-            </div>
-            :""}
-        </div>
+          <div>
+            {rules && rules.map((item, index) =>
+              <Row key={item.id}>
+                <Col md={12}>
+                <Fade 
+                  in={this.state.loaded}
+                  style={{ transformOrigin: '0 0 0' }}
+                  {...(this.state.loaded ? { timeout: (1000 * (index + 0.5))  } : {})}>
+                  <div>
+                    <RuleCard
+                      history={this.props.history}
+                      title={ item.rule_title }
+                      text={ item.description }
+                      ruleId={item.id}
+                      handleDelete={this.handleDelete}
+                    />
+                  </div>
+                </Fade>
+                </Col>
+              </Row>
+            )}
+            {rules && rules.length === 0 ?
+              <div style={{textAlign: "center", color: "white"}}>
+                Nenhuma regra encontrada
+              </div>
+              :""}
+          </div>
         <Fab 
           color="primary" 
           style={styles.fab} 

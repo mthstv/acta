@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
@@ -21,114 +21,121 @@ import * as snackbarActions from "../../_actions/snackbar";
 
 import {ReactComponent as Icon} from "../../images/book_shelf.svg";
 
-class LoginPage extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   // console.log(props);
-  // }
-
-  state = {
+function LoginPage(props) {
+  const [user, setUser] = useState({
     email: "",
-    password: "",
-    error: false,
-    errorMessage: ""
-  }
+    password: ""
+  })
+  const [error, setError] = useState({
+    value: false,
+    errorMessage:""
+  })
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true)
+  
+  useEffect(() => {
+    if (user.email.trim() && user.password.trim()) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }, [user.email, user.password]);
 
-  LoginUser = (e) => {
+  const LoginUser = (e) => {
     e.preventDefault();
-
-    api.post("/auth/login", this.state)
+    api.post("/auth/login", user)
       .then(async (res) => {
-        await this.props.userActions.SaveUserData(res.data.data);
+        await props.userActions.SaveUserData(res.data.data);
         login(res.data.data);
-        // this.props.history.push('/');
         window.location.href = "/";
-      
       })
       .catch((err) => {
         if(err.response) {
-          this.setState({ error: true, errorMessage: err.response.data.message });
+          setError({ value: true, errorMessage: err.response.data.message });
         }
       });
   }
 
-  handleForgotPass = () => {
+  const handleForgotPass = () => {
     // console.log(this.props.snackbarActions)
-    this.props.snackbarActions.showSnackbar("Teste! Tudo funcionando!");
+    props.snackbarActions.showSnackbar("Email enviado com sucesso!");
   }
 
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <div>
-          <div style={styles.loginContainer}>
-            <div style={{textAlign: "center"}}>
-              {/* <Icon style={{height: 100, fill: '#eeeeee', background: "linear-gradient(#2196F3, #219DF3 50%)", borderRadius: 10, marginLeft: 200, marginBottom: 200}} /> */}
-              <Icon style={{height: 100, fill: "rgb(158, 158, 158)"}} />
-              <b className="customlogo" style={{color: "rgb(158, 158, 158)", fontSize: 40}}>
-                ACTA
-              </b>
-            </div>
-            <Paper style={styles.paper}>
-              <form onSubmit={this.LoginUser}>
-                <TextField 
-                  label="E-mail" 
-                  fullWidth={true}
-                  required
-                  error={this.state.error}
-                  helperText={this.state.errorMessage}
-                  onChange={(e) => this.setState({ email: e.target.value, error: false, errorMessage: "" })}/>
-                
-                <div style={{ marginTop: 16 }}>
-                  <TextField 
-                    label="Senha" 
-                    fullWidth={true} 
-                    required
-                    error={this.state.error}
-                    type="password" 
-                    onChange={(e) => this.setState({ password: e.target.value, error: false, errorMessage: "" })}/>
-                </div>
-  
-                <div style={{ marginTop: 10 }}>
-                  {/* <FormControlLabel
-                    control={
-                      <Checkbox
-                        label="Lembre de mim"
-                        style={styles.checkRemember.style}
-                      />
-                    }
-                    label="Lembre de mim"
-                  /> */}
-                  <Button
-                    type="submit"
-                    variant="contained" 
-                    color="primary" 
-                    style={styles.loginBtn}>
-                    Login
-                  </Button>
-                </div>
-              </form>
-            </Paper>
-  
-            <div style={styles.buttonsDiv} >
-              <Button href="/registrar" style={styles.flatButton}>
-                <PersonAdd />
-                <span style={{ margin: 5 }}>Registrar</span>
-              </Button>
-  
-              <Button 
-                style={styles.flatButton}
-                onClick={this.handleForgotPass}>
-                <Help />
-                <span style={{ margin: 5 }}>Esqueceu a senha?</span>
-              </Button>
-            </div>
-  
-          </div>
-        </div>
-      </ThemeProvider>
-    );
+  const handleFieldChange = (field, value) => {
+    setError({value: false, errorMessage: ""})
+    setUser({...user,  [field]: value})
   }
+
+  return (
+    <ThemeProvider theme={theme}>
+      <div>
+        <div style={styles.loginContainer}>
+          <div style={{textAlign: "center"}}>
+            {/* <Icon style={{height: 100, fill: '#eeeeee', background: "linear-gradient(#2196F3, #219DF3 50%)", borderRadius: 10, marginLeft: 200, marginBottom: 200}} /> */}
+            <Icon style={{height: 100, fill: "rgb(158, 158, 158)"}} />
+            <b className="customlogo" style={{color: "rgb(158, 158, 158)", fontSize: 40}}>
+              ACTA
+            </b>
+          </div>
+          <Paper style={styles.paper}>
+            <form onSubmit={LoginUser}>
+              <TextField 
+                label="E-mail" 
+                fullWidth={true}
+                required
+                error={error.value}
+                helperText={error.errorMessage}
+                onChange={(e) => handleFieldChange('email', e.target.value)} />
+              
+              <div style={{ marginTop: 16 }}>
+                <TextField 
+                  label="Senha" 
+                  fullWidth={true} 
+                  required
+                  error={error.value}
+                  type="password" 
+                  onChange={(e) => handleFieldChange('password', e.target.value)} />
+              </div>
+
+              <div style={{ marginTop: 10 }}>
+                {/* <FormControlLabel
+                  control={
+                    <Checkbox
+                      label="Lembre de mim"
+                      style={styles.checkRemember.style}
+                    />
+                  }
+                  label="Lembre de mim"
+                /> */}
+                <Button
+                  type="submit"
+                  variant="contained" 
+                  color="primary" 
+                  style={styles.loginBtn}
+                  disabled={isButtonDisabled}>
+                  Login
+                </Button>
+              </div>
+            </form>
+          </Paper>
+
+          <div style={styles.buttonsDiv} >
+            <Button href="/registrar" style={styles.flatButton}>
+              <PersonAdd />
+              <span style={{ margin: 5 }}>Registrar</span>
+            </Button>
+
+            <Button 
+              style={styles.flatButton}
+              onClick={handleForgotPass}>
+              <Help />
+              <span style={{ margin: 5 }}>Esqueceu a senha?</span>
+            </Button>
+          </div>
+
+        </div>
+      </div>
+    </ThemeProvider>
+  );
 };
 
 const mapStateToProps = state => ({
