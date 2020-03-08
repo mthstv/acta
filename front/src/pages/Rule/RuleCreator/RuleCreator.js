@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -12,91 +12,85 @@ import { connect } from "react-redux";
 
 import * as snackbarActions from "../../../_actions/snackbar";
 
-class RuleCreator extends Component {
-  // constructor(props) {
-  //   super(props)
-  // }
+function RuleCreator (props) {
 
-    state = {
-      rule_title: "",
-      description: "",
-      preamble: ""
-    }
+  const [rule, setRule] = useState({
+    rule_title: "",
+    description: "",
+    preamble: ""
+  })
 
-    handleSubmit = async (e) => {
-      e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await api.post("/rule", rule)
+      .then((res) =>{
+        props.snackbarActions.showSnackbar("Registro criada com sucesso");
+        props.history.push("/");
+      })
+      .catch((err) => {
+        if(err.response.status === 401) {
+          window.location.href = "/login";
+        }
+      });
+  }
 
-      await api.post("/rule", this.state)
-        .then((res) =>{
-          this.props.snackbarActions.showSnackbar("Registro criada com sucesso");
-          this.props.history.push("/");
-        })
-        .catch((err) => {
-          if(err.response.status === 401) {
-            window.location.href = "/login";
-          }
-        });
-    }
+  return (
+    <PageBase title="Criar nova regra">
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Título"
+          fullWidth={true}
+          margin="normal"
+          required
+          value={rule.rule_title}
+          onChange={(e) => setRule({...rule, rule_title: e.target.value})}
+        />
 
-    render() {
-      return (
-        <PageBase title="Criar nova regra">
-          <form onSubmit={this.handleSubmit}>
-            <TextField
-              label="Título"
-              fullWidth={true}
-              margin="normal"
-              required
-              value={this.state.rule_title}
-              onChange={(e) => this.setState({rule_title: e.target.value})}
-            />
+        <TextField
+          label="Descrição"
+          fullWidth={true}
+          margin="normal"
+          required
+          multiline
+          rows={2}
+          value={rule.description}
+          onChange={(e) => setRule({...rule, description: e.target.value})}
+        />
 
-            <TextField
-              label="Descrição"
-              fullWidth={true}
-              margin="normal"
-              required
-              multiline
-              rows={2}
-              value={this.state.description}
-              onChange={(e) => this.setState({description: e.target.value})}
-            />
+        <TextField
+          label="Preâmbulo"
+          fullWidth={true}
+          margin="normal"
+          multiline
+          rows={4}
+          value={rule.preamble}
+          onChange={(e) => setRule({...rule, preamble: e.target.value})}
+        />
 
-            <TextField
-              label="Preâmbulo"
-              fullWidth={true}
-              margin="normal"
-              multiline
-              rows={4}
-              value={this.state.preamble}
-              onChange={(e) => this.setState({preamble: e.target.value})}
-            />
+        <div style={styles.buttons}>
+          <Link to="/">
+            <Button variant="contained">Cancelar</Button>
+          </Link>
 
-            <div style={styles.buttons}>
-              <Link to="/">
-                <Button variant="contained">Cancelar</Button>
-              </Link>
-
-              <Button
-                style={styles.saveButton}
-                variant="contained"
-                type="submit"
-                color="primary"
-              >
-                  Criar
-              </Button>
-              {/* <Button
-                style={styles.saveButton}
-                variant="contained"
-                color="secondary"
-                >
-                  Criar e adicionar elementos
-              </Button> */}
-            </div>
-          </form>
-        </PageBase>
-      );
-    }
+          <Button
+            style={styles.saveButton}
+            variant="contained"
+            type="submit"
+            color="primary"
+          >
+              Criar
+          </Button>
+          {/* <Button
+            style={styles.saveButton}
+            variant="contained"
+            color="secondary"
+            >
+              Criar e adicionar elementos
+          </Button> */}
+        </div>
+      </form>
+    </PageBase>
+  );
 };
 
 const mapStateToProps = state => ({
@@ -108,6 +102,5 @@ function mapDispatchToProps (dispatch) {
     snackbarActions: bindActionCreators(snackbarActions, dispatch),
   };
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(RuleCreator);

@@ -11,6 +11,10 @@ const styles = {
     right: 20,
     margin: "auto"
   },
+  customlogo: {
+    color: "rgb(158, 158, 158)", 
+    fontSize: 40
+  },
   paper: {
     padding: 20,
     overflow: "auto",

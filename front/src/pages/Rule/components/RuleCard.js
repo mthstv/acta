@@ -45,10 +45,9 @@ const RuleCard = props => {
   return (
     <div>
       <ConfirmationModal
-        show={modalShow}
-        onHide={handleConfirmation}
+        open={modalShow}
+        onClose={handleConfirmation}
         confirmcolor="red"
-
       />
       <Card style={cardStyle}>
         <CardHeader

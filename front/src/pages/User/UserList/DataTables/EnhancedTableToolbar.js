@@ -56,8 +56,8 @@ let EnhancedTableToolbar = props => {
   return (
     <>
       <ConfirmationModal
-        show={modalShow}
-        onHide={handleConfirmation}
+        open={modalShow}
+        onClose={handleConfirmation}
         confirmcolor="red"
       />
       <Toolbar

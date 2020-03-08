@@ -1,6 +1,10 @@
 import React from "react";
-import Modal from "react-bootstrap/Modal";
 import Button from "@material-ui/core/Button";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default function ConfirmationModal(props) {
   const styles = {
@@ -18,37 +22,37 @@ export default function ConfirmationModal(props) {
   };
 
   return (
-    <Modal
+    <Dialog
       {...props}
       // { onHide(true or false), title, body, confirmcolor, confirmtext }
-      size="md"
+      fullWidth={true}
+      maxWidth="sm"
       aria-labelledby="contained-modal"
-      style={{zIndex: 99999}}
+      onClose={() => props.onClose(false)}
     >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal">
-          { props.title ? props.title : "Confirmação" }
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <p>
+      <DialogTitle>
+        { props.title ? props.title : "Confirmação" }
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText>
           { props.body ? props.body : "Tem certeza que deseja fazer isso?" }
-        </p>
-      </Modal.Body>
-      <Modal.Footer>
+        </DialogContentText>
+
+      </DialogContent>
+      <DialogActions>
         <div style={styles.buttons}>
-          <Button variant="contained" onClick={() => props.onHide(false)}>Cancelar</Button>
+          <Button variant="contained" onClick={() => props.onClose(false)}>Cancelar</Button>
           <Button
             style={props.confirmcolor ? styles.customColorButton : styles.saveButton}
             variant="contained"
             type="submit"
             color="primary"
-            onClick={() => props.onHide(true)}
+            onClick={() => props.onClose(true)}
           >
             { props.confirmtext ? props.confirmtext : "Confirmar" }
           </Button>
         </div>
-      </Modal.Footer>
-    </Modal>
+      </DialogActions>
+    </Dialog>
   );
 }

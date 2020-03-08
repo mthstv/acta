@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import RuleCard from "./components/RuleCard";
 import { Row, Col } from "react-bootstrap";
 import api from "../../services/api";
@@ -21,20 +21,20 @@ const styles = {
     position: "fixed",
   }
 };
-class RuleList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loaded: false
-    };
+function RuleList (props) {
 
-    this.getRules();
-  }
+  const [rules, setRules] = useState([])
+  const [loaded, setLoaded] = useState(false)
 
-  getRules = () => {
+  useEffect(() => {
+    getRules();
+  },[])
+
+  const getRules = () => {
     api.get("/rule")
-      .then((res) => {
-        this.setState({ rules: res.data.data, loaded: true });
+      .then(async (res) => {
+        await setRules(res.data.data)
+        await setLoaded(true)
       })
       .catch((err) => {
         if(err.response.status === 401) {
@@ -46,61 +46,56 @@ class RuleList extends Component {
   /**
    * Receives roleID from child to delete 
    */
-  handleDelete = async (ruleID) => {
+  const handleDelete = async (ruleID) => {
     api.delete(`/rule/${ruleID}`)
       .then((res) => {
-        this.props.snackbarActions.showSnackbar("Regra excluída com sucesso");
-        this.getRules();
+        props.snackbarActions.showSnackbar("Regra excluída com sucesso");
+        getRules();
       })
       .catch((err) => {
-        this.props.snackbarActions.showSnackbar("Houve um problema ao realizar esta ação");
+        props.snackbarActions.showSnackbar("Houve um problema ao realizar esta ação");
       });
   }
-
-  render() {
-    // const { classes } = this.props;
-    const { rules } = this.state;
-    return (
-      <>
-          <div>
-            {rules && rules.map((item, index) =>
-              <Row key={item.id}>
-                <Col md={12}>
-                <Fade 
-                  in={this.state.loaded}
-                  style={{ transformOrigin: '0 0 0' }}
-                  {...(this.state.loaded ? { timeout: (1000 * (index + 0.5))  } : {})}>
-                  <div>
-                    <RuleCard
-                      history={this.props.history}
-                      title={ item.rule_title }
-                      text={ item.description }
-                      ruleId={item.id}
-                      handleDelete={this.handleDelete}
-                    />
-                  </div>
-                </Fade>
-                </Col>
-              </Row>
-            )}
-            {rules && rules.length === 0 ?
-              <div style={{textAlign: "center", color: "white"}}>
-                Nenhuma regra encontrada
+  return (
+    <>
+      <div>
+        {rules.length > 0 && rules.map((item, index) =>
+          <Row key={item.id}>
+            <Col md={12}>
+            <Fade 
+              in={loaded}
+              style={{ transformOrigin: '0 0 0' }}
+              {...(loaded ? { timeout: (1000 * (index + 0.5))  } : {})}>
+              <div>
+                <RuleCard
+                  history={props.history}
+                  title={ item.rule_title }
+                  text={ item.description }
+                  ruleId={item.id}
+                  handleDelete={handleDelete}
+                />
               </div>
-              :""}
+            </Fade>
+            </Col>
+          </Row>
+        )}
+        {loaded && rules.length === 0 ?
+          <div style={{textAlign: "center", color: "white"}}>
+            Nenhuma regra encontrada
           </div>
-        <Fab 
-          color="primary" 
-          style={styles.fab} 
-          aria-label="add"
-          onClick={() => this.props.history.push("/criar-regra")}
-          title="Adicionar regra"
-        >
-          <AddIcon />
-        </Fab>
-      </>
-    );
-  }
+          :""}
+      </div>
+      <Fab 
+        color="primary" 
+        style={styles.fab} 
+        aria-label="add"
+        onClick={() => props.history.push("/criar-regra")}
+        title="Adicionar regra"
+      >
+        <AddIcon />
+      </Fab>
+    </>
+  );
 }
 
 function mapDispatchToProps (dispatch) {

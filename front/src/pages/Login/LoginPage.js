@@ -7,6 +7,9 @@ import Help from "@material-ui/icons/Help";
 import TextField from "@material-ui/core/TextField";
 // import Checkbox from "@material-ui/core/Checkbox";
 // import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Fade from '@material-ui/core/Fade';
+import Collapse from '@material-ui/core/Collapse';
+
 import theme from "../../theme";
 import styles from "./styles";
 
@@ -30,6 +33,7 @@ function LoginPage(props) {
     value: false,
     errorMessage:""
   })
+  const [loaded, setLoaded] = useState(false)
   const [isButtonDisabled, setIsButtonDisabled] = useState(true)
   
   useEffect(() => {
@@ -38,6 +42,7 @@ function LoginPage(props) {
     } else {
       setIsButtonDisabled(true);
     }
+    setLoaded(true)
   }, [user.email, user.password]);
 
   const LoginUser = (e) => {
@@ -69,54 +74,63 @@ function LoginPage(props) {
     <ThemeProvider theme={theme}>
       <div>
         <div style={styles.loginContainer}>
-          <div style={{textAlign: "center"}}>
-            {/* <Icon style={{height: 100, fill: '#eeeeee', background: "linear-gradient(#2196F3, #219DF3 50%)", borderRadius: 10, marginLeft: 200, marginBottom: 200}} /> */}
-            <Icon style={{height: 100, fill: "rgb(158, 158, 158)"}} />
-            <b className="customlogo" style={{color: "rgb(158, 158, 158)", fontSize: 40}}>
-              ACTA
-            </b>
-          </div>
-          <Paper style={styles.paper}>
-            <form onSubmit={LoginUser}>
-              <TextField 
-                label="E-mail" 
-                fullWidth={true}
-                required
-                error={error.value}
-                helperText={error.errorMessage}
-                onChange={(e) => handleFieldChange('email', e.target.value)} />
-              
-              <div style={{ marginTop: 16 }}>
-                <TextField 
-                  label="Senha" 
-                  fullWidth={true} 
-                  required
-                  error={error.value}
-                  type="password" 
-                  onChange={(e) => handleFieldChange('password', e.target.value)} />
-              </div>
+          <Fade 
+            in={loaded}
+            style={{ transformOrigin: '0 0 0' }}
+            {...(loaded ? { timeout: (1500)  } : {})}>
+            <div style={{textAlign: "center"}}>
+              {/* <Icon style={{height: 100, fill: '#eeeeee', background: "linear-gradient(#2196F3, #219DF3 50%)", borderRadius: 10, marginLeft: 200, marginBottom: 200}} /> */}
+              <Icon style={{height: 100, fill: "rgb(158, 158, 158)"}} />
+              <b className="customlogo" style={styles.customlogo} data-text="ACTA">
+                ACTA
+              </b>
+            </div>
+          </Fade>
+          <Collapse in={loaded}>
+            <div>
+              <Paper style={styles.paper}>
+                <form onSubmit={LoginUser}>
+                  <TextField 
+                    label="E-mail" 
+                    fullWidth={true}
+                    required
+                    error={error.value}
+                    helperText={error.errorMessage}
+                    onChange={(e) => handleFieldChange('email', e.target.value)} />
+                  
+                  <div style={{ marginTop: 16 }}>
+                    <TextField 
+                      label="Senha" 
+                      fullWidth={true} 
+                      required
+                      error={error.value}
+                      type="password" 
+                      onChange={(e) => handleFieldChange('password', e.target.value)} />
+                  </div>
 
-              <div style={{ marginTop: 10 }}>
-                {/* <FormControlLabel
-                  control={
-                    <Checkbox
+                  <div style={{ marginTop: 10 }}>
+                    {/* <FormControlLabel
+                      control={
+                        <Checkbox
+                          label="Lembre de mim"
+                          style={styles.checkRemember.style}
+                        />
+                      }
                       label="Lembre de mim"
-                      style={styles.checkRemember.style}
-                    />
-                  }
-                  label="Lembre de mim"
-                /> */}
-                <Button
-                  type="submit"
-                  variant="contained" 
-                  color="primary" 
-                  style={styles.loginBtn}
-                  disabled={isButtonDisabled}>
-                  Login
-                </Button>
-              </div>
-            </form>
-          </Paper>
+                    /> */}
+                    <Button
+                      type="submit"
+                      variant="contained" 
+                      color="primary" 
+                      style={styles.loginBtn}
+                      disabled={isButtonDisabled}>
+                      Login
+                    </Button>
+                  </div>
+                </form>
+              </Paper>
+            </div>
+          </Collapse>
 
           <div style={styles.buttonsDiv} >
             <Button href="/registrar" style={styles.flatButton}>

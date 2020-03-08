@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import api from "../../services/api";
 import { GetSingleRule } from "./components/FullSingleRule/FullSingleRule";
 import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import Fab from "@material-ui/core/Fab";
 import EditIcon from "@material-ui/icons/Edit";
+import Zoom from '@material-ui/core/Zoom';
 
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -30,18 +31,17 @@ const styles = {
     position: "fixed",
   }
 };
-class RulePage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editorMode: false
-    };
-  }
-  
-  componentDidMount() {
-    api.get(`/rule/${this.props.match.params.rule}`)
+
+function RulePage (props) {
+  const [rule, setRule] = useState(null)
+  const [editorMode, setEditorMode] = useState(false)
+  const [loaded, setLoaded] = useState(false)
+ 
+  useEffect(() => {
+    api.get(`/rule/${props.match.params.rule}`)
       .then((res) => {
-        this.setState({ rule: res.data.data });
+        setRule(res.data.data)
+        setLoaded(true)
       })
       .catch((err) => {
         if(err.response && err.response.status === 401) {
@@ -51,52 +51,51 @@ class RulePage extends React.Component {
           this.props.history.push('/404');
         }
       });
+  },[props.match.params.rule])
+
+  const handleEditorClick = () => {
+    props.snackbarActions.showSnackbar(editorMode ? 'Modo editor desativado' : 'Modo editor ativado, selecione um elemento para editá-lo.' )
+    setEditorMode(!editorMode)
   }
 
-  handleEditorClick = () => {
-    this.props.snackbarActions.showSnackbar(this.state.editorMode ? 'Modo editor desativado' : 'Modo editor ativado, selecione um elemento para editá-lo.' )
-    this.setState({editorMode: !this.state.editorMode})
-
-  }
-  render() {
-    const { rule } = this.state;
-    return (
-      rule ?
-        <>
+  return (
+    rule ?
+      <>
+        <Zoom in={loaded}>
           <Row>
             <Col md={12}>
               <Card>
                 <Card.Body>
-                  <GetSingleRule rule={rule} editorMode={this.state.editorMode} history={this.props.history}/>
+                  <GetSingleRule rule={rule} editorMode={editorMode} history={props.history}/>
                 </Card.Body>
               </Card>
             </Col>
           </Row>
-          <Fab 
-            color="primary" 
-            style={styles.createFab} 
-            aria-label="add"
-            onClick={() => this.props.history.push(`/criar-elemento/regra/${rule.id}`)}
-            title="Adicionar elemento"
-          >
-            <AddToPhotosIcon />
-          </Fab>
-          <Fab 
-            color="secondary" 
-            size="small"
-            style={styles.editFab} 
-            aria-label="edit"
-            onClick={this.handleEditorClick}
-            title={this.state.editorMode  ? "Desativar Modo Editor" : " Ativar Modo Editor"}
-            className={this.state.editorMode ? "pulse-button" : null}
-          >
-            <EditIcon />
-          </Fab>
-        </>
-        :
-        <div/>
-    );
-  }
+        </Zoom>
+        <Fab 
+          color="primary" 
+          style={styles.createFab} 
+          aria-label="add"
+          onClick={() => props.history.push(`/criar-elemento/regra/${rule.id}`)}
+          title="Adicionar elemento"
+        >
+          <AddToPhotosIcon />
+        </Fab>
+        <Fab 
+          color="secondary" 
+          size="small"
+          style={styles.editFab} 
+          aria-label="edit"
+          onClick={handleEditorClick}
+          title={editorMode  ? "Desativar Modo Editor" : " Ativar Modo Editor"}
+          className={editorMode ? "pulse-button" : null}
+        >
+          <EditIcon />
+        </Fab>
+      </>
+      :
+      <div/>
+  );
 }
 
 function mapDispatchToProps (dispatch) {

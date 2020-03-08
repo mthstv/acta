@@ -1,6 +1,6 @@
-const initialState = JSON.parse(localStorage.getItem("user"));
+export const initialUserState = JSON.parse(localStorage.getItem("user"));
 
-export default function user(state = initialState, action) {
+export function userReducer(state = initialUserState, action) {
   // { type: 'LOGIN_USER', user }
   switch(action.type) {
   case "SAVE_USER_DATA":
@@ -9,3 +9,5 @@ export default function user(state = initialState, action) {
     return state;
   }
 }
+
+export default userReducer;

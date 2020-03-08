@@ -6,7 +6,7 @@ const styles = {
     maxWidth: 400,
     height: "auto",
     position: "absolute",
-    top: "20%",
+    top: "2%",
     left: 20,
     right: 20,
     margin: "auto"

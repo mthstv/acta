@@ -5,7 +5,9 @@ import Button from "@material-ui/core/Button";
 import PersonAdd from "@material-ui/icons/PersonAdd";
 import TextField from "@material-ui/core/TextField";
 import theme from "../../theme";
+import Collapse from '@material-ui/core/Collapse';
 import styles from "./styles";
+import Fade from '@material-ui/core/Fade';
 
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -14,6 +16,8 @@ import api from "../../services/api";
 import { login } from "../../services/auth";
 
 import * as userActions from "../../_actions/user";
+
+import {ReactComponent as Icon} from "../../images/book_shelf.svg";
 
 function RegisterPage(props) {
 
@@ -26,13 +30,15 @@ function RegisterPage(props) {
     errorMessages:""
   })
   const [isButtonDisabled, setIsButtonDisabled] = useState(true)
-
+  const [loaded, setLoaded] = useState(false)
+  
   useEffect(() => {
     if (user.name.trim() && user.email.trim() && user.password.trim()) {
       setIsButtonDisabled(false);
     } else {
       setIsButtonDisabled(true);
     }
+    setLoaded(true)
   }, [user.name, user.email, user.password]);
 
   const registerUser = (e) => {
@@ -58,58 +64,72 @@ function RegisterPage(props) {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <div style={styles.loginContainer}>
-          <Paper style={styles.paper}>
-            <form onSubmit={registerUser}>
-              <TextField 
-                label="Nome" 
-                fullWidth={true}
-                required
-                error={Boolean(error.errorMessages.name)}
-                onChange={(e) => handleFieldChange('name', e.target.value)}/>
-            
-              <div style={{ marginTop: 16 }}>
-                <TextField 
-                  label="E-mail" 
-                  fullWidth={true}
-                  required
-                  error={Boolean(error.errorMessages.email)}
-                  helperText={error.errorMessages.email ? error.errorMessages.email[0] : ""}
-                  onChange={(e) => handleFieldChange('email', e.target.value)}/>
+          <div style={styles.loginContainer}>
+            <Fade 
+              in={loaded}
+              style={{ transformOrigin: '0 0 0' }}
+              {...(loaded ? { timeout: (1500)  } : {})}>
+              <div style={{textAlign: "center"}}>
+                {/* <Icon style={{height: 100, fill: '#eeeeee', background: "linear-gradient(#2196F3, #219DF3 50%)", borderRadius: 10, marginLeft: 200, marginBottom: 200}} /> */}
+                <Icon style={{height: 100, fill: "rgb(158, 158, 158)"}} />
+                <b className="customlogo glitch mx-auto" style={{color: "rgb(158, 158, 158)", fontSize: 40}}>
+                  ACTA
+                </b>
               </div>
-            
-              <div style={{ marginTop: 16 }}>
-                <TextField
-                  label="Senha"
-                  fullWidth={true}
-                  required
-                  error={Boolean(error.errorMessages.password)}
-                  helperText={error.errorMessages.password ? error.errorMessages.password[0] : ""}
-                  type="password"
-                  onChange={(e) => handleFieldChange('password', e.target.value)}/>
+            </Fade>
+            <Collapse in={loaded}>
+              <div>
+                <Paper style={styles.paper}>
+                  <form onSubmit={registerUser}>
+                    <TextField 
+                      label="Nome" 
+                      fullWidth={true}
+                      required
+                      error={Boolean(error.errorMessages.name)}
+                      onChange={(e) => handleFieldChange('name', e.target.value)}/>
+                  
+                    <div style={{ marginTop: 16 }}>
+                      <TextField 
+                        label="E-mail" 
+                        fullWidth={true}
+                        required
+                        error={Boolean(error.errorMessages.email)}
+                        helperText={error.errorMessages.email ? error.errorMessages.email[0] : ""}
+                        onChange={(e) => handleFieldChange('email', e.target.value)}/>
+                    </div>
+                  
+                    <div style={{ marginTop: 16 }}>
+                      <TextField
+                        label="Senha"
+                        fullWidth={true}
+                        required
+                        error={Boolean(error.errorMessages.password)}
+                        helperText={error.errorMessages.password ? error.errorMessages.password[0] : ""}
+                        type="password"
+                        onChange={(e) => handleFieldChange('password', e.target.value)}/>
+                    </div>
+                  
+                    <div style={{ marginTop: 10 }}>
+                      <Button 
+                        type="submit"
+                        variant="contained" 
+                        color="primary" 
+                        style={styles.loginBtn}
+                        disabled={isButtonDisabled}>
+                        Registrar
+                      </Button>
+                    </div>
+                  </form>
+                </Paper>
               </div>
-            
-              <div style={{ marginTop: 10 }}>
-                <Button 
-                  type="submit"
-                  variant="contained" 
-                  color="primary" 
-                  style={styles.loginBtn}
-                  disabled={isButtonDisabled}>
-                  Registrar
-                </Button>
-              </div>
-            </form>
-          </Paper>
-
-          <div style={styles.buttonsDiv} >
-            <Button href="/login" style={styles.flatButton}>
-              <PersonAdd />
-              <span style={{ margin: 5 }}>Login</span>
-            </Button>
+            </Collapse>
+            <div style={styles.buttonsDiv} >
+              <Button href="/login" style={styles.flatButton}>
+                <PersonAdd />
+                <span style={{ margin: 5 }}>Login</span>
+              </Button>
+            </div>
           </div>
-
-        </div>
       </div>
     </ThemeProvider>
   );
