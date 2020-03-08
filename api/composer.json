@@ -9,9 +9,11 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "algolia/algoliasearch-client-php": "^2.2",
         "fideloper/proxy": "^4.0",
         "fruitcake/laravel-cors": "^1.0",
         "laravel/framework": "^6.2",
+        "laravel/scout": "^8.0",
         "laravel/tinker": "^1.0",
         "orangehill/iseed": "^2.6",
         "tymon/jwt-auth": "^1.0.0"

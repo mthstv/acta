@@ -3,9 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Laravel\Scout\Searchable;
 class Article extends Model
 {
+    use Searchable;
+
+    /**
+     * Sets Eager Loading from environment
+     */
+    function __construct(array $attributes = array())
+    { 
+        parent::__construct($attributes);
+        if(!env('APP_EAGER_LOADING')) {
+            $this->with = [];
+        }
+    }
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -31,6 +44,24 @@ class Article extends Model
     */
     protected $hidden = ['created_at', 'updated_at'];
 
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = [];
+        
+        $array['id'] = $this->id;
+        $array['number'] = $this->number;
+        $array['text'] = $this->text;
+        $array['rule_reference'] = $this->rule_reference;
+        $array['label'] = 'article';
+
+        return $array;
+    }
 
     //belongsto
 
