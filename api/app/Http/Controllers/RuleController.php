@@ -6,6 +6,7 @@ use App\Models\Rule;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\RuleValidation;
+use App\Repositories\Contracts\RuleRepositoryInterface;
 
 class RuleController extends Controller
 {
@@ -86,5 +87,15 @@ class RuleController extends Controller
     {
         $rule->delete();
         return response()->json(['success' => true, 'data' => trans('api.rule.delete')]);
+    }
+
+    /**
+     * Search for a element inside storage
+     */
+    public function search(Request $request, RuleRepositoryInterface $repository)
+    {
+      $data = $request->all();
+      $result = $repository->searchQuery($data['search'], $data['aggregate']);
+      return response()->json(['success' => true, 'data' => $result]);
     }
 }

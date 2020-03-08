@@ -48,6 +48,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
      * /rule/{id}   => 'DELETE' @ destroy()
      *
      */
+    Route::post('rule/search', 'RuleController@search');
     Route::resource('rule', 'RuleController');
 
     /**
