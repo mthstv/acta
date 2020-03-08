@@ -10,15 +10,13 @@ import CreateIcon from '@material-ui/icons/Create';
 
 import api from "../../../services/api";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
-import * as snackbarActions from "../../../_actions/snackbar";
-import * as userActions from "../../../_actions/user";
+import { useSelector, useDispatch } from "react-redux";
 
 import FileUploadModal from "../../../components/FileUploadModal";
 
 function UserProfile (props) {
+  const userState = useSelector(state => state.user)
+  const dispatch = useDispatch()
 
   const [user, setUser] = useState({
     name: "",
@@ -31,7 +29,7 @@ function UserProfile (props) {
   const [isAuth, setIsAuth] = useState(false)
 
   useEffect(() => {
-    setIsAuth(parseInt(props.user.id) === parseInt(props.match.params.user))
+    setIsAuth(parseInt(userState.id) === parseInt(props.match.params.user))
     
     const fetchUser = () => {
       api.get(`/user/${parseInt(props.match.params.user)}`)
@@ -48,7 +46,7 @@ function UserProfile (props) {
         });
     }
     fetchUser()
-  }, [props])
+  }, [props, userState.id])
   
   const getUser = async () => {
     await api.get(`/user/${parseInt(props.match.params.user)}`)
@@ -62,8 +60,8 @@ function UserProfile (props) {
     if(isAuth) {
       await api.patch("/user/auth-update", user)
         .then((res) =>{
-          props.userActions.SaveUserData(res.data.data);
-          props.snackbarActions.showSnackbar("Dados alterados com sucesso");
+          dispatch({type: 'SNACKBAR_SHOW', message: "Dados alterados com sucesso"})
+          dispatch({type: 'SAVE_USER_DATA', user: res.data.data})
         })
         .catch((err) => {
           if(err.response.status === 401) {
@@ -75,7 +73,7 @@ function UserProfile (props) {
       delete user.auth_token;
       await api.patch(`/user/${user.id}`, user)
         .then((res) =>{
-          props.snackbarActions.showSnackbar("Usuário alterado com sucesso");
+          dispatch({type: 'SNACKBAR_SHOW', message: "Usuário alterado com sucesso"})
         })
         .catch((err) => {
           if(err.response.status === 401) {
@@ -101,7 +99,7 @@ function UserProfile (props) {
       await api.post('/user/avatar-upload', data)
       await api.get('/auth/by-token')
         .then((res) => {
-          props.userActions.SaveUserData(res.data.data)
+          dispatch({type: 'SAVE_USER_DATA', user: res.data.data})
           getUser()
         })
       setUploadModalShow(false)
@@ -197,16 +195,4 @@ function UserProfile (props) {
   );
 };
 
-const mapStateToProps = state => ({
-  user: state.user,
-});
-
-function mapDispatchToProps (dispatch) {
-  return {
-    userActions: bindActionCreators(userActions, dispatch),
-    snackbarActions: bindActionCreators(snackbarActions, dispatch),
-  };
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
+export default UserProfile;

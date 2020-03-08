@@ -14,15 +14,13 @@ import styles from "./styles";
 
 import api from "../../../services/api";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
-import * as snackbarActions from "../../../_actions/snackbar";
+import { useDispatch } from "react-redux";
 
 import ElementSelect from "./components/ElementSelect";
 import { elementToString, handleElementName } from "../../../helpers";
 
 function ElementCreator (props) {
+  const dispatch = useDispatch()
   const [element, setElement] = useState({
     number: "",
     letter: "",
@@ -79,7 +77,7 @@ function ElementCreator (props) {
     }
     await api.post(`/${selectedElement}`, elementData)
       .then((res) => {
-        props.snackbarActions.showSnackbar(`${handleElementName(selectedElement)} adicionado com sucesso`);
+        dispatch({type: 'SNACKBAR_SHOW', message: `${handleElementName(selectedElement)} adicionado(a) com sucesso`})
         props.history.push(`/regra/${element.rule_reference}`);
       });
   }
@@ -204,15 +202,4 @@ function ElementCreator (props) {
   );
 };
 
-const mapStateToProps = state => ({
-  user: state.user,
-});
-
-function mapDispatchToProps (dispatch) {
-  return {
-    snackbarActions: bindActionCreators(snackbarActions, dispatch),
-  };
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(ElementCreator);
+export default ElementCreator;

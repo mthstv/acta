@@ -7,13 +7,10 @@ import styles from "./styles";
 
 import api from "../../../services/api";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
-import * as snackbarActions from "../../../_actions/snackbar";
+import { useDispatch } from "react-redux";
 
 function RuleEditor (props) {
-
+  const dispatch = useDispatch()
   const [rule, setRule] = useState({
     rule_title: "",
     description: "",
@@ -26,7 +23,7 @@ function RuleEditor (props) {
     
     await api.patch(`/rule/${ruleId}`, rule)
     .then((res) =>{
-      props.snackbarActions.showSnackbar("Registro alterado com sucesso");
+      dispatch({type: 'SNACKBAR_SHOW', message: "Registro alterado com sucesso"})
       props.history.push("/");
     })
     .catch((err) => {
@@ -102,15 +99,4 @@ function RuleEditor (props) {
   );
 };
 
-const mapStateToProps = state => ({
-  user: state.user,
-});
-
-function mapDispatchToProps (dispatch) {
-  return {
-    snackbarActions: bindActionCreators(snackbarActions, dispatch),
-  };
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(RuleEditor);
+export default RuleEditor;

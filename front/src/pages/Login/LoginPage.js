@@ -16,15 +16,14 @@ import styles from "./styles";
 import api from "../../services/api";
 import { login } from "../../services/auth";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
-import * as userActions from "../../_actions/user";
-import * as snackbarActions from "../../_actions/snackbar";
+import { useDispatch } from "react-redux";
 
 import {ReactComponent as Icon} from "../../images/book_shelf.svg";
 
 function LoginPage(props) {
+  // const userState = useSelector(state => state.user)
+  const dispatch = useDispatch()
+
   const [user, setUser] = useState({
     email: "",
     password: ""
@@ -49,7 +48,8 @@ function LoginPage(props) {
     e.preventDefault();
     api.post("/auth/login", user)
       .then(async (res) => {
-        await props.userActions.SaveUserData(res.data.data);
+        // await props.userActions.SaveUserData(res.data.data);
+        await dispatch({type: 'SAVE_USER_DATA', user: res.data.data})
         login(res.data.data);
         window.location.href = "/";
       })
@@ -61,8 +61,7 @@ function LoginPage(props) {
   }
 
   const handleForgotPass = () => {
-    // console.log(this.props.snackbarActions)
-    props.snackbarActions.showSnackbar("Email enviado com sucesso!");
+    dispatch({type: 'SNACKBAR_SHOW', message: "Email enviado com sucesso!"})
   }
 
   const handleFieldChange = (field, value) => {
@@ -109,15 +108,6 @@ function LoginPage(props) {
                   </div>
 
                   <div style={{ marginTop: 10 }}>
-                    {/* <FormControlLabel
-                      control={
-                        <Checkbox
-                          label="Lembre de mim"
-                          style={styles.checkRemember.style}
-                        />
-                      }
-                      label="Lembre de mim"
-                    /> */}
                     <Button
                       type="submit"
                       variant="contained" 
@@ -132,35 +122,28 @@ function LoginPage(props) {
             </div>
           </Collapse>
 
-          <div style={styles.buttonsDiv} >
-            <Button href="/registrar" style={styles.flatButton}>
-              <PersonAdd />
-              <span style={{ margin: 5 }}>Registrar</span>
-            </Button>
+          <Fade 
+            in={loaded}
+            style={{ transformOrigin: '0 0 0' }}
+            {...(loaded ? { timeout: (2500)  } : {})}>
+            <div style={styles.buttonsDiv} >
+              <Button href="/registrar" style={styles.flatButton}>
+                <PersonAdd />
+                <span style={{ margin: 5 }}>Registrar</span>
+              </Button>
 
-            <Button 
-              style={styles.flatButton}
-              onClick={handleForgotPass}>
-              <Help />
-              <span style={{ margin: 5 }}>Esqueceu a senha?</span>
-            </Button>
-          </div>
-
+              <Button 
+                style={styles.flatButton}
+                onClick={handleForgotPass}>
+                <Help />
+                <span style={{ margin: 5 }}>Esqueceu a senha?</span>
+              </Button>
+            </div>
+          </Fade>
         </div>
       </div>
     </ThemeProvider>
   );
 };
 
-const mapStateToProps = state => ({
-  user: state.user,
-});
-
-function mapDispatchToProps (dispatch) {
-  return {
-    userActions: bindActionCreators(userActions, dispatch),
-    snackbarActions: bindActionCreators(snackbarActions, dispatch),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default LoginPage;

@@ -9,18 +9,15 @@ import Collapse from '@material-ui/core/Collapse';
 import styles from "./styles";
 import Fade from '@material-ui/core/Fade';
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import api from "../../services/api";
 import { login } from "../../services/auth";
 
-import * as userActions from "../../_actions/user";
-
 import {ReactComponent as Icon} from "../../images/book_shelf.svg";
 
 function RegisterPage(props) {
-
+  const dispatch = useDispatch()
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -45,7 +42,7 @@ function RegisterPage(props) {
     e.preventDefault();
     api.post("/auth/register", user)
       .then(async (res) => {
-        await props.SaveUserData(res.data.data);
+        await dispatch({type: 'SAVE_USER_DATA', user: res.data.data})
         login(res.data.data);
         window.location.href = "/";
       })
@@ -123,23 +120,21 @@ function RegisterPage(props) {
                 </Paper>
               </div>
             </Collapse>
-            <div style={styles.buttonsDiv} >
-              <Button href="/login" style={styles.flatButton}>
-                <PersonAdd />
-                <span style={{ margin: 5 }}>Login</span>
-              </Button>
-            </div>
+            <Fade 
+              in={loaded}
+              style={{ transformOrigin: '0 0 0' }}
+              {...(loaded ? { timeout: (2500)  } : {})}>
+              <div style={styles.buttonsDiv} >
+                <Button href="/login" style={styles.flatButton}>
+                  <PersonAdd />
+                  <span style={{ margin: 5 }}>Login</span>
+                </Button>
+              </div>
+            </Fade> 
           </div>
       </div>
     </ThemeProvider>
   );
 }
 
-const mapStateToProps = state => ({
-  user: state.user,
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(userActions, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);
+export default RegisterPage;

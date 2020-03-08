@@ -7,13 +7,10 @@ import styles from "./styles";
 
 import api from "../../../services/api";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
-import * as snackbarActions from "../../../_actions/snackbar";
+import { useDispatch } from "react-redux";
 
 function RuleCreator (props) {
-
+  const dispatch = useDispatch()
   const [rule, setRule] = useState({
     rule_title: "",
     description: "",
@@ -24,7 +21,7 @@ function RuleCreator (props) {
     e.preventDefault();
     await api.post("/rule", rule)
       .then((res) =>{
-        props.snackbarActions.showSnackbar("Registro criada com sucesso");
+        dispatch({type: 'SNACKBAR_SHOW', message: "Registro criada com sucesso"})
         props.history.push("/");
       })
       .catch((err) => {
@@ -93,14 +90,4 @@ function RuleCreator (props) {
   );
 };
 
-const mapStateToProps = state => ({
-  user: state.user,
-});
-
-function mapDispatchToProps (dispatch) {
-  return {
-    snackbarActions: bindActionCreators(snackbarActions, dispatch),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(RuleCreator);
+export default RuleCreator;

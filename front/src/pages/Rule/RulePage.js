@@ -6,11 +6,7 @@ import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import Fab from "@material-ui/core/Fab";
 import EditIcon from "@material-ui/icons/Edit";
 import Zoom from '@material-ui/core/Zoom';
-
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
-import * as snackbarActions from "../../_actions/snackbar";
+import { useDispatch } from "react-redux";
 
 const styles = {
   createFab: {
@@ -33,6 +29,7 @@ const styles = {
 };
 
 function RulePage (props) {
+  const dispatch = useDispatch()
   const [rule, setRule] = useState(null)
   const [editorMode, setEditorMode] = useState(false)
   const [loaded, setLoaded] = useState(false)
@@ -54,7 +51,7 @@ function RulePage (props) {
   },[props.match.params.rule])
 
   const handleEditorClick = () => {
-    props.snackbarActions.showSnackbar(editorMode ? 'Modo editor desativado' : 'Modo editor ativado, selecione um elemento para editá-lo.' )
+    dispatch({type: 'SNACKBAR_SHOW', message: editorMode ? 'Modo editor desativado' : 'Modo editor ativado, selecione um elemento para editá-lo.'})
     setEditorMode(!editorMode)
   }
 
@@ -98,10 +95,4 @@ function RulePage (props) {
   );
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    snackbarActions: bindActionCreators(snackbarActions, dispatch),
-  };
-}
-
-export default connect(null, mapDispatchToProps)(RulePage);
+export default RulePage;

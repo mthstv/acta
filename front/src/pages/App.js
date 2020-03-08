@@ -8,10 +8,6 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import Header from "../components/Header";
 import LeftDrawer from "../components/LeftDrawer";
 import Data from "../data";
-// import Dashboard from "./Dashboard/DashboardPage";
-// import Form from "./Form/FormPage";
-// import BasicTable from "./Table/BasicTables";
-// import DataTable from "./Table/DataTables";
 import NotFound from "./NotFoundPage/NotFoundPage";
 import Rules from "./Rule/RuleList";
 import Rule from "./Rule/RulePage";
@@ -22,14 +18,10 @@ import ElementEditor from "./Rule/ElementEditor/ElementEditor";
 import UserList from "./User/UserList/UserList";
 import UserProfile from "./User/UserProfile/UserProfile";
 import Logout from "./Logout";
-import { compose } from "redux";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { isAuthenticated, logout } from "../services/auth";
 import api from "../services/api";
-
-import * as userActions from "../_actions/user";
 
 const styles = () => ({
   container: {
@@ -63,6 +55,8 @@ const styles = () => ({
 });
 
 function App(props) {
+  const user = useSelector(state => state.user)
+  const dispatch = useDispatch()
 
   const [state, setState] = useState({
     theme: defaultTheme,
@@ -72,22 +66,21 @@ function App(props) {
         : false
   })
 
-  const {SaveUserData, history} = props
   useEffect(() => {
     // Get user data
     api.get("/auth/by-token")
     .then((res) => {
-      SaveUserData(res.data.data);
-        localStorage.setItem("token", res.data.data.auth_token);
-        delete res.data.data.auth_token;
-        localStorage.setItem("user", JSON.stringify(res.data.data));
+      dispatch({type: 'SAVE_USER_DATA', user: res.data.data})
+      localStorage.setItem("token", res.data.data.auth_token);
+      delete res.data.data.auth_token;
+      localStorage.setItem("user", JSON.stringify(res.data.data));
       })
       .catch((err) => {
         logout();
-        history.push("/login");
+        props.history.push("/login");
         console.log("token expired");
       });
-  },[history, SaveUserData])
+  },[props, dispatch])
 
   const handleChangeNavDrawer = () => {
     setState({
@@ -108,7 +101,7 @@ function App(props) {
     <ThemeProvider theme={state.theme}>
       <Header handleChangeNavDrawer={handleChangeNavDrawer} navDrawerOpen={state.navDrawerOpen} history={props.history}/>
       <LeftDrawer
-        user={props.user}
+        user={user}
         history={props.history}
         isLogged={isAuthenticated()}
         navDrawerOpen={state.navDrawerOpen}
@@ -142,12 +135,4 @@ App.propTypes = {
   classes: PropTypes.object
 };
 
-const mapStateToProps = state => ({
-  user: state.user,
-});
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(userActions, dispatch);
-
-
-export default compose( withStyles(styles), connect(mapStateToProps, mapDispatchToProps) )(App);
+export default withStyles(styles)(App);

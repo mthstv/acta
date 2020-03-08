@@ -9,15 +9,12 @@ import styles from "./styles";
 
 import api from "../../../services/api";
 
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
-import * as snackbarActions from "../../../_actions/snackbar";
+import { useDispatch } from "react-redux";
 
 import { handleElementName, handleUrlTranslateElement } from "../../../helpers";
 
 function ElementEditor (props) {
-
+  const dispatch = useDispatch()
   const [element, setElement] = useState({
     number: "",
     letter: "",
@@ -43,7 +40,7 @@ function ElementEditor (props) {
     api.patch(`/${selectedElement}/${element.id}`, element)
       .then((res) => {
         props.history.push(`/regra/${element.rule_reference}`)
-        props.snackbarActions.showSnackbar(`${handleElementName(selectedElement)} alterado(a) com sucesso`)
+        dispatch({type: 'SNACKBAR_SHOW', message: `${handleElementName(selectedElement)} alterado(a) com sucesso`})
       })
   }
     
@@ -119,15 +116,4 @@ function ElementEditor (props) {
   );
 };
 
-const mapStateToProps = state => ({
-  user: state.user,
-});
-
-function mapDispatchToProps (dispatch) {
-  return {
-    snackbarActions: bindActionCreators(snackbarActions, dispatch),
-  };
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(ElementEditor);
+export default ElementEditor;

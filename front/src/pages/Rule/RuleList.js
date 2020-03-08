@@ -5,11 +5,7 @@ import api from "../../services/api";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Fade from '@material-ui/core/Fade';
-
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-
-import * as snackbarActions from "../../_actions/snackbar";
+import { useDispatch } from "react-redux";
 
 const styles = {
   fab: {
@@ -22,7 +18,7 @@ const styles = {
   }
 };
 function RuleList (props) {
-
+  const dispatch = useDispatch()
   const [rules, setRules] = useState([])
   const [loaded, setLoaded] = useState(false)
 
@@ -49,11 +45,11 @@ function RuleList (props) {
   const handleDelete = async (ruleID) => {
     api.delete(`/rule/${ruleID}`)
       .then((res) => {
-        props.snackbarActions.showSnackbar("Regra excluída com sucesso");
+        dispatch({type: 'SNACKBAR_SHOW', message: "Regra excluída com sucesso"})
         getRules();
       })
       .catch((err) => {
-        props.snackbarActions.showSnackbar("Houve um problema ao realizar esta ação");
+        dispatch({type: 'SNACKBAR_SHOW', message: "Houve um problema ao realizar esta ação"})
       });
   }
   return (
@@ -98,11 +94,4 @@ function RuleList (props) {
   );
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    snackbarActions: bindActionCreators(snackbarActions, dispatch),
-  };
-}
-
-
-export default connect(null, mapDispatchToProps)(RuleList);
+export default RuleList;
