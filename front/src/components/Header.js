@@ -5,8 +5,6 @@ import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Menu from "@material-ui/core/Menu";
-import InputBase from "@material-ui/core/InputBase";
-import SearchIcon from "@material-ui/icons/Search";
 // import AccountCircle from "@material-ui/icons/AccountCircle";
 // import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
@@ -14,11 +12,24 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 // import MoreIcon from "@material-ui/icons/MoreVert";
 import Badge from "@material-ui/core/Badge";
 import { Toolbar } from "@material-ui/core";
-import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 // import ListItemIcon from "@material-ui/core/ListItemIcon";
 // import ListItemText from "@material-ui/core/ListItemText";
+
+import CustomSearchBox from './CustomSearchBox';
+
+// import algoliasearch from 'algoliasearch/lite';
+// import {
+//   InstantSearch,
+//   Index,
+//   Hits
+// } from 'react-instantsearch-dom';
+
+// const searchClient = algoliasearch(
+//   'AKYYFEGWVX',
+//   '162f026f53f9fdeefc26d00d94e1f6f2'
+// );
 
 
 const styles = theme => ({
@@ -53,39 +64,6 @@ const styles = theme => ({
       display: "block"
     }
   },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
-    },
-    marginRight: theme.spacing(),
-    marginLeft: 0,
-    transition: "width 500ms ease-in-out"
-  },
-  searchIcon: {
-    width: theme.spacing(5),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  inputRoot: {
-    color: "inherit",
-  },
-  inputInput: {
-    paddingTop: theme.spacing(),
-    paddingRight: theme.spacing(),
-    paddingBottom: theme.spacing(),
-    paddingLeft: theme.spacing(5),
-    transition: theme.transitions.create("width"),
-    [theme.breakpoints.up("md")]: {
-      // width: "auto"
-    }
-  },
   sectionDesktop: {
     display: "none",
     [theme.breakpoints.up("md")]: {
@@ -102,7 +80,6 @@ const styles = theme => ({
 
 function Header(props) {
   const [notificationMoreAnchorEl, setNotificationMoreAnchorEl] = useState(null)
-  const [searchBarWidth, setSearchBarWidth] = useState("40%")
 
 
   const handleNotificationMenuOpen = event => {
@@ -131,21 +108,21 @@ function Header(props) {
             </IconButton>
 
             {/* SEARCHBAR */}
-            <div className={props.classes.search} style={{width: searchBarWidth}}>
-              <div className={props.classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Busca..."
-                classes={{
-                  root: props.classes.inputRoot,
-                  input: props.classes.inputInput
-                }}
-                fullWidth={true}
-                onFocus={() => setSearchBarWidth("100%")}
-                onBlur={() => setSearchBarWidth("40%")}
-              />
-            </div>
+            {/* <InstantSearch indexName="rules" searchClient={searchClient}>
+              <SearchBox />
+
+              <Index indexName="rules">
+                <h2>index: rules</h2>
+                <Hits />
+              </Index>
+
+              <Index indexName="parts">
+                <h2>index: parts</h2>
+                <Hits />
+              </Index>
+            </InstantSearch> */}
+            <CustomSearchBox defaultRefinement="iphone"/>
+
             <div className={props.classes.grow} />
             <div className={props.classes.sectionDesktop}>
 
