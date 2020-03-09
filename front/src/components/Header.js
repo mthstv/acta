@@ -19,17 +19,18 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import CustomSearchBox from './CustomSearchBox';
 
-// import algoliasearch from 'algoliasearch/lite';
-// import {
-//   InstantSearch,
-//   Index,
-//   Hits
-// } from 'react-instantsearch-dom';
+import algoliasearch from 'algoliasearch/lite';
+import {
+  InstantSearch,
+  SearchBox,
+  Index,
+  Hits
+} from 'react-instantsearch-dom';
 
-// const searchClient = algoliasearch(
-//   'AKYYFEGWVX',
-//   '162f026f53f9fdeefc26d00d94e1f6f2'
-// );
+const searchClient = algoliasearch(
+  'AKYYFEGWVX',
+  '162f026f53f9fdeefc26d00d94e1f6f2'
+);
 
 
 const styles = theme => ({
