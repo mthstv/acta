@@ -16,13 +16,17 @@ import { withStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 // import ListItemIcon from "@material-ui/core/ListItemIcon";
 // import ListItemText from "@material-ui/core/ListItemText";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Divider from '@material-ui/core/Divider';
+import Paper from '@material-ui/core/Paper';
 
 import CustomSearchBox from './CustomSearchBox';
+import { RuleHit } from './SearchHits';
 
 import algoliasearch from 'algoliasearch/lite';
 import {
   InstantSearch,
-  SearchBox,
   Index,
   Hits
 } from 'react-instantsearch-dom';
@@ -31,7 +35,6 @@ const searchClient = algoliasearch(
   'AKYYFEGWVX',
   '162f026f53f9fdeefc26d00d94e1f6f2'
 );
-
 
 const styles = theme => ({
   appBar: {
@@ -76,6 +79,11 @@ const styles = theme => ({
     [theme.breakpoints.up("md")]: {
       display: "none"
     }
+  },
+  searchResult: {
+    position: "fixed",
+    bottom: theme.spacing.unit,
+    right: theme.spacing.unit
   }
 });
 
@@ -109,20 +117,26 @@ function Header(props) {
             </IconButton>
 
             {/* SEARCHBAR */}
-            {/* <InstantSearch indexName="rules" searchClient={searchClient}>
-              <SearchBox />
+              <InstantSearch indexName="rules" searchClient={searchClient}>
+                <CustomSearchBox />
+                <Paper className={props.classes.searchResult}>
+                  <Index indexName="rules">
+                    <List component="nav" aria-label="main mailbox folders">
+                      <ListItem>
+                        <h2>Regras:</h2>
+                      </ListItem>
+                      <ListItem>
+                        <Hits hitComponent={RuleHit}/>  
+                      </ListItem>
+                    </List>
+                  </Index>
+                </Paper>
+                {/* <Index indexName="parts">
+                  <h2>index: parts</h2>
+                  <Hits hitComponent={SearchHit}/>
+                </Index> */}
+              </InstantSearch>
 
-              <Index indexName="rules">
-                <h2>index: rules</h2>
-                <Hits />
-              </Index>
-
-              <Index indexName="parts">
-                <h2>index: parts</h2>
-                <Hits />
-              </Index>
-            </InstantSearch> */}
-            <CustomSearchBox defaultRefinement="iphone"/>
 
             <div className={props.classes.grow} />
             <div className={props.classes.sectionDesktop}>

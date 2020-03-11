@@ -4,10 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
-
-
-import algoliasearch from 'algoliasearch/lite';
-// import { connectSearchBox } from 'react-instantsearch-dom';
+import { connectSearchBox } from 'react-instantsearch-dom';
 
 const styles = theme => ({
   search: {
@@ -44,8 +41,7 @@ const styles = theme => ({
     }
   },
 })
-const CustomSearchBox = (props) => {
-
+const SearchBox = (props) => {
   const [searchBarWidth, setSearchBarWidth] = useState("40%")
 
   return (
@@ -62,10 +58,13 @@ const CustomSearchBox = (props) => {
         fullWidth={true}
         onFocus={() => setSearchBarWidth("100%")}
         onBlur={() => setSearchBarWidth("40%")}
+        onChange={event => props.refine(event.currentTarget.value)}
       />
     </div>
   );
 };
+
+const CustomSearchBox = connectSearchBox(SearchBox);
 
 CustomSearchBox.propTypes = {
   styles: PropTypes.object,
