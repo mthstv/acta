@@ -166,6 +166,7 @@ function Header(props) {
                           <Paper
                             className={classes.searchResults}>
                             <ClickAwayListener onClickAway={handleSearchResultClose}>
+                              {/* WHEN THE HIT RETURNS EMPTY, ITS STILL RENDERING A MENU ITEM */}
                               <MenuList id="menu-list-grow">
                                 <MenuItem onClick={handleSearchResultClose}>
                                 <Index indexName="rules">
