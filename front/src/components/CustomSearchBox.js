@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import { connectSearchBox } from 'react-instantsearch-dom';
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
@@ -40,20 +40,20 @@ const styles = theme => ({
       // width: "auto"
     }
   },
-})
+}))
 const SearchBox = (props) => {
+  const classes = useStyles()
   const [searchBarWidth, setSearchBarWidth] = useState("40%")
-
   return (
-    <div className={props.classes.search} style={{width: searchBarWidth}}>
-      <div className={props.classes.searchIcon}>
+    <div className={classes.search} style={{width: searchBarWidth}}>
+      <div className={classes.searchIcon}>
         <SearchIcon />
       </div>
       <InputBase
         placeholder="Busca..."
         classes={{
-          root: props.classes.inputRoot,
-          input: props.classes.inputInput
+          root: classes.inputRoot,
+          input: classes.inputInput
         }}
         fullWidth={true}
         onFocus={() => setSearchBarWidth("100%")}
@@ -66,11 +66,4 @@ const SearchBox = (props) => {
 
 const CustomSearchBox = connectSearchBox(SearchBox);
 
-CustomSearchBox.propTypes = {
-  styles: PropTypes.object,
-  handleChangeNavDrawer: PropTypes.func,
-  classes: PropTypes.object,
-  navDrawerOpen: PropTypes.bool
-};
-
-export default withStyles(styles)(CustomSearchBox);
+export default CustomSearchBox;
