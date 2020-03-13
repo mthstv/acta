@@ -17,15 +17,14 @@ import Grid from '@material-ui/core/Grid';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import CustomSearchBox from './CustomSearchBox';
-import { RuleHit, NameHit, TextHit } from './SearchHits';
+import CustomSearchBox from './SearchBar/CustomSearchBox';
+import { RuleHit, NameHit, TextHit } from './SearchBar/SearchHits';
+import AllResults from './SearchBar/AllResults';
+import IndexResults from './SearchBar/IndexResults';
+
 
 import algoliasearch from 'algoliasearch/lite';
-import {
-  InstantSearch,
-  Index,
-  Hits
-} from 'react-instantsearch-dom';
+import { InstantSearch, Index, Hits } from 'react-instantsearch-dom';
 
 const searchClient = algoliasearch(
   'AKYYFEGWVX',
@@ -165,71 +164,83 @@ function Header(props) {
                         <Grid item xs={12} sm={12} md={8} lg={10}>
                           <Paper
                             className={classes.searchResults}>
-                            <ClickAwayListener onClickAway={handleSearchResultClose}>
+                            {/* <ClickAwayListener onClickAway={handleSearchResultClose}> */}
                               {/* WHEN THE HIT RETURNS EMPTY, ITS STILL RENDERING A MENU ITEM */}
-                              <MenuList id="menu-list-grow">
-                                <MenuItem onClick={handleSearchResultClose}>
-                                <Index indexName="rules">
-                                  <Hits hitComponent={RuleHit}/>
-                                </Index>
-                                </MenuItem>
-                                <MenuItem onClick={handleSearchResultClose}>
-                                  <Index indexName="parts">
-                                    <Hits hitComponent={NameHit}/>
+                              <AllResults>
+                                <div>
+                                  <Index indexName="rules">
+                                    <IndexResults>
+                                      <Hits hitComponent={RuleHit}/>
+                                    </IndexResults>
                                   </Index>
-                                </MenuItem>
-                                <MenuItem onClick={handleSearchResultClose}>
-                                  <Index indexName="books">
-                                    <Hits hitComponent={NameHit}/>
-                                  </Index>
-                                </MenuItem>
-                                <MenuItem onClick={handleSearchResultClose}>
-                                  <Index indexName="titles">
-                                    <Hits hitComponent={NameHit}/>
-                                  </Index>
-                                </MenuItem>
-                                <MenuItem onClick={handleSearchResultClose}>
-                                  <Index indexName="chapters">
-                                    <Hits hitComponent={NameHit}/>
-                                  </Index>
-                                </MenuItem>
-                                <MenuItem onClick={handleSearchResultClose}>
-                                  <Index indexName="sections">
-                                    <Hits hitComponent={NameHit}/>
-                                  </Index>
-                                </MenuItem>
-                                <MenuItem onClick={handleSearchResultClose}>
-                                  <Index indexName="subsections">
-                                    <Hits hitComponent={NameHit}/>
-                                  </Index>
-                                </MenuItem>
-                                <MenuItem onClick={handleSearchResultClose}>
-                                  <Index indexName="articles">
-                                    <Hits hitComponent={TextHit}/>
-                                  </Index>
-                                </MenuItem>
-                                <MenuItem onClick={handleSearchResultClose}>
-                                  <Index indexName="paragraphs">
-                                    <Hits hitComponent={TextHit}/>
-                                  </Index>
-                                </MenuItem>
-                                <MenuItem onClick={handleSearchResultClose}>
-                                  <Index indexName="incises">
-                                    <Hits hitComponent={TextHit}/>
-                                  </Index>
-                                </MenuItem>
-                                <MenuItem onClick={handleSearchResultClose}>
-                                  <Index indexName="lines">
-                                    <Hits hitComponent={TextHit}/>
-                                  </Index>
-                                </MenuItem>
-                                <MenuItem onClick={handleSearchResultClose}>
-                                  <Index indexName="items">
-                                    <Hits hitComponent={TextHit}/>
-                                  </Index>
-                                </MenuItem>
-                              </MenuList>
-                            </ClickAwayListener>
+                                    <Index indexName="parts">
+                                      <IndexResults>
+                                        <Hits hitComponent={NameHit}/>
+                                      </IndexResults>
+                                    </Index>
+                                 
+                                    <Index indexName="books">
+                                      <IndexResults>
+                                        <Hits hitComponent={NameHit}/>
+                                      </IndexResults>
+                                    </Index>
+                                 
+                                    <Index indexName="titles">
+                                      <IndexResults>
+                                        <Hits hitComponent={NameHit}/>
+                                      </IndexResults>
+                                    </Index>
+                                 
+                                    <Index indexName="chapters">
+                                      <IndexResults>
+                                        <Hits hitComponent={NameHit}/>
+                                      </IndexResults>
+                                    </Index>
+                                 
+                                    <Index indexName="sections">
+                                      <IndexResults>
+                                        <Hits hitComponent={NameHit}/>
+                                      </IndexResults>
+                                    </Index>
+                                 
+                                    <Index indexName="subsections">
+                                      <IndexResults>
+                                        <Hits hitComponent={NameHit}/>
+                                      </IndexResults>
+                                    </Index>
+                                 
+                                    <Index indexName="articles">
+                                      <IndexResults>
+                                        <Hits hitComponent={TextHit}/>
+                                      </IndexResults>
+                                    </Index>
+                                 
+                                    <Index indexName="paragraphs">
+                                      <IndexResults>
+                                        <Hits hitComponent={TextHit}/>
+                                      </IndexResults>
+                                    </Index>
+                                 
+                                    <Index indexName="incises">
+                                      <IndexResults>
+                                        <Hits hitComponent={TextHit}/>
+                                      </IndexResults>
+                                    </Index>
+                                 
+                                    <Index indexName="lines">
+                                      <IndexResults>
+                                        <Hits hitComponent={TextHit}/>
+                                      </IndexResults>
+                                    </Index>
+                                 
+                                    <Index indexName="items">
+                                      <IndexResults>
+                                        <Hits hitComponent={TextHit}/>
+                                      </IndexResults>
+                                    </Index>
+                                </div>
+                              </AllResults>
+                            {/* </ClickAwayListener> */}
                           </Paper>
                         </Grid>
                       </Grow>
