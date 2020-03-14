@@ -1,5 +1,5 @@
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import { blue, grey, pink, red, deepOrange, orange, teal, green, amber, lime, purple } from "@material-ui/core/colors";
+import { blue, grey, pink, red, deepOrange, orange, teal, green, amber, lime, deepPurple } from "@material-ui/core/colors";
 
 export const availableThemes = [
   {
@@ -29,14 +29,14 @@ export const availableThemes = [
   },
   {
     title: "Deep Ocean",
-    primary: purple,
+    primary: deepPurple,
     secondary: pink
   }
 ];
 
 const defaultTheme = {
   palette: {
-    primary: blue,
+    primary: teal,
     secondary: grey
   },
   error: red,

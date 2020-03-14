@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { isMobile } from 'react-device-detect';
 import classNames from "classnames";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
@@ -14,19 +15,12 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import MenuList from '@material-ui/core/MenuList';
 import Grow from '@material-ui/core/Grow';
 import Grid from '@material-ui/core/Grid';
-
 import { makeStyles } from '@material-ui/core/styles';
 
+import { InstantSearch, Index } from 'react-instantsearch-dom';
 import CustomSearchBox from './SearchBar/CustomSearchBox';
 import CustomHit from './SearchBar/CustomHit';
-
-import algoliasearch from 'algoliasearch/lite';
-import { InstantSearch, Index, Hits } from 'react-instantsearch-dom';
-
-const searchClient = algoliasearch(
-  'AKYYFEGWVX',
-  '162f026f53f9fdeefc26d00d94e1f6f2'
-);
+import searchClient from '../services/search'
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -74,12 +68,28 @@ const useStyles = makeStyles(theme => ({
   },
   searchResults: {
     // position: 'absolute',
-    marginTop: 20,
-    width: 800,
-    maxWidth: 800,
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.primary,
+    // color: theme.palette.text.secondary,
+    marginTop: 15,
+    // width: 800,
+    // maxWidth: 800,
     // height: 300,
     maxHeight: 300,
     overflowY: 'scroll', 
+    // overflow: 'auto',
+    // alignItems: 'center', 
+    // justifyContent: 'center',
+  },
+  searchResultsMobile: {
+    // position: 'absolute',
+    marginTop: 10,
+    width: 350,
+    maxWidth: 350,
+    // height: 300,
+    maxHeight: 300,
+    overflowY: 'scroll',
     // overflow: 'auto'
   }
 }));
@@ -148,6 +158,7 @@ function Header(props) {
                 onKeyUp={handleSearchResultToggle}>
                 <CustomSearchBox />
               </div>
+              <div>
                   <Popper 
                     open={openSearchResult} 
                     anchorEl={anchorSearchRef.current}
@@ -158,65 +169,64 @@ function Header(props) {
                         {...TransitionProps}
                         style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
                       >
-                        <Grid item xs={12} sm={12} md={8} lg={10}>
-                          <Paper
-                            className={classes.searchResults}>
-                            <ClickAwayListener onClickAway={handleSearchResultClose}> 
-                              {/* WHEN THE HIT RETURNS EMPTY, ITS STILL RENDERING A MENU ITEM */}
-                              <MenuList id="menu-list-grow">
-                                <Index indexName="rules">
-                                  <CustomHit history={props.history}/>
-                                </Index>
-                                <Index indexName="parts">
-                                  <CustomHit history={props.history}/>
-                                </Index>
-                              
-                                <Index indexName="books">
-                                  <CustomHit history={props.history}/>
-                                </Index>
-                              
-                                <Index indexName="titles">
-                                  <CustomHit history={props.history}/>
-                                </Index>
-                              
-                                <Index indexName="chapters">
-                                  <CustomHit history={props.history}/>
-                                </Index>
-                              
-                                <Index indexName="sections">
-                                  <CustomHit history={props.history}/>
-                                </Index>
-                              
-                                <Index indexName="subsections">
-                                  <CustomHit history={props.history}/>
-                                </Index>
-                              
-                                <Index indexName="articles">
-                                  <CustomHit history={props.history}/>
-                                </Index>
-                              
-                                <Index indexName="paragraphs">
-                                  <CustomHit history={props.history}/>
-                                </Index>
-                              
-                                <Index indexName="incises">
-                                  <CustomHit history={props.history}/>
-                                </Index>
-                              
-                                <Index indexName="lines">
-                                  <CustomHit history={props.history}/>
-                                </Index>
-                              
-                                <Index indexName="items">
-                                  <CustomHit history={props.history}/>
-                                </Index>
-                              </MenuList>
-                            </ClickAwayListener>
-                          </Paper>
-                        </Grid>
+                        <Paper
+                          className={classes.searchResults}>
+                          <ClickAwayListener onClickAway={handleSearchResultClose}> 
+                            {/* WHEN THE HIT RETURNS EMPTY, ITS STILL RENDERING A MENU ITEM */}
+                            <MenuList id="menu-list-grow">
+                              <Index indexName="rules">
+                                <CustomHit history={props.history}/>
+                              </Index>
+                              <Index indexName="parts">
+                                <CustomHit history={props.history}/>
+                              </Index>
+                            
+                              <Index indexName="books">
+                                <CustomHit history={props.history}/>
+                              </Index>
+                            
+                              <Index indexName="titles">
+                                <CustomHit history={props.history}/>
+                              </Index>
+                            
+                              <Index indexName="chapters">
+                                <CustomHit history={props.history}/>
+                              </Index>
+                            
+                              <Index indexName="sections">
+                                <CustomHit history={props.history}/>
+                              </Index>
+                            
+                              <Index indexName="subsections">
+                                <CustomHit history={props.history}/>
+                              </Index>
+                            
+                              <Index indexName="articles">
+                                <CustomHit history={props.history}/>
+                              </Index>
+                            
+                              <Index indexName="paragraphs">
+                                <CustomHit history={props.history}/>
+                              </Index>
+                            
+                              <Index indexName="incises">
+                                <CustomHit history={props.history}/>
+                              </Index>
+                            
+                              <Index indexName="lines">
+                                <CustomHit history={props.history}/>
+                              </Index>
+                            
+                              <Index indexName="items">
+                                <CustomHit history={props.history}/>
+                              </Index>
+                            </MenuList>
+                          </ClickAwayListener>
+                        </Paper>
                       </Grow>
                     )}
                 </Popper>
+              </div>
             </InstantSearch>
 
 

@@ -19,11 +19,13 @@ import UserList from "./User/UserList/UserList";
 import UserProfile from "./User/UserProfile/UserProfile";
 import Logout from "./Logout";
 import { useSelector, useDispatch } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
 
 import { isAuthenticated, logout } from "../services/auth";
 import api from "../services/api";
+import { hot } from 'react-hot-loader/root';
 
-const styles = () => ({
+const useStyles = makeStyles(theme => ({
   container: {
     margin: "80px 20px 20px 15px",
     paddingLeft: defaultTheme.drawer.width,
@@ -52,11 +54,12 @@ const styles = () => ({
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0
   }
-});
+}));
 
 function App(props) {
   const user = useSelector(state => state.user)
   const dispatch = useDispatch()
+  const classes = useStyles()
 
   const [state, setState] = useState({
     theme: defaultTheme,
@@ -108,7 +111,7 @@ function App(props) {
         handleChangeNavDrawer={handleChangeNavDrawer}
         menus={Data.menus}
       />
-      <div className={classNames(props.classes.container, !state.navDrawerOpen && props.classes.containerFull)}>
+      <div className={classNames(classes.container, !state.navDrawerOpen && classes.containerFull)}>
         <Switch>
           <Route exact path="/" component={Rules} />
           {/* <Route path="/dashboard" component={Dashboard} /> */}
@@ -131,9 +134,4 @@ function App(props) {
   );
 }
 
-App.propTypes = {
-  children: PropTypes.element,
-  classes: PropTypes.object
-};
-
-export default withStyles(styles)(App);
+export default hot(App);

@@ -20,7 +20,7 @@ export const GetSingleRule = (props) => {
       window.scrollTo(0, highlightedElement.offsetTop)
       return () => highlightedElement.classList.remove('search-highlight');
     }
-  },[props.match.url])
+  },[props.match.url, props.searchElement])
 
   const editRedirect = (label, id) => {
     return props.editorMode ? props.history.push(`/editar-elemento/${label}/${id}`) : ''

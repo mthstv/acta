@@ -9,9 +9,19 @@ const Hits = (props) => {
     const newLabel = handleTranslateBackToUrl(label)
     if (props.history.location.pathname.includes('regra')) {
       await props.history.push(`/regra`)
-      await props.history.push(`/regra/${rule}/busca/${newLabel}/${id}`)
+
+      if (rule) {
+        await props.history.push(`/regra/${rule}/busca/${newLabel}/${id}`)
+      } else {
+        await props.history.push(`/regra/${id}`)
+      }
+
     } else {
-      await props.history.push(`/regra/${rule}/busca/${newLabel}/${id}`)
+      if (rule) {
+        await props.history.push(`/regra/${rule}/busca/${newLabel}/${id}`)
+      } else {
+        await props.history.push(`/regra/${id}`)
+      }
     }
   }
   return (

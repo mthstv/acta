@@ -44,7 +44,7 @@ function RulePage (props) {
       })
       .catch((err) => {
         if(err.response && err.response.status === 404) {
-          this.props.history.push('/404');
+          props.history.push('/erro/404');
         }
       });
 
@@ -54,8 +54,7 @@ function RulePage (props) {
           id: props.match.params.elementid
         })
       }
-      console.log('page', props.match.url)
-  },[props.match.params, props.match.url])
+  },[props.match.params, props.match.url, props.history])
 
   const handleEditorClick = () => {
     dispatch({type: 'SNACKBAR_SHOW', message: editorMode ? 'Modo editor desativado' : 'Modo editor ativado, selecione um elemento para editá-lo.'})
