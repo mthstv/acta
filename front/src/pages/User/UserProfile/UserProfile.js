@@ -37,9 +37,6 @@ function UserProfile (props) {
           setUser(res.data.data)
         })
         .catch((err) => {
-          if(err.response.status === 401) {
-            window.location.href = "/login";
-          }
           if(err.response && err.response.status === 404) {
             props.history.push('/404');
           }
@@ -63,11 +60,6 @@ function UserProfile (props) {
           dispatch({type: 'SNACKBAR_SHOW', message: "Dados alterados com sucesso"})
           dispatch({type: 'SAVE_USER_DATA', user: res.data.data})
         })
-        .catch((err) => {
-          if(err.response.status === 401) {
-            window.location.href = "/login";
-          }
-        });
 
     } else {
       delete user.auth_token;
@@ -75,12 +67,6 @@ function UserProfile (props) {
         .then((res) =>{
           dispatch({type: 'SNACKBAR_SHOW', message: "Usuário alterado com sucesso"})
         })
-        .catch((err) => {
-          if(err.response.status === 401) {
-            window.location.href = "/login";
-          }
-        });
-
     }
   }
 

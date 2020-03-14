@@ -139,12 +139,6 @@ class UserTable extends React.Component {
       .then((res) => {
         this.setState({ data: res.data.data });
       })
-      .catch((err) => {
-        console.log(err);
-        if(err.response.status === 401) {
-          window.location.href = "/login";
-        }
-      });
   }
 
   deleteUser = () => {

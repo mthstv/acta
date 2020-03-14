@@ -32,11 +32,6 @@ function RuleList (props) {
         await setRules(res.data.data)
         await setLoaded(true)
       })
-      .catch((err) => {
-        if(err.response.status === 401) {
-          window.location.href = "/login";
-        }
-      });
   }
 
   /**

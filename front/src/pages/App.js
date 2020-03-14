@@ -113,6 +113,7 @@ function App(props) {
           <Route exact path="/" component={Rules} />
           {/* <Route path="/dashboard" component={Dashboard} /> */}
           {/* <Route path="/form" component={Form} /> */}
+          <Route path="/regra/:rule/busca/:elementlabel/:elementid" component={Rule} />
           <Route path="/regra/:rule" component={Rule} />
           <Route path="/criar-regra" component={RuleCreator} />
           <Route path="/editar-regra/:rule" component={RuleEditor} />

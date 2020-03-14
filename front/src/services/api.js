@@ -5,6 +5,15 @@ const url = process.env.REACT_APP_API_URL;
 const port = process.env.REACT_APP_API_PORT;
 const basePath = process.env.REACT_APP_API_BASEPATH;
 
+axios.interceptors.response.use((response) => {
+  return response;
+},(error) => {
+  if (error.response.status === 401) {    
+    window.location.href = "/login";
+  }
+  return Promise.reject(error);
+});
+
 const api = axios.create({
   baseURL: url + ":" + port + basePath
 });

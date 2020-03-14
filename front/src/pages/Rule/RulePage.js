@@ -7,6 +7,7 @@ import Fab from "@material-ui/core/Fab";
 import EditIcon from "@material-ui/icons/Edit";
 import Zoom from '@material-ui/core/Zoom';
 import { useDispatch } from "react-redux";
+import { handleUrlTranslateElement } from '../../helpers'
 
 const styles = {
   createFab: {
@@ -33,7 +34,8 @@ function RulePage (props) {
   const [rule, setRule] = useState(null)
   const [editorMode, setEditorMode] = useState(false)
   const [loaded, setLoaded] = useState(false)
- 
+  const [searchElement, setSearchElement] = useState(null)
+  
   useEffect(() => {
     api.get(`/rule/${props.match.params.rule}`)
       .then((res) => {
@@ -41,14 +43,19 @@ function RulePage (props) {
         setLoaded(true)
       })
       .catch((err) => {
-        if(err.response && err.response.status === 401) {
-          window.location.href = "/login";
-        }
         if(err.response && err.response.status === 404) {
           this.props.history.push('/404');
         }
       });
-  },[props.match.params.rule])
+
+      if(props.match.params.elementlabel && props.match.params.elementid) {
+        setSearchElement({
+          label: handleUrlTranslateElement(props.match.params.elementlabel),
+          id: props.match.params.elementid
+        })
+      }
+      console.log('page', props.match.url)
+  },[props.match.params, props.match.url])
 
   const handleEditorClick = () => {
     dispatch({type: 'SNACKBAR_SHOW', message: editorMode ? 'Modo editor desativado' : 'Modo editor ativado, selecione um elemento para editá-lo.'})
@@ -63,7 +70,12 @@ function RulePage (props) {
             <Col md={12}>
               <Card>
                 <Card.Body>
-                  <GetSingleRule rule={rule} editorMode={editorMode} history={props.history}/>
+                    <GetSingleRule 
+                      rule={rule} 
+                      editorMode={editorMode} 
+                      history={props.history}
+                      match={props.match}
+                      searchElement={searchElement}/>
                 </Card.Body>
               </Card>
             </Col>

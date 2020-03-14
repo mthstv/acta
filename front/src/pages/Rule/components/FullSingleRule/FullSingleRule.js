@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card } from "react-bootstrap";
 import { Romanize } from "../../../../helpers";
 
@@ -12,15 +12,24 @@ const styles = {
 };
 
 export const GetSingleRule = (props) => {
+  // Getting the search element to add highlight class
+  useEffect(() => {
+    if(props.searchElement) {
+      const highlightedElement = document.getElementById(props.searchElement.label + '-' + props.searchElement.id);
+      highlightedElement.classList.add('search-highlight');
+      window.scrollTo(0, highlightedElement.offsetTop)
+      return () => highlightedElement.classList.remove('search-highlight');
+    }
+  },[props.match.url])
 
   const editRedirect = (label, id) => {
     return props.editorMode ? props.history.push(`/editar-elemento/${label}/${id}`) : ''
   }
 
-
   const getItemList = (list) => {
     return (list.map((item) => (
-      <div 
+      <div
+        id={'item-'+item.id} 
         style={styles.textFields} key={item.id} 
         className={props.editorMode ? "editorStyle" : null}
         onClick={() => editRedirect('item', item.id)}>
@@ -32,7 +41,8 @@ export const GetSingleRule = (props) => {
   const getLineList = (list) => {
     return (list.map((line) => (
       <div key={line.id}>
-        <div 
+        <div
+          id={'line-'+line.id} 
           style={styles.textFields} key={line.id} 
           className={props.editorMode ? "editorStyle" : null}
           onClick={() => editRedirect('alinea', line.id)}>
@@ -46,7 +56,8 @@ export const GetSingleRule = (props) => {
   const getInciseList = (list) => {
     return (list.map((incise) => (
       <div key={incise.id}>
-        <div 
+        <div
+          id={'incise-'+incise.id} 
           style={styles.textFields} key={incise.id} 
           className={props.editorMode ? "editorStyle" : null}
           onClick={() => editRedirect('inciso', incise.id)}>
@@ -60,7 +71,8 @@ export const GetSingleRule = (props) => {
   const getParagraphList = (list) => {
     return (list.map((paragraph) => (
       <div key={paragraph.id}>
-        <div 
+        <div
+          id={'paragraph-'+paragraph.id} 
           style={styles.textFields} key={paragraph.id} 
           className={props.editorMode ? "editorStyle" : null}
           onClick={() => editRedirect('paragrafo', paragraph.id)}>
@@ -78,7 +90,8 @@ export const GetSingleRule = (props) => {
   const getArticleList = (list) => {
     return (list.map((article) => (
       <div key={article.id}>
-        <div 
+        <div
+          id={'article-'+article.id} 
           style={styles.textFields} key={article.id} 
           className={props.editorMode ? "editorStyle" : null}
           onClick={() => editRedirect('artigo', article.id)}>
@@ -94,7 +107,8 @@ export const GetSingleRule = (props) => {
   const getSubsectionList = (list) => {
     return (list.map((subSection) => (
       <div key={subSection.id}>
-        <div 
+        <div
+          id={'subsection-'+subSection.id} 
           style={styles.nameFields} key={subSection.id} 
           className={props.editorMode ? "editorStyle" : null}
           onClick={() => editRedirect('subsecao', subSection.id)}>
@@ -109,7 +123,8 @@ export const GetSingleRule = (props) => {
   const getSectionList = (list) => {
     return (list.map((section) => (
       <div key={section.id}>
-        <div 
+        <div
+          id={'section-'+section.id} 
           style={styles.nameFields} key={section.id} 
           className={props.editorMode ? "editorStyle" : null}
           onClick={() => editRedirect('secao', section.id)}>
@@ -125,7 +140,8 @@ export const GetSingleRule = (props) => {
   const getChapterList = (list) => {
     return (list.map((chapter) => (
       <div key={chapter.id}>
-        <div 
+        <div
+          id={'chapter-'+chapter.id} 
           style={styles.nameFields} key={chapter.id} 
           className={props.editorMode ? "editorStyle" : null}
           onClick={() => editRedirect('capitulo', chapter.id)}>
@@ -141,7 +157,8 @@ export const GetSingleRule = (props) => {
   const getTitleList = (list) => {
     return (list.map((title) => (
       <div key={title.id}>
-        <div 
+        <div
+          id={'title-'+title.id} 
           style={styles.nameFields} key={title.id} 
           className={props.editorMode ? "editorStyle" : null}
           onClick={() => editRedirect('titulo', title.id)}>
@@ -157,7 +174,8 @@ export const GetSingleRule = (props) => {
   const getBookList = (list) => {
     return (list.map((book) => (
       <div key={book.id}>
-        <div 
+        <div
+          id={'book-'+book.id} 
           style={styles.nameFields} key={book.id} 
           className={props.editorMode ? "editorStyle" : null}
           onClick={() => editRedirect('livro', book.id)}>
@@ -172,7 +190,8 @@ export const GetSingleRule = (props) => {
   const getPartList = (list) => {
     return (list.map((part) => (
       <div key={part.id} >
-        <div 
+        <div
+          id={'part-'+part.id} 
           style={styles.nameFields} key={part.id} 
           className={props.editorMode ? "editorStyle" : null}
           onClick={() => editRedirect('parte', part.id)}>

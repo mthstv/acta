@@ -24,11 +24,6 @@ function RuleCreator (props) {
         dispatch({type: 'SNACKBAR_SHOW', message: "Registro criada com sucesso"})
         props.history.push("/");
       })
-      .catch((err) => {
-        if(err.response.status === 401) {
-          window.location.href = "/login";
-        }
-      });
   }
 
   return (

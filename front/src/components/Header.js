@@ -18,10 +18,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
 import CustomSearchBox from './SearchBar/CustomSearchBox';
-import { RuleHit, NameHit, TextHit } from './SearchBar/SearchHits';
-import AllResults from './SearchBar/AllResults';
-import IndexResults from './SearchBar/IndexResults';
-
+import CustomHit from './SearchBar/CustomHit';
 
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, Index, Hits } from 'react-instantsearch-dom';
@@ -80,7 +77,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: 20,
     width: 800,
     maxWidth: 800,
-    height: 300,
+    // height: 300,
     maxHeight: 300,
     overflowY: 'scroll', 
     // overflow: 'auto'
@@ -148,7 +145,7 @@ function Header(props) {
                 ref={anchorSearchRef}
                 aria-controls={openSearchResult ? 'menu-list-grow' : undefined}
                 aria-haspopup="true"
-                onClick={handleSearchResultToggle}>
+                onKeyUp={handleSearchResultToggle}>
                 <CustomSearchBox />
               </div>
                   <Popper 
@@ -164,98 +161,62 @@ function Header(props) {
                         <Grid item xs={12} sm={12} md={8} lg={10}>
                           <Paper
                             className={classes.searchResults}>
-                            {/* <ClickAwayListener onClickAway={handleSearchResultClose}> */}
+                            <ClickAwayListener onClickAway={handleSearchResultClose}> 
                               {/* WHEN THE HIT RETURNS EMPTY, ITS STILL RENDERING A MENU ITEM */}
-                              <AllResults>
-                                <div>
-                                  <Index indexName="rules">
-                                    <IndexResults>
-                                      <Hits hitComponent={RuleHit}/>
-                                    </IndexResults>
-                                  </Index>
-                                    <Index indexName="parts">
-                                      <IndexResults>
-                                        <Hits hitComponent={NameHit}/>
-                                      </IndexResults>
-                                    </Index>
-                                 
-                                    <Index indexName="books">
-                                      <IndexResults>
-                                        <Hits hitComponent={NameHit}/>
-                                      </IndexResults>
-                                    </Index>
-                                 
-                                    <Index indexName="titles">
-                                      <IndexResults>
-                                        <Hits hitComponent={NameHit}/>
-                                      </IndexResults>
-                                    </Index>
-                                 
-                                    <Index indexName="chapters">
-                                      <IndexResults>
-                                        <Hits hitComponent={NameHit}/>
-                                      </IndexResults>
-                                    </Index>
-                                 
-                                    <Index indexName="sections">
-                                      <IndexResults>
-                                        <Hits hitComponent={NameHit}/>
-                                      </IndexResults>
-                                    </Index>
-                                 
-                                    <Index indexName="subsections">
-                                      <IndexResults>
-                                        <Hits hitComponent={NameHit}/>
-                                      </IndexResults>
-                                    </Index>
-                                 
-                                    <Index indexName="articles">
-                                      <IndexResults>
-                                        <Hits hitComponent={TextHit}/>
-                                      </IndexResults>
-                                    </Index>
-                                 
-                                    <Index indexName="paragraphs">
-                                      <IndexResults>
-                                        <Hits hitComponent={TextHit}/>
-                                      </IndexResults>
-                                    </Index>
-                                 
-                                    <Index indexName="incises">
-                                      <IndexResults>
-                                        <Hits hitComponent={TextHit}/>
-                                      </IndexResults>
-                                    </Index>
-                                 
-                                    <Index indexName="lines">
-                                      <IndexResults>
-                                        <Hits hitComponent={TextHit}/>
-                                      </IndexResults>
-                                    </Index>
-                                 
-                                    <Index indexName="items">
-                                      <IndexResults>
-                                        <Hits hitComponent={TextHit}/>
-                                      </IndexResults>
-                                    </Index>
-                                </div>
-                              </AllResults>
-                            {/* </ClickAwayListener> */}
+                              <MenuList id="menu-list-grow">
+                                <Index indexName="rules">
+                                  <CustomHit history={props.history}/>
+                                </Index>
+                                <Index indexName="parts">
+                                  <CustomHit history={props.history}/>
+                                </Index>
+                              
+                                <Index indexName="books">
+                                  <CustomHit history={props.history}/>
+                                </Index>
+                              
+                                <Index indexName="titles">
+                                  <CustomHit history={props.history}/>
+                                </Index>
+                              
+                                <Index indexName="chapters">
+                                  <CustomHit history={props.history}/>
+                                </Index>
+                              
+                                <Index indexName="sections">
+                                  <CustomHit history={props.history}/>
+                                </Index>
+                              
+                                <Index indexName="subsections">
+                                  <CustomHit history={props.history}/>
+                                </Index>
+                              
+                                <Index indexName="articles">
+                                  <CustomHit history={props.history}/>
+                                </Index>
+                              
+                                <Index indexName="paragraphs">
+                                  <CustomHit history={props.history}/>
+                                </Index>
+                              
+                                <Index indexName="incises">
+                                  <CustomHit history={props.history}/>
+                                </Index>
+                              
+                                <Index indexName="lines">
+                                  <CustomHit history={props.history}/>
+                                </Index>
+                              
+                                <Index indexName="items">
+                                  <CustomHit history={props.history}/>
+                                </Index>
+                              </MenuList>
+                            </ClickAwayListener>
                           </Paper>
                         </Grid>
                       </Grow>
                     )}
                 </Popper>
-              {/* <Paper className={classes.searchResult}>
-                <Index indexName="rules">
-                  <h2>Regras:</h2>
-                  <Hits hitComponent={RuleHit}/>
-                </Index>
-              </Paper> */}
-              {/* <Index indexName="parts">
-                <h2>index: parts</h2>
-                <Hits hitComponent={SearchHit}/>
-              </Index> */}
             </InstantSearch>
 
 

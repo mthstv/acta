@@ -26,11 +26,6 @@ function RuleEditor (props) {
       dispatch({type: 'SNACKBAR_SHOW', message: "Registro alterado com sucesso"})
       props.history.push("/");
     })
-    .catch((err) => {
-      if(err.response.status === 401) {
-        window.location.href = "/login";
-      }
-    });
   }
 
   useEffect(() => {
@@ -40,11 +35,6 @@ function RuleEditor (props) {
     .then((res) => { 
       setRule(res.data.data)
     })
-    .catch((err) => {
-      if(err.response.status === 401) {
-        window.location.href = "/login";
-      }
-    });
     document.title = `ACTA - Editar Regra`;
   }, [props, ruleId])
   
