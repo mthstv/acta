@@ -89,4 +89,5 @@ return [
     ],
 
 ];
+// php artisan scout:flush "App\Models\Rule" && php artisan scout:flush "App\Models\Part" && php artisan scout:flush "App\Models\Book" && php artisan scout:flush "App\Models\Title" && php artisan scout:flush "App\Models\Chapter" && php artisan scout:flush "App\Models\Section" && php artisan scout:flush "App\Models\Subsection" && php artisan scout:flush "App\Models\Article" && php artisan scout:flush "App\Models\Paragraph" && php artisan scout:flush "App\Models\Incise" && php artisan scout:flush "App\Models\Line" && php artisan scout:flush "App\Models\Item"
 // php artisan scout:import "App\Models\Rule" && php artisan scout:import "App\Models\Part" && php artisan scout:import "App\Models\Book" && php artisan scout:import "App\Models\Title" && php artisan scout:import "App\Models\Chapter" && php artisan scout:import "App\Models\Section" && php artisan scout:import "App\Models\Subsection" && php artisan scout:import "App\Models\Article" && php artisan scout:import "App\Models\Paragraph" && php artisan scout:import "App\Models\Incise" && php artisan scout:import "App\Models\Line" && php artisan scout:import "App\Models\Item"
