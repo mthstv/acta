@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
-import PropTypes from "prop-types";
 import classNames from "classnames";
 import defaultTheme from "../theme";
-import { withStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Header from "../components/Header";
 import LeftDrawer from "../components/LeftDrawer";

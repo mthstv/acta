@@ -16,9 +16,11 @@ export const GetSingleRule = (props) => {
   useEffect(() => {
     if(props.searchElement) {
       const highlightedElement = document.getElementById(props.searchElement.label + '-' + props.searchElement.id);
-      highlightedElement.classList.add('search-highlight');
-      window.scrollTo(0, highlightedElement.offsetTop)
-      return () => highlightedElement.classList.remove('search-highlight');
+      if (highlightedElement) {
+        highlightedElement.classList.add('search-highlight');
+        window.scrollTo(0, highlightedElement.offsetTop)
+        return () => highlightedElement.classList.remove('search-highlight');
+      }
     }
   },[props.match.url, props.searchElement])
 

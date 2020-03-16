@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
-import { isMobile } from 'react-device-detect';
+import React, { useState } from "react";
 import classNames from "classnames";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
@@ -9,18 +8,9 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import Badge from "@material-ui/core/Badge";
 import { Toolbar } from "@material-ui/core";
 import MenuItem from "@material-ui/core/MenuItem";
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import MenuList from '@material-ui/core/MenuList';
-import Grow from '@material-ui/core/Grow';
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { InstantSearch, Index } from 'react-instantsearch-dom';
-import CustomSearchBox from './SearchBar/CustomSearchBox';
-import CustomHit from './SearchBar/CustomHit';
-import searchClient from '../services/search'
+import SearchResultsMenu from './SearchBar/SearchResultsMenu';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -65,71 +55,21 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("md")]: {
       display: "none"
     }
-  },
-  searchResults: {
-    // position: 'absolute',
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.primary,
-    // color: theme.palette.text.secondary,
-    marginTop: 15,
-    // width: 800,
-    // maxWidth: 800,
-    // height: 300,
-    maxHeight: 300,
-    overflowY: 'scroll', 
-    // overflow: 'auto',
-    // alignItems: 'center', 
-    // justifyContent: 'center',
-  },
-  searchResultsMobile: {
-    // position: 'absolute',
-    marginTop: 10,
-    width: 350,
-    maxWidth: 350,
-    // height: 300,
-    maxHeight: 300,
-    overflowY: 'scroll',
-    // overflow: 'auto'
   }
 }));
 
 function Header(props) {
   const classes = useStyles();
 
-  const [notificationMoreAnchorEl, setNotificationMoreAnchorEl] = useState(null)
-  const [openSearchResult, setOpenSearchResult] = useState(false);
-
-  const anchorSearchRef = useRef(null);
-
+  const [notificationMenuAnchorEl, setNotificationMenuAnchorEl] = useState(null)
   // Notifications
   const handleNotificationMenuOpen = event => {
-    setNotificationMoreAnchorEl(event.currentTarget);
+    setNotificationMenuAnchorEl(event.currentTarget);
   };
 
   const handleNotificationMenuClose = () => {
-    setNotificationMoreAnchorEl(null);
+    setNotificationMenuAnchorEl(null);
   };
-
-  //Search Results
-  const handleSearchResultToggle = () => {
-    setOpenSearchResult(true);
-  };
-
-  const handleSearchResultClose = event => {
-    if (anchorSearchRef.current && anchorSearchRef.current.contains(event.target)) {
-      return;
-    }
-    setOpenSearchResult(false);
-  };
-  const prevOpen = useRef(openSearchResult);
-
-  useEffect(() => {
-    if (prevOpen.current === true && openSearchResult === false) {
-      anchorSearchRef.current.focus();
-    }
-    prevOpen.current = openSearchResult;
-  }, [openSearchResult]);
 
   return (
     <div>
@@ -149,86 +89,7 @@ function Header(props) {
           </IconButton>
 
           {/* SEARCHBAR */}
-            <InstantSearch indexName="rules" searchClient={searchClient}>
-              <div
-                style={{width: '100%'}}
-                ref={anchorSearchRef}
-                aria-controls={openSearchResult ? 'menu-list-grow' : undefined}
-                aria-haspopup="true"
-                onKeyUp={handleSearchResultToggle}>
-                <CustomSearchBox />
-              </div>
-              <div>
-                  <Popper 
-                    open={openSearchResult} 
-                    anchorEl={anchorSearchRef.current}
-                    transition
-                    disablePortal>
-                    {({ TransitionProps, placement }) => (
-                      <Grow
-                        {...TransitionProps}
-                        style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                      >
-                        <Paper
-                          className={classes.searchResults}>
-                          <ClickAwayListener onClickAway={handleSearchResultClose}> 
-                            {/* WHEN THE HIT RETURNS EMPTY, ITS STILL RENDERING A MENU ITEM */}
-                            <MenuList id="menu-list-grow">
-                              <Index indexName="rules">
-                                <CustomHit history={props.history}/>
-                              </Index>
-                              <Index indexName="parts">
-                                <CustomHit history={props.history}/>
-                              </Index>
-                            
-                              <Index indexName="books">
-                                <CustomHit history={props.history}/>
-                              </Index>
-                            
-                              <Index indexName="titles">
-                                <CustomHit history={props.history}/>
-                              </Index>
-                            
-                              <Index indexName="chapters">
-                                <CustomHit history={props.history}/>
-                              </Index>
-                            
-                              <Index indexName="sections">
-                                <CustomHit history={props.history}/>
-                              </Index>
-                            
-                              <Index indexName="subsections">
-                                <CustomHit history={props.history}/>
-                              </Index>
-                            
-                              <Index indexName="articles">
-                                <CustomHit history={props.history}/>
-                              </Index>
-                            
-                              <Index indexName="paragraphs">
-                                <CustomHit history={props.history}/>
-                              </Index>
-                            
-                              <Index indexName="incises">
-                                <CustomHit history={props.history}/>
-                              </Index>
-                            
-                              <Index indexName="lines">
-                                <CustomHit history={props.history}/>
-                              </Index>
-                            
-                              <Index indexName="items">
-                                <CustomHit history={props.history}/>
-                              </Index>
-                            </MenuList>
-                          </ClickAwayListener>
-                        </Paper>
-                      </Grow>
-                    )}
-                </Popper>
-              </div>
-            </InstantSearch>
-
+          <SearchResultsMenu history={props.history} />
 
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
@@ -259,10 +120,10 @@ function Header(props) {
 
             {/* NOTIFICATIONS MENU */}
             <Menu
-              anchorEl={notificationMoreAnchorEl}
+              anchorEl={notificationMenuAnchorEl}
               anchorOrigin={{ vertical: "top", horizontal: "right" }}
               transformOrigin={{ vertical: "top", horizontal: "right" }}
-              open={Boolean(notificationMoreAnchorEl)}
+              open={Boolean(notificationMenuAnchorEl)}
               onClose={handleNotificationMenuClose}
             >
               <MenuItem>
