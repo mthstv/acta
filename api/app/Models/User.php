@@ -26,7 +26,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @var array
      */
-    protected $appends = ['role', 'avatar_url'];
+    protected $appends = ['role', 'avatar_url', 'is_admin', 'is_consultant'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -93,5 +93,17 @@ class User extends Authenticatable implements JWTSubject
         } else {
             return null;
         }
+    }
+
+    public function getIsAdminAttribute()
+    {
+        $roles = $this->role()->first();
+        return $this->attributes['is_admin'] = $roles->label === 'ADMIN';
+    }
+
+    public function getIsConsultantAttribute()
+    {
+        $roles = $this->role()->first();
+        return $this->attributes['is_consultant'] = $roles->label === 'CONSULTANT';
     }
 }
