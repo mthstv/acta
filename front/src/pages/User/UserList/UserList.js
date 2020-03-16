@@ -171,7 +171,7 @@ class UserTable extends React.Component {
           onDeleteConfirmation={this.deleteUser}
         />
         <div className={classes.tableWrapper}>
-          <Table className={classes.table} aria-labelledby="tableTitle">
+          <Table className={classes.table} size="small" aria-labelledby="tableTitle">
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
@@ -212,7 +212,7 @@ class UserTable extends React.Component {
                   );
                 })}
               {emptyRows > 0 && (
-                <TableRow style={{ height: 49 * emptyRows }}>
+                <TableRow style={{ height: 1 * emptyRows }}>
                   <TableCell colSpan={6} />
                 </TableRow>
               )}

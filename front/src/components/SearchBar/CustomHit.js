@@ -1,7 +1,7 @@
 import React from 'react';
 import { connectHits } from 'react-instantsearch-dom';
 import MenuItem from "@material-ui/core/MenuItem";
-import { handleTranslateBackToUrl } from '../../helpers';
+import { handleTranslateBackToUrl, elementToString } from '../../helpers';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 const Hits = (props) => {
@@ -41,7 +41,7 @@ const Hits = (props) => {
           }
           {hit.name && 
             <div key={hit.id}>
-              {hit.name}
+              {elementToString(hit.label, hit)}
               <FormHelperText>
                 {props.ruleData.map(rule => parseInt(hit.rule_reference) === parseInt(rule.id) ? rule.rule_title : null)}
               </FormHelperText>
@@ -49,7 +49,7 @@ const Hits = (props) => {
           }
           {hit.text && 
             <div key={hit.id}>
-              {hit.text}
+              {elementToString(hit.label, hit)}
               <FormHelperText>
                 {props.ruleData.map(rule => parseInt(hit.rule_reference) === parseInt(rule.id) ? rule.rule_title : null)}
               </FormHelperText>

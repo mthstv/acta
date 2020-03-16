@@ -15,11 +15,12 @@ import searchClient from '../../services/search';
 
 const useStyles = makeStyles(theme => ({
 searchResults: {
+    borderRadius: '5px 5px 0px 0px',
     padding: theme.spacing(2),
     marginTop: 50,
     width: '97vw',
     maxHeight: 300,
-    overflowY: 'scroll'
+    overflow: 'auto',
   }
 }));
 
@@ -81,66 +82,78 @@ const SearchResultsMenu = (props) => {
           transition
           disablePortal>
           {({ TransitionProps }) => (
-            <Grow
-            {...TransitionProps}>
-              <Paper
-                className={classes.searchResults}>
-                <ClickAwayListener onClickAway={handleClose}> 
-                  {/* WHEN THE HIT RETURNS EMPTY, ITS STILL RENDERING A MENU ITEM */}
-                  <MenuList id="menu-list-grow">
+            <>
+              <Grow
+              {...TransitionProps}>
+                <div>
+                  <Paper
+                    className={classes.searchResults}
+                    elevation={0}
+                    square={true}>
+                    <ClickAwayListener onClickAway={handleClose}> 
+                      {/* WHEN THE HIT RETURNS EMPTY, ITS STILL RENDERING A MENU ITEM */}
+                      <MenuList id="menu-list-grow">
 
-                    <Index indexName="rules">
-                      <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
-                    </Index>
+                        <Index indexName="rules">
+                          <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
+                        </Index>
 
-                    <Index indexName="parts">
-                      <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
-                    </Index>
-                  
-                    <Index indexName="books">
-                      <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
-                    </Index>
-                  
-                    <Index indexName="titles">
-                      <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
-                    </Index>
-                  
-                    <Index indexName="chapters">
-                      <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
-                    </Index>
-                  
-                    <Index indexName="sections">
-                      <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
-                    </Index>
-                  
-                    <Index indexName="subsections">
-                      <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
-                    </Index>
-                  
-                    <Index indexName="articles">
-                      <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
-                    </Index>
-                  
-                    <Index indexName="paragraphs">
-                      <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
-                    </Index>
-                  
-                    <Index indexName="incises">
-                      <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
-                    </Index>
-                  
-                    <Index indexName="lines">
-                      <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
-                    </Index>
-                  
-                    <Index indexName="items">
-                      <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
-                    </Index>
+                        <Index indexName="parts">
+                          <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
+                        </Index>
+                      
+                        <Index indexName="books">
+                          <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
+                        </Index>
+                      
+                        <Index indexName="titles">
+                          <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
+                        </Index>
+                      
+                        <Index indexName="chapters">
+                          <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
+                        </Index>
+                      
+                        <Index indexName="sections">
+                          <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
+                        </Index>
+                      
+                        <Index indexName="subsections">
+                          <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
+                        </Index>
+                      
+                        <Index indexName="articles">
+                          <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
+                        </Index>
+                      
+                        <Index indexName="paragraphs">
+                          <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
+                        </Index>
+                      
+                        <Index indexName="incises">
+                          <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
+                        </Index>
+                      
+                        <Index indexName="lines">
+                          <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
+                        </Index>
+                      
+                        <Index indexName="items">
+                          <CustomHit history={props.history} ruleData={ruleData} handleClose={handleClose}/>
+                        </Index>
 
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                  <Paper
+                    square
+                    elevation={1}
+                    style={{textAlign: 'right', backgroundColor: 'white', borderRadius: '0px 0px 5px 5px',}}>
+                    <img src={require('../../images/search-by-algolia.svg')} alt="algolia-logo"/>
+                  </Paper>
+                </div>
+              </Grow>
+          </>
           )}
         </Popper>
       </div>

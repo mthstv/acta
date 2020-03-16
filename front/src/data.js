@@ -3,10 +3,12 @@ import Faker from "faker";
 // import Assessment from "@material-ui/icons/Assessment";
 // import GridOn from "@material-ui/icons/GridOn";
 import PermIdentity from "@material-ui/icons/PermIdentity";
+import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
 // import Web from "@material-ui/icons/Web";
 // import Home from "@material-ui/icons/Home";
 import MenuBook from "@material-ui/icons/MenuBook";
 import ReplyRoundedIcon from "@material-ui/icons/ReplyRounded";
+import ForumIcon from '@material-ui/icons/Forum';
 // import BorderClear from "@material-ui/icons/BorderClear";
 // import BorderOuter from "@material-ui/icons/BorderOuter";
 // import api from "./services/api"
@@ -14,7 +16,10 @@ import ReplyRoundedIcon from "@material-ui/icons/ReplyRounded";
 const data = {
   menus: [
     { text: "Regras", icon: <MenuBook />, link: "/" },
+    { text: "Importação", icon: <OpenInBrowserIcon />, link: "/importacao" },
     { text: "Usuários", icon: <PermIdentity />, link: "/usuarios" },
+    { text: "Solicitações", icon: <ForumIcon />, link: "/solicitacoes" },
+
     { text: "Sair", icon: <ReplyRoundedIcon />, link: "/logout" },
     // { text: "DashBoard", icon: <Assessment />, link: "/dashboard" },
     // { text: "Form Page", icon: <Web />, link: "/form" },
