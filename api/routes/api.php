@@ -26,7 +26,11 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
 
     Route::patch('user/auth-update', 'UserController@updateAuthenticated');
     Route::post('user/avatar-upload', 'UserController@avatarUpload');
-    Route::resource('user', 'UserController');
+    Route::resource('user', 'UserController')->only(['show']);
+
+    Route::group(['middleware' => ['admin']], function () {
+        Route::resource('user', 'UserController')->except(['show']);
+    });
 
     /**
      * /element        => 'GET'    @ index()
