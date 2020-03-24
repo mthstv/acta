@@ -48,7 +48,6 @@ function LoginPage(props) {
     e.preventDefault();
     api.post("/auth/login", user)
       .then(async (res) => {
-        // await props.userActions.SaveUserData(res.data.data);
         await dispatch({type: 'SAVE_USER_DATA', user: res.data.data})
         login(res.data.data);
         window.location.href = "/";
