@@ -30,6 +30,21 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
 
     Route::group(['middleware' => ['admin']], function () {
         Route::resource('user', 'UserController')->except(['show']);
+
+        Route::resource('element', 'ElementController')->except(['index', 'show']);
+        
+        Route::resource('rule', 'RuleController')->except(['index', 'show']);
+        Route::resource('part', 'PartController')->except(['index', 'show']);
+        Route::resource('book', 'BookController')->except(['index', 'show']);
+        Route::resource('title', 'TitleController')->except(['index', 'show']);
+        Route::resource('chapter', 'ChapterController')->except(['index', 'show']);
+        Route::resource('section', 'SectionController')->except(['index', 'show']);
+        Route::resource('subsection', 'SubsectionController')->except(['index', 'show']);
+        Route::resource('article', 'ArticleController')->except(['index', 'show']);
+        Route::resource('paragraph', 'ParagraphController')->except(['index', 'show']);
+        Route::resource('incise', 'InciseController')->except(['index', 'show']);
+        Route::resource('line', 'LineController')->except(['index', 'show']);
+        Route::resource('item', 'ItemController')->except(['index', 'show']);
     });
 
     /**
@@ -42,7 +57,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
      * /element/by-label/{label} => 'GET'  @ findByLabel()
      */
     Route::get('element/by-label/{label}', 'ElementController@findByLabel');
-    Route::resource('element', 'ElementController');
+    Route::resource('element', 'ElementController')->only(['index', 'show']);
 
     /**
      * /rule        => 'GET'    @ index()
@@ -53,7 +68,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
      *
      */
     Route::post('rule/search', 'RuleController@search');
-    Route::resource('rule', 'RuleController');
+    Route::resource('rule', 'RuleController')->only(['index', 'show']);
 
     /**
      * /part        => 'GET'    @ index()
@@ -63,7 +78,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
      * /part/{id}   => 'DELETE' @ destroy()
      *
      */
-    Route::resource('part', 'PartController');
+    Route::resource('part', 'PartController')->only(['index', 'show']);
 
     /**
      * /book        => 'GET'    @ index()
@@ -73,7 +88,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
      * /book/{id}   => 'DELETE' @ destroy()
      *
      */
-    Route::resource('book', 'BookController');
+    Route::resource('book', 'BookController')->only(['index', 'show']);
 
     /**
      * /title        => 'GET'    @ index()
@@ -83,7 +98,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
      * /title/{id}   => 'DELETE' @ destroy()
      *
      */
-    Route::resource('title', 'TitleController');
+    Route::resource('title', 'TitleController')->only(['index', 'show']);
 
     /**
      * /chapter        => 'GET'    @ index()
@@ -93,7 +108,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
      * /chapter/{id}   => 'DELETE' @ destroy()
      *
      */
-    Route::resource('chapter', 'ChapterController');
+    Route::resource('chapter', 'ChapterController')->only(['index', 'show']);
 
     /**
      * /section        => 'GET'    @ index()
@@ -103,7 +118,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
      * /section/{id}   => 'DELETE' @ destroy()
      *
      */
-    Route::resource('section', 'SectionController');
+    Route::resource('section', 'SectionController')->only(['index', 'show']);
 
     /**
      * /subsection        => 'GET'    @ index()
@@ -113,7 +128,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
      * /subsection/{id}   => 'DELETE' @ destroy()
      *
      */
-    Route::resource('subsection', 'SubsectionController');
+    Route::resource('subsection', 'SubsectionController')->only(['index', 'show']);
 
     /**
      * /article        => 'GET'    @ index()
@@ -123,7 +138,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
      * /article/{id}   => 'DELETE' @ destroy()
      *
      */
-    Route::resource('article', 'ArticleController');
+    Route::resource('article', 'ArticleController')->only(['index', 'show']);
 
     /**
      * /paragraph        => 'GET'    @ index()
@@ -133,7 +148,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
      * /paragraph/{id}   => 'DELETE' @ destroy()
      *
      */
-    Route::resource('paragraph', 'ParagraphController');
+    Route::resource('paragraph', 'ParagraphController')->only(['index', 'show']);
 
     /**
      * /incise        => 'GET'    @ index()
@@ -143,7 +158,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
      * /incise/{id}   => 'DELETE' @ destroy()
      *
      */
-    Route::resource('incise', 'InciseController');
+    Route::resource('incise', 'InciseController')->only(['index', 'show']);
 
     /**
      * /line        => 'GET'    @ index()
@@ -153,7 +168,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
      * /line/{id}   => 'DELETE' @ destroy()
      *
      */
-    Route::resource('line', 'LineController');
+    Route::resource('line', 'LineController')->only(['index', 'show']);
 
     /**
      * /item        => 'GET'    @ index()
@@ -163,6 +178,6 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
      * /item/{id}   => 'DELETE' @ destroy()
      *
      */
-    Route::resource('item', 'ItemController');
+    Route::resource('item', 'ItemController')->only(['index', 'show']);
 
 });

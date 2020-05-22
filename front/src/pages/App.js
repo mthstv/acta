@@ -107,13 +107,11 @@ function App(props) {
         isLogged={isAuthenticated()}
         navDrawerOpen={state.navDrawerOpen}
         handleChangeNavDrawer={handleChangeNavDrawer}
-        menus={Data.menus}
+        menus={user.is_admin ? Data.adminMenus : Data.consultantMenus}
       />
       <div className={classNames(classes.container, !state.navDrawerOpen && classes.containerFull)}>
         <Switch>
           <Route exact path="/" component={Rules} />
-          {/* <Route path="/dashboard" component={Dashboard} /> */}
-          {/* <Route path="/form" component={Form} /> */}
           <Route path="/regra/:rule/busca/:elementlabel/:elementid" component={Rule} />
           <Route path="/regra/:rule" component={Rule} />
           <Route path="/criar-regra" component={RuleCreator} />
@@ -122,8 +120,6 @@ function App(props) {
           <Route path="/editar-elemento/:label/:element" component={ElementEditor} />
           <Route path="/usuarios" component={UserList} />
           <Route path="/perfil/:user" component={UserProfile} />
-          {/* <Route path="/table/basic" component={BasicTable} />
-          <Route path="/table/data" component={DataTable} /> */}
           <Route path="/logout" component={Logout} />
           <Route component={NotFound} />
         </Switch>
