@@ -15,7 +15,7 @@ como salvar solicitação no banco:
 (Se as solicitações aceitarem inserção de novos elementos, seria melhor criar o elemento com a tag pending true 
 (caso seja um consultor criando) para não ser exibido, isso vai precisar adicionar a flag pending em todos os elementos, 
 reabilitar as rotas CRUD pro consultor e criar um filtro no back pra retornar somente os 
-aprovados/criar endpoint de não aprovados ainda para as solicitações)
+aprovados/criar endpoint de não aprovados ainda para as solicitações).
 
 TABELA DE SOLICITAÇÔES DE EDIÇÂO
 id,
