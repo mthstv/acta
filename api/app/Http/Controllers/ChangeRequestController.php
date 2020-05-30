@@ -57,11 +57,20 @@ class ChangeRequestController extends Controller
      */
     public function review(Request $request, ChangeRequest $changeRequest)
     {
-        dd($changeRequest);
         $data = $request->except(['admin']);
         $data['reviewed_at'] = date("Y-m-d H:i:s");
         $changeRequest->admin()->associate($request->admin ? $request->admin : JWTAuth::user()->id);
         $changeRequest->update($data);
+
+        if($changeRequest->status === 'ACCEPTED') {
+            $element = element_label_to_object($changeRequest->element_name, $changeRequest->element_id);
+
+            if(isset($element->name)) {
+                $element->update(['name' => $changeRequest->new_text]);
+            } else {
+                $element->update(['text' => $changeRequest->new_text]);
+            }
+        }
         return response()->json(['success' => true, 'data' => $changeRequest]);
     }
     
@@ -74,7 +83,6 @@ class ChangeRequestController extends Controller
      */
     public function update(Request $request, ChangeRequest $changeRequest)
     {
-        dd($changeRequest);
         $changeRequest->update($request->all());
         return response()->json(['success' => true, 'data' => $changeRequest]);
     }

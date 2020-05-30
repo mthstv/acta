@@ -25,7 +25,7 @@ class ChangeRequestObserver
      */
     public function updated(ChangeRequest $changeRequest)
     {
-        // dd($changeRequest);
+        //
     }
 
     /**
