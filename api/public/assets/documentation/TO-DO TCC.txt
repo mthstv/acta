@@ -10,7 +10,6 @@ tela de minhas solicitações do consultor
 as solicitações com order by pending true and created_at desc, por ultimo as dones
 
 como salvar solicitação no banco:
-(Somente mudanças textuais em mente no momento)
 (Somente mudanças no momento, consultor nao pode inserir coisas novas)
 (Se as solicitações aceitarem inserção de novos elementos, seria melhor criar o elemento com a tag pending true 
 (caso seja um consultor criando) para não ser exibido, isso vai precisar adicionar a flag pending em todos os elementos, 
@@ -20,10 +19,10 @@ aprovados/criar endpoint de não aprovados ainda para as solicitações).
 TABELA DE SOLICITAÇÔES DE EDIÇÂO
 id,
 status(default='PENDING')(['PENDING', 'ACCEPTED', 'REJECTED']),
-consultant_id(user),
-element_name,
+consultant_id(user)(IF NULL -> AUTH USER ID),
+element_name, (COMO FAZER ISSO NO BACKEND??)
 element_id,
 old_text,
 new_text,
-reviewed(default=false)(bool, se o status for pending, essa flag será false, se for accepted ou rejected, será true),
-admin_id(nullable)(user)(null se nao teve review ainda)
+reviewed_at(default=null)(data em que a solicitação foi avaliada, (se for null, não foi avaliada ainda)),
+admin_id(nullable)(user)(null se nao teve review ainda)(IF NULL -> AUTH USER ID)

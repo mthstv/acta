@@ -60,6 +60,17 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     Route::resource('element', 'ElementController')->only(['index', 'show']);
 
     /**
+     * /change-request        => 'GET'    @ index()
+     * /change-request        => 'POST'   @ store()
+     * /change-request/{id}   => 'GET'    @ show()
+     * /change-request/{id}   => 'PATCH'  @ update()
+     * /change-request/{id}   => 'DELETE' @ destroy()
+     *
+     */
+    Route::patch('change-request/review/{changeRequest}', 'ChangeRequestController@review');
+    Route::resource('change-request', 'ChangeRequestController');
+
+    /**
      * /rule        => 'GET'    @ index()
      * /rule        => 'POST'   @ store()
      * /rule/{id}   => 'GET'    @ show()

@@ -34,7 +34,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'auth_token'
     ];
 
     /**
@@ -59,7 +59,16 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany('App\Models\Comment');
     }
-
+    
+    public function changeRequests()
+    {
+        return $this->hasMany('App\Models\ChangeRequest', 'consultant_id');
+    }
+    
+    public function changeRequestReviews()
+    {
+        return $this->hasMany('App\Models\ChangeRequest', 'admin_id');
+    }
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
