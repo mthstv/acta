@@ -29,6 +29,6 @@ class ItemController extends ElementsAbstractController
         $request->line ? $item->line()->associate($request->line) : null;
         $item->fill($data);
         $item->save();
-        return response()->json(['success' => true, 'data' => $item]);
+        return response()->json(['success' => true, 'data' => $item, 'message' => trans('api.generic_element.new')]);
     }
 }

@@ -31,6 +31,6 @@ class LineController extends ElementsAbstractController
         $request->incise ? $line->incise()->associate($request->incise) : null;
         $line->fill($data);
         $line->save();
-        return response()->json(['success' => true, 'data' => $line]);
+        return response()->json(['success' => true, 'data' => $line, 'message' => trans('api.generic_element.new')]);
     }
 }

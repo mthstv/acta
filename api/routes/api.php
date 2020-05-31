@@ -30,7 +30,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
 
     Route::group(['middleware' => ['admin']], function () {
         Route::resource('user', 'UserController')->except(['show']);
-
+        
         Route::resource('element', 'ElementController')->except(['index', 'show']);
         
         Route::resource('rule', 'RuleController')->except(['index', 'show']);
@@ -45,6 +45,9 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
         Route::resource('incise', 'InciseController')->except(['index', 'show']);
         Route::resource('line', 'LineController')->except(['index', 'show']);
         Route::resource('item', 'ItemController')->except(['index', 'show']);
+        
+        Route::patch('change-request/review/{changeRequest}', 'ChangeRequestController@review');
+        Route::get('change-request/reviewed-list', 'ChangeRequestController@adminReviewedRequests');
     });
 
     /**
@@ -67,7 +70,6 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
      * /change-request/{id}   => 'DELETE' @ destroy()
      *
      */
-    Route::patch('change-request/review/{changeRequest}', 'ChangeRequestController@review');
     Route::resource('change-request', 'ChangeRequestController');
 
     /**

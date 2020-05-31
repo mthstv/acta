@@ -31,6 +31,6 @@ class TitleController extends ElementsAbstractController
         $request->part ? $title->part()->associate($request->part) : null;
         $title->fill($data);
         $title->save();
-        return response()->json(['data' => $title]);
+        return response()->json(['success' => true, 'data' => $title, 'message' => trans('api.generic_element.new')]);
     }
 }

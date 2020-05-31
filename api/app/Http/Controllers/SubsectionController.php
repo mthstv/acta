@@ -29,6 +29,6 @@ class SubsectionController extends ElementsAbstractController
         $request->section ? $subSection->section()->associate($request->section) : null;
         $subSection->fill($data);
         $subSection->save();
-        return response()->json(['success' => true, 'data' => $subSection]);
+        return response()->json(['success' => true, 'data' => $subSection, 'message' => trans('api.generic_element.new')]);
     }
 }

@@ -9,6 +9,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ChangeRequestController extends Controller
 {
+    private $queryOrder = "CASE WHEN status = 'PENDING' THEN 1 WHEN status = 'ACCEPTED' THEN 2 ELSE 3 END";
+    
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +18,27 @@ class ChangeRequestController extends Controller
      */
     public function index()
     {
-        $changeRequests = ChangeRequest::all();
+        $user = JWTAuth::user();
+        if($user->is_admin) {
+            $changeRequests = ChangeRequest::orderByRaw($this->queryOrder)->get();
+        } else {
+            $changeRequests = ChangeRequest::where('consultant_id', $user->id)->orderByRaw($this->queryOrder)->get();
+        }
+        return response()->json(['success' => true, 'data' => $changeRequests]);
+    }
+
+    /**
+     * Display already reviewed requests of authenticated admin.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function adminReviewedRequests()
+    {
+        $admin = JWTAuth::user();
+        if(!$admin->is_admin) {
+            return response()->json(['success' => false, 'data' => [], 'message' => trans('api.change_requests.fail.reviewed_list')]);
+        }
+        $changeRequests = ChangeRequest::where('admin_id', $admin->id)->orderByRaw($this->queryOrder)->get();
         return response()->json(['success' => true, 'data' => $changeRequests]);
     }
 
@@ -34,7 +56,8 @@ class ChangeRequestController extends Controller
         $request->admin ? $changeRequest->admin()->associate($request->admin) : null;
         $changeRequest->fill($data);
         $changeRequest->save();
-        return response()->json(['success' => true, 'data' => $changeRequest]);
+
+        return response()->json(['success' => true, 'data' => $changeRequest, 'message' => trans('api.change_request.new')]);
     }
 
     /**
@@ -57,6 +80,10 @@ class ChangeRequestController extends Controller
      */
     public function review(Request $request, ChangeRequest $changeRequest)
     {
+        if($changeRequest->status != 'PENDING') {
+            return response()->json(['success' => false, 'data' => [], 'message' => trans('api.change_request.fail.review')]);
+        }
+
         $data = $request->except(['admin']);
         $data['reviewed_at'] = date("Y-m-d H:i:s");
         $changeRequest->admin()->associate($request->admin ? $request->admin : JWTAuth::user()->id);
@@ -71,7 +98,7 @@ class ChangeRequestController extends Controller
                 $element->update(['text' => $changeRequest->new_text]);
             }
         }
-        return response()->json(['success' => true, 'data' => $changeRequest]);
+        return response()->json(['success' => true, 'data' => $changeRequest, 'message' => trans('api.change_request.review')]);
     }
     
     /**
@@ -83,8 +110,12 @@ class ChangeRequestController extends Controller
      */
     public function update(Request $request, ChangeRequest $changeRequest)
     {
+        if($changeRequest->status != 'PENDING') {
+            return response()->json(['success' => false, 'data' => [], 'message' => trans('api.change_request.fail.update')]);
+        }
+
         $changeRequest->update($request->all());
-        return response()->json(['success' => true, 'data' => $changeRequest]);
+        return response()->json(['success' => true, 'data' => $changeRequest, 'message' => trans('api.change_request.update')]);
     }
 
 
@@ -97,7 +128,11 @@ class ChangeRequestController extends Controller
      */
     public function destroy(ChangeRequest $changeRequest)
     {
+        if($changeRequest->status != 'PENDING') {
+            return response()->json(['success' => false, 'data' => [], 'message' => trans('api.change_request.fail.delete')]);
+        }
+
         $changeRequest->delete();
-        return response()->json(['success' => true, 'data' => trans('api.change_request.delete')]);
+        return response()->json(['success' => true, 'data' => [], 'message' => trans('api.change_request.delete')]);
     }
 }

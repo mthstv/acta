@@ -51,9 +51,9 @@ abstract class ElementsAbstractController extends Controller
         $element = ($this->getModel())::find($elementId);
         if($element) {
             $element->update($request->all());
-            return response()->json(['success' => true, 'data' => $element]);
+            return response()->json(['success' => true, 'data' => $element, 'message' => trans('api.generic_element.update')]);
         } else {
-            return response()->json(['success' => false, 'data' => []], 404);
+            return response()->json(['success' => false, 'data' => [], 'message' => trans('api.generic_element.fail.update')], 404);
         }
     }
 
@@ -67,9 +67,9 @@ abstract class ElementsAbstractController extends Controller
         $element = ($this->getModel())::find($elementId);
         if($element) {
             $element->delete();
-            return response()->json(['success' => true, 'data' => trans('api.element.delete')]);
+            return response()->json(['success' => true, 'data' => [], 'message' => trans('api.generic_element.delete')]);
         } else {
-            return response()->json(['success' => false, 'data' => []], 404);
+            return response()->json(['success' => false, 'data' => [], 'message' => trans('api.generic_element.fail.delete')], 404);
         }
     }
 }

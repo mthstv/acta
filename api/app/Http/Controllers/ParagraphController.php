@@ -29,6 +29,6 @@ class ParagraphController extends ElementsAbstractController
         $request->article ? $paragraph->article()->associate($request->article) : null;
         $paragraph->fill($data);
         $paragraph->save();
-        return response()->json(['success' => true, 'data' => $paragraph]);
+        return response()->json(['success' => true, 'data' => $paragraph, 'message' => trans('api.generic_element.new')]);
     }
 }

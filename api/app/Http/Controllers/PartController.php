@@ -29,6 +29,6 @@ class PartController extends ElementsAbstractController
         $part->rule()->associate($request->rule);
         $part->fill($data);
         $part->save();
-        return response()->json(['success' => true, 'data' => $part]);
+        return response()->json(['success' => true, 'data' => $part, 'message' => trans('api.generic_element.new')]);
     }
 }

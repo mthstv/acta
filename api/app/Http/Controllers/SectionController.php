@@ -29,6 +29,6 @@ class SectionController extends ElementsAbstractController
         $request->chapter ? $section->chapter()->associate($request->chapter) : null;
         $section->fill($data);
         $section->save();
-        return response()->json(['success' => true, 'data' => $section]);
+        return response()->json(['success' => true, 'data' => $section, 'message' => trans('api.generic_element.new')]);
     }
 }

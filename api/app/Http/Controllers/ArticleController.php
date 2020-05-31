@@ -32,6 +32,6 @@ class ArticleController extends ElementsAbstractController
         $request->subsection ? $article->subsection()->associate($request->subsection) : null;
         $article->fill($data);
         $article->save();
-        return response()->json(['success' => true, 'data' => $article]);
+        return response()->json(['success' => true, 'data' => $article, 'message' => trans('api.generic_element.new')]);
     }
 }

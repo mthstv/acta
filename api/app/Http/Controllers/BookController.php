@@ -30,6 +30,6 @@ class BookController extends ElementsAbstractController
         $request->part ? $book->part()->associate($request->part) : null;
         $book->fill($data);
         $book->save();
-        return response()->json(['success' => true, 'data' => $book]);
+        return response()->json(['success' => true, 'data' => $book, 'message' => trans('api.generic_element.new')]);
     }
 }

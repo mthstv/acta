@@ -30,6 +30,6 @@ class InciseController extends ElementsAbstractController
         $request->paragraph ? $incise->paragraph()->associate($request->paragraph) : null;
         $incise->fill($data);
         $incise->save();
-        return response()->json(['success' => true, 'data' => $incise]);
+        return response()->json(['success' => true, 'data' => $incise, 'message' => trans('api.generic_element.new')]);
     }
 }

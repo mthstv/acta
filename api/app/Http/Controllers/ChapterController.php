@@ -29,6 +29,6 @@ class ChapterController extends ElementsAbstractController
         $request->title ? $chapter->title()->associate($request->title) : null;
         $chapter->fill($data);
         $chapter->save();
-        return response()->json(['success' => true, 'data' => $chapter]);
+        return response()->json(['success' => true, 'data' => $chapter, 'message' => trans('api.generic_element.new')]);
     }
 }
