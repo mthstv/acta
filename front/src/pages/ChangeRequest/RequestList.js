@@ -21,8 +21,14 @@ const useStyles = makeStyles({
         margin: '0 2px',
         transform: 'scale(0.8)',
     },
-    title: {
+    pendingRequest: {
         backgroundColor: 'yellow',
+    },
+    acceptedRequest: {
+        backgroundColor: 'green',
+    },
+    rejectedRequest: {
+      backgroundColor: 'red',
     },
     pos: {
         marginBottom: 12,
@@ -62,7 +68,7 @@ function RequestList (props) {
               <div>
                 <Card className={classes.root}>
                 <CardHeader
-                    className={classes.title}
+                    className={classes.pendingRequest}
                     // title="Shrimp and Chorizo Paella"
                     // subheader="September 14, 2016"
                 />
@@ -74,7 +80,7 @@ function RequestList (props) {
                             Código Penal
                         </Typography>
                         <Typography variant="body2" component="p">
-                            Avaliado por: Admin
+                            Avaliado por: Admin / Avaliação pendente
                         </Typography>
                     </CardContent>
                     <CardActions>
