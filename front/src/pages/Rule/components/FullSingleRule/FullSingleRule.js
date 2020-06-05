@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Card } from "react-bootstrap";
 import { Romanize } from "../../../../helpers";
-
 const styles = {
   textFields: {
     textAlign: "left",
@@ -12,6 +11,7 @@ const styles = {
 };
 
 export const GetSingleRule = (props) => {
+
   // Getting the search element to add highlight class
   useEffect(() => {
     if(props.searchElement) {
@@ -24,8 +24,14 @@ export const GetSingleRule = (props) => {
     }
   },[props.match.url, props.searchElement])
 
+  // Handling redirect
   const editRedirect = (label, id) => {
-    return props.editorMode ? props.history.push(`/editar-elemento/${label}/${id}`) : ''
+    if(props.user.is_admin) {
+      return props.editorMode ? props.history.push(`/editar-elemento/${label}/${id}`) : ''
+    }
+    if(props.user.is_consultant) {
+      return props.editorMode ? props.history.push(`/nova-solicitacao/${label}/${id}`) : ''
+    }
   }
 
   const getItemList = (list) => {

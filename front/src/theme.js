@@ -36,7 +36,7 @@ export const availableThemes = [
 
 const defaultTheme = {
   palette: {
-    primary: teal,
+    primary: blue,
     secondary: grey
   },
   error: red,

@@ -6,8 +6,9 @@ import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import Fab from "@material-ui/core/Fab";
 import EditIcon from "@material-ui/icons/Edit";
 import Zoom from '@material-ui/core/Zoom';
-import { useDispatch } from "react-redux";
-import { handleUrlTranslateElement } from '../../helpers'
+import { useDispatch, useSelector } from "react-redux";
+import { handleUrlTranslateElement } from '../../helpers';
+import RateReviewIcon from '@material-ui/icons/RateReview';
 
 const styles = {
   createFab: {
@@ -26,10 +27,19 @@ const styles = {
     bottom: 90,
     left: "auto",
     position: "fixed",
+  },
+  editRequestFab: {
+    margin: 0,
+    top: "auto",
+    right: 20,
+    bottom: 20,
+    left: "auto",
+    position: "fixed",
   }
 };
 
 function RulePage (props) {
+  const user = useSelector(state => state.user)
   const dispatch = useDispatch()
   const [rule, setRule] = useState(null)
   const [editorMode, setEditorMode] = useState(false)
@@ -74,32 +84,51 @@ function RulePage (props) {
                       editorMode={editorMode} 
                       history={props.history}
                       match={props.match}
-                      searchElement={searchElement}/>
+                      searchElement={searchElement}
+                      user={user}/>
                 </Card.Body>
               </Card>
             </Col>
           </Row>
         </Zoom>
-        <Fab 
-          color="primary" 
-          style={styles.createFab} 
-          aria-label="add"
-          onClick={() => props.history.push(`/criar-elemento/regra/${rule.id}`)}
-          title="Adicionar elemento"
-        >
-          <AddToPhotosIcon />
-        </Fab>
-        <Fab 
-          color="secondary" 
-          size="small"
-          style={styles.editFab} 
-          aria-label="edit"
-          onClick={handleEditorClick}
-          title={editorMode  ? "Desativar Modo Editor" : " Ativar Modo Editor"}
-          className={editorMode ? "pulse-button" : null}
-        >
-          <EditIcon />
-        </Fab>
+        {user.is_admin && 
+          <>
+            <Fab 
+              color="primary" 
+              style={styles.createFab} 
+              aria-label="add"
+              onClick={() => props.history.push(`/criar-elemento/regra/${rule.id}`)}
+              title="Adicionar elemento"
+            >
+              <AddToPhotosIcon />
+            </Fab>
+            <Fab 
+              color="secondary" 
+              size="small"
+              style={styles.editFab} 
+              aria-label="edit"
+              onClick={handleEditorClick}
+              title={editorMode  ? "Desativar Modo Editor" : " Ativar Modo Editor"}
+              className={editorMode ? "pulse-button" : null}
+            >
+              <EditIcon />
+            </Fab>
+          </>
+        }
+        {user.is_consultant && 
+          <>
+            <Fab 
+              color="primary"
+              style={styles.editRequestFab} 
+              aria-label="edit"
+              onClick={handleEditorClick}
+              title={editorMode  ? "Desativar Modo Editor" : " Ativar Modo Editor"}
+              className={editorMode ? "pulse-button" : null}
+            >
+              <RateReviewIcon />
+            </Fab>
+          </>
+        }
       </>
       :
       <div/>

@@ -5,7 +5,7 @@ import api from "../../services/api";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Fade from '@material-ui/core/Fade';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const styles = {
   fab: {
@@ -18,6 +18,7 @@ const styles = {
   }
 };
 function RuleList (props) {
+  const user = useSelector(state => state.user)
   const dispatch = useDispatch()
   const [rules, setRules] = useState([])
   const [loaded, setLoaded] = useState(false)
@@ -64,6 +65,7 @@ function RuleList (props) {
                   text={ item.description }
                   ruleId={item.id}
                   handleDelete={handleDelete}
+                  userIsAdmin={user.is_admin}
                 />
               </div>
             </Fade>
@@ -76,15 +78,17 @@ function RuleList (props) {
           </div>
           :""}
       </div>
-      <Fab 
-        color="primary" 
-        style={styles.fab} 
-        aria-label="add"
-        onClick={() => props.history.push("/criar-regra")}
-        title="Adicionar regra"
-      >
+      { user.is_admin && 
+        <Fab 
+          color="primary" 
+          style={styles.fab} 
+          aria-label="add"
+          onClick={() => props.history.push("/criar-regra")}
+          title="Adicionar regra"
+        >
         <AddIcon />
       </Fab>
+      }
     </>
   );
 }
