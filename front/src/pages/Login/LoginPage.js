@@ -136,6 +136,8 @@ function LoginPage(props) {
                 onClick={handleForgotPass}>
                 <Help />
                 <span style={{ margin: 5 }}>Esqueceu a senha?</span>
+                {/* TODO */}
+                {/* INSERIR MODAL COM CAMPO DE EMAIL E DEPOIS UM CHECK DE EMAIL ENVIADO COM BOTAO DE VOLTAR/FAZER LOGIN */}
               </Button>
             </div>
           </Fade>

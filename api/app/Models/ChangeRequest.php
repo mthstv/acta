@@ -27,7 +27,7 @@ class ChangeRequest extends Model
     *
     * @var array
     */
-    protected $hidden = ['created_at', 'updated_at', 'consultant_id', 'admin_id'];
+    protected $hidden = ['updated_at', 'consultant_id', 'admin_id'];
 
 
     //belongsto
