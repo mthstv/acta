@@ -9,6 +9,7 @@ import Data from "../data";
 import NotFound from "./NotFoundPage/NotFoundPage";
 import Rules from "./Rule/RuleList";
 import RequestList from "./ChangeRequest/RequestList";
+import NewRequest from "./ChangeRequest/NewRequest/NewRequest";
 import Rule from "./Rule/RulePage";
 import RuleCreator from "./Rule/RuleCreator/RuleCreator";
 import RuleEditor from "./Rule/RuleEditor/RuleEditor";
@@ -120,6 +121,7 @@ function App(props) {
           <Route path="/criar-elemento/regra/:rule" component={ElementCreator} />
           <Route path="/editar-elemento/:label/:element" component={ElementEditor} />
           <Route path="/solicitacoes" component={RequestList} />
+          <Route path="/nova-solicitacao/:label/:element" component={NewRequest} />
           <Route path="/usuarios" component={UserList} />
           <Route path="/perfil/:user" component={UserProfile} />
           <Route path="/logout" component={Logout} />

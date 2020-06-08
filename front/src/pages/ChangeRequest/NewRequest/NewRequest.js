@@ -9,12 +9,23 @@ import styles from "./styles";
 
 import api from "../../../services/api";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { handleElementName, handleUrlTranslateElement } from "../../../helpers";
+import { handleUrlTranslateElement, elementToTitle } from "../../../helpers";
 
-function ElementEditor (props) {
+function NewRequest (props) {
   const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
+
+  const [request, setRequest] = useState({
+    consultant: null,
+    element_name: "",
+    element_id: "",
+    rule_reference: null,
+    old_text: "",
+    new_text: ""
+  })
+
   const [element, setElement] = useState({
     number: "",
     letter: "",
@@ -31,52 +42,40 @@ function ElementEditor (props) {
     setSelectedElement(elementLabel)
     api.get(`/${elementLabel}/${elementId}`)
       .then((res) => {
+        let newRequest = {
+            consultant: user.id,
+            element_name: elementLabel,
+            element_id: elementId,
+            rule_reference: res.data.data.rule_reference,
+            old_text: res.data.data.name ? res.data.data.name : res.data.data.text,
+            new_text: res.data.data.name ? res.data.data.name : res.data.data.text
+        }
         setElement(res.data.data)
+        setRequest(newRequest)
       })
   },[props])
    
   const handleSubmit = async (e) => {
     e.preventDefault();
-    api.patch(`/${selectedElement}/${element.id}`, element)
+    api.post(`/change-request`, request)
       .then((res) => {
         props.history.push(`/regra/${element.rule_reference}`)
-        dispatch({type: 'SNACKBAR_SHOW', message: `${handleElementName(selectedElement)} alterado(a) com sucesso`})
+        dispatch({type: 'SNACKBAR_SHOW', message: `Solicitação gerada com sucesso`})
       })
   }
     
   return (
-    <PageBase title={"Editar " + handleElementName(selectedElement)}>
+    <PageBase title={"Nova solicitação de alteração: " + elementToTitle(selectedElement, element)}>
       <form onSubmit={handleSubmit}>
         <Row>
-          <Col sm={2} md={2} lg={2}>
-            {selectedElement === "line" ?
-              <TextField
-                label={"Letra"}
-                fullWidth={true}
-                margin="normal"
-                type={"text"}
-                value={element.letter}
-                onChange={(e) => setElement({...element, letter: e.target.value})}
-              />
-              :
-              <TextField
-                label={"Numeração"}
-                fullWidth={true}
-                margin="normal"
-                type={"number"}
-                value={element.number}
-                onChange={(e) => setElement({...element, number: e.target.value})}
-              />
-            }
-          </Col>
-          <Col sm={10} md={10} lg={10}>
+          <Col sm={12} md={12} lg={12}>
             {["part","book","title","chapter","section","subsection"].includes(selectedElement) ?
               <TextField
                 label="Nome"
                 fullWidth={true}
                 margin="normal"
-                value={element.name}
-                onChange={(e) => setElement({...element, name: e.target.value})}
+                value={request.new_text}
+                onChange={(e) => setRequest({...request, new_text: e.target.value})}
               />
               :
               <TextField
@@ -86,20 +85,14 @@ function ElementEditor (props) {
                 margin="normal"
                 multiline
                 rows={3}
-                value={element.text}
-                onChange={(e) => setElement({...element, text: e.target.value})}
+                value={request.new_text}
+                onChange={(e) => setRequest({...request, new_text: e.target.value})}
               />
             }
           </Col>
         </Row>
-
-        <div style={styles.deleteButton}>
-          <Button variant="contained">Excluir</Button>
-          {/* TODO */}
-          {/* Modal de confirmação de exclusão */}
-        </div>
         <div style={styles.buttons}>
-          <Link to={`/regra/${element.rule_reference}`}>
+          <Link to={`/regra/${request.rule_reference}`}>
             <Button variant="contained">Cancelar</Button>
           </Link>
 
@@ -108,6 +101,7 @@ function ElementEditor (props) {
             variant="contained"
             type="submit"
             color="primary"
+            disabled={request.old_text === request.new_text}
           >
             Salvar
           </Button>
@@ -117,4 +111,4 @@ function ElementEditor (props) {
   );
 };
 
-export default ElementEditor;
+export default NewRequest;

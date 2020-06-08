@@ -144,3 +144,32 @@ export const elementToString = (elementName, element) => {
     return "";
   }
 };
+
+export const elementToTitle = (elementName, element) => {
+  switch(elementName.toLowerCase()) {
+  case "part":
+    return `Parte - ${element.name}`;
+  case "book":
+    return `Livro - ${Romanize(element.number)}`;
+  case "title":
+    return `Título - ${Romanize(element.number)}`;
+  case "chapter":
+    return `Capítulo - ${Romanize(element.number)}`;
+  case "section":
+    return `Seção - ${Romanize(element.number)}`;
+  case "subsection":
+    return `Subseção - ${Romanize(element.number)}`;
+  case "article":
+    return `Artigo - Art. ${element.number < 10 ? element.number+"º" : element.number }`;
+  case "paragraph":
+    return `Parágrafo - § ${element.number}º`;
+  case "incise":
+    return `Inciso ${Romanize(element.number)}`;
+  case "line":
+    return `Alínea ${element.letter})`;
+  case "item":
+    return `Item ${element.number}.`;
+  default:
+    return "";
+  }
+};
