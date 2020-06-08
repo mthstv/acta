@@ -25,6 +25,7 @@ class CreateChangeRequestsTable extends Migration
             $table->dateTime('reviewed_at')->nullable();
             $table->bigInteger('admin_id')->unsigned()->nullable();
             $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('rule_reference')->index();
             $table->timestamps();
         });
     }

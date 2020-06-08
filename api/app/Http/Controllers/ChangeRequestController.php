@@ -80,6 +80,11 @@ class ChangeRequestController extends Controller
      */
     public function review(Request $request, ChangeRequest $changeRequest)
     {
+        // check if status is equal to pending, accepted or rejected
+        if($request->status !== 'PENDING' && $request->status !== 'REJECTED' && $request->status !== 'ACCEPTED') {
+            return response()->json(['success' => false, 'data' => [], 'message' => trans('api.change_request.fail.review_status')]);
+        }
+
         if($changeRequest->status != 'PENDING') {
             return response()->json(['success' => false, 'data' => [], 'message' => trans('api.change_request.fail.review')]);
         }

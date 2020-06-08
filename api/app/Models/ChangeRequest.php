@@ -12,7 +12,7 @@ class ChangeRequest extends Model
      * @var array
      */
     protected $fillable = [ 
-        'status', 'consultant_id', 'element_name', 'element_id', 'old_text', 'new_text', 'reviewed_at', 'admin_id'
+        'status', 'consultant_id', 'element_name', 'element_id', 'old_text', 'new_text', 'reviewed_at', 'admin_id', 'rule_reference'
     ];
 
     /**
@@ -29,6 +29,13 @@ class ChangeRequest extends Model
     */
     protected $hidden = ['updated_at', 'consultant_id', 'admin_id'];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['rule_title'];
+
 
     //belongsto
 
@@ -40,5 +47,11 @@ class ChangeRequest extends Model
     public function admin()
     {
         return $this->belongsTo('App\Models\User', 'admin_id');
+    }
+
+    public function getRuleTitleAttribute()
+    {
+        $rule = Rule::find($this->rule_reference);
+        return $rule->rule_title;
     }
 }

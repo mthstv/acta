@@ -140,6 +140,7 @@ return [
             'update' => 'Solicitação não foi possivel ser atualizado(a).',
             'delete' => 'Solicitação não foi possivel ser excluído(a).',
             'review' => 'Solicitação já foi avaliada.',
+            'review_status' => 'Status inválido.',
             'reviewed_list' => 'Não foi possível listar as solicitações avaliadas.'
         ]
     ]

@@ -68,12 +68,8 @@ const RuleCard = props => {
         onClose={handleMenuClose}
       >
         <MenuItem onClick={() => handleMenuClose(0)}>Visualizar</MenuItem>
-        {props.userIsAdmin && 
-          <>
-            <MenuItem onClick={() => handleMenuClose(1)}>Editar</MenuItem>
-            <MenuItem onClick={() => handleMenuClose(2)}>Excluir</MenuItem>
-          </>
-        }
+        {props.userIsAdmin && <MenuItem onClick={() => handleMenuClose(1)}>Editar</MenuItem> }
+        {props.userIsAdmin && <MenuItem onClick={() => handleMenuClose(2)}>Excluir</MenuItem> }
       </Menu>
     </div>
   );

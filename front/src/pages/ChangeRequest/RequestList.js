@@ -14,7 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import red from '@material-ui/core/colors/red';
 import yellow from '@material-ui/core/colors/yellow';
 import green from '@material-ui/core/colors/green';
-// import Diff from 'diff';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles({
     root: {
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     opaqueRoot: {
       marginBottom: '20px',
       minWidth: 275,
-      opacity: 0.6
+      opacity: 0.3
     },
     pendingRequest: {
         backgroundColor: yellow[500],
@@ -38,6 +38,51 @@ const useStyles = makeStyles({
     pos: {
         marginBottom: 12,
     },
+    oldTextExpanded: {
+      backgroundColor: red[100], 
+      marginBottom: '16px'
+    },
+    newTextExpanded: {
+      backgroundColor: green[100], 
+      marginBottom: '8px'
+    },
+    addRemoveIconBg: {
+      backgroundColor: '#dedede'
+    },
+    createdBy: {
+      textAlign: 'right'
+    },
+    acceptButton: {
+      backgroundColor: green[500],
+      color: 'white', 
+      marginRight: '8px',
+      "&:hover": {
+        backgroundColor: green[700]
+      }
+    },
+    acceptButtonDisabled: {
+      backgroundColor: green[200], 
+      color: 'white', 
+      marginRight: '8px'
+    },
+    rejectButton: {
+      backgroundColor: red[500],
+      color: 'white',
+      "&:hover": {
+        backgroundColor: red[700]
+      }
+    },    
+    rejectButtonDisabled: {
+      backgroundColor: red[200], 
+      color: 'white'
+    },
+    progress: {
+      color: 'white'
+    },
+    noRequestsText: {
+      textAlign: "center", 
+      color: "white"
+    }
 });
 
 function RequestList (props) {
@@ -46,39 +91,66 @@ function RequestList (props) {
   const dispatch = useDispatch()
   const [requests, setRequests] = useState([])
   const [loaded, setLoaded] = useState(false)
+  const [reviewLoading, setReviewLoading] = useState({ requestId: null, accept: false, reject: false })
+  const [expanded, setExpanded] = useState([])
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
 
   useEffect(() => {
-    getRequests();
+    getRequests()
   },[])
 
   const getRequests = () => {
+    setRequests([])
+    setLoaded(false)
+
     api.get("/change-request")
       .then(async (res) => {
-        
-        res.data.data.map(request => {
+        res.data.data.forEach(request => {
           let newDate = new Date(request.created_at);
           request.formatted_created_at = newDate.toLocaleDateString();
+
           if(request.reviewed_at) {
             let newDate = new Date(request.reviewed_at);
             request.formatted_reviewed_at = newDate.toLocaleDateString();
           }
-          let diff = Diff.diffChars(request.old_text, request.new_text);
+
+          request.changes = [];
+          let diff = Diff.diffWords(request.old_text, request.new_text);
           diff.forEach((part) => {
-            // green for additions, red for deletions
-            // grey for common parts
-            const color = part.added ? 'green' :
-              part.removed ? 'red' : 'black';
-            request.changes = { part, color }
-            console.log(request.changes);
-            // process.stderr.write(part.value[color]);
+            const bgColor = part.added ? green[200] : part.removed ? red[200] : 'white';
+            request.changes.push({ part, bgColor})
           });
+
         })
+    
         await setRequests(res.data.data)
         await setLoaded(true)
-        console.log(res.data.data);
       })
+  }
+  
+  const handleExpandButton = (requestId) => {
+    if(expanded.includes(requestId)) {
+      let filteredExpanded = expanded.filter((id) => {
+        return id !== requestId
+      })
+      setExpanded(filteredExpanded);
+    } else {
+      setExpanded([...expanded, requestId]);
+    }
+  }
+
+  const handleReview = (requestId, accepted) => {
+    setReviewLoading({ requestId, accept: accepted, reject: !accepted })
+    const payload = {
+      admin: user.id,
+      status: accepted ? 'ACCEPTED' : 'REJECTED'
+    }
+      api.patch(`/change-request/review/${requestId}`, payload)
+        .then(res => {
+          dispatch({type: 'SNACKBAR_SHOW', message: `Solicitação avaliada com sucesso`})
+          setReviewLoading({ requestId: null, accept: false, reject: false })
+          getRequests()
+        })
   }
 
   return (
@@ -97,29 +169,95 @@ function RequestList (props) {
                 {request.status === 'ACCEPTED' && <CardHeader className={classes.acceptedRequest}/> }
                 {request.status === 'REJECTED' && <CardHeader className={classes.rejectedRequest}/> }
                   <CardContent>
-                      <Typography variant="h6" component="h6">
-                          {request.change}
-                          {/* Art. 3º - A lei excepcional ou temporária, embora decorrido o período de sua duração ou cessadas as circunstâncias que a determinaram, aplica-se ao fato praticado durante sua vigência. */}
-                      </Typography>
-                      <Typography className={classes.pos} color="textSecondary">
-                          Código Penal
-                      </Typography>
+                    {expanded.includes(request.id) ? 
+                      <>
+                        {/* Expanded view */}
+                        <Typography color="textSecondary">
+                          Texto atual
+                        </Typography>
+                        <Typography variant="h6" component="h6" className={classes.oldTextExpanded}>
+                          {request.old_text}
+                        </Typography>
+                        <Typography color="textSecondary">
+                          Mudança sugerida
+                        </Typography>
+                        <Typography variant="h6" component="h6" className={classes.newTextExpanded}>
+                          {request.new_text}
+                        </Typography>
+                      </>
+                    : 
+                      <>
+                      {/* Mix and match old and new text */}
+                        <Typography variant="h6" component="h6">
+                            {request.changes.map((change, index) => 
+                              <span key={index} style={{backgroundColor: change.bgColor}}>
+                                <em className={classes.addRemoveIconBg}>
+                                  {change.part.added ? '+ ' : change.part.removed ? '- ' : ''}
+                                </em>
+                                {change.part.value}
+                              </span>
+                            )}
+                        </Typography>
+                        <Typography className={classes.pos} color="textSecondary">
+                          {request.rule_title}
+                        </Typography>
+                      </>
+                    }
                       <Grid container spacing={3}>
                         <Grid item xs={6}>
+                          {/* Reviewed by */}
                           <Typography variant="body2" component="p">
-                            {request.admin ? `Avaliado por: ${request.admin.name}`: 'Avaliação pendente' }
+                            {request.admin ? `Avaliado por ${request.admin.name} em ${request.formatted_reviewed_at}`: 'Avaliação pendente' }
                           </Typography>
                         </Grid>
                         <Grid item xs={6}>
-                          <Typography variant="body2" component="p" style={{textAlign: 'right'}}>
-                            {request.reviewed_at ? `Avaliado em : ${request.formatted_reviewed_at}`: `Criado em : ${request.formatted_created_at}`}
+                          {/* Created by */}
+                          <Typography variant="body2" component="p" className={classes.createdBy}>
+                            Criado {user.is_admin && `por ${request.consultant.name} `} em {request.formatted_created_at}
                           </Typography>
                         </Grid>
                       </Grid>
                   </CardContent>
-                  <CardActions>
-                      <Button size="small">Abrir</Button>
-                  </CardActions>
+                  {!request.reviewed_at && user.is_admin && 
+                    <CardActions>
+                        <Grid container justify="space-between" spacing={10}>
+                          {/* Expand Button */}
+                          <Grid item>
+                            <Button size="small" onClick={() => handleExpandButton(request.id)}>{expanded.includes(request.id) ? 'Retrair' : 'Expandir'}</Button>
+                          </Grid>
+                          {/* Review Buttons */}
+                          <Grid item>
+                            <Button 
+                              size="small" 
+                              className={reviewLoading.requestId === request.id && (reviewLoading.reject || reviewLoading.accept) ? classes.acceptButtonDisabled : classes.acceptButton} 
+                              onClick={() => handleReview(request.id, true)}
+                              disabled={reviewLoading.requestId === request.id && (reviewLoading.reject || reviewLoading.accept)}>
+                                {reviewLoading.requestId === request.id && reviewLoading.accept ? 
+                                  <CircularProgress size={24} className={classes.progress}/>
+                                  :
+                                  'Aceitar'
+                                }
+                            </Button>
+                            <Button 
+                              size="small"
+                              className={reviewLoading.requestId === request.id && (reviewLoading.reject || reviewLoading.accept) ? classes.rejectButtonDisabled : classes.rejectButton}
+                              onClick={() => handleReview(request.id, false)}
+                              disabled={reviewLoading.requestId === request.id && (reviewLoading.reject || reviewLoading.accept)}>
+                                {reviewLoading.requestId === request.id && reviewLoading.reject ? 
+                                    <CircularProgress size={24} className={classes.progress}/>
+                                    :
+                                    'Recusar'
+                                }
+                            </Button>
+                          </Grid>
+                        </Grid>
+                    </CardActions>
+                  }
+                  {!request.reviewed_at &&  user.is_consultant && 
+                    <CardActions>
+                        <Button size="small" >Alterar</Button>
+                    </CardActions>
+                  }
                 </Card>
               </div>
             </Fade>
@@ -127,7 +265,7 @@ function RequestList (props) {
           </Row>
         )}
         {loaded && requests.length === 0 ?
-          <div style={{textAlign: "center", color: "white"}}>
+          <div className={classes.noRequestsText}>
             Nenhuma solicitação encontrada
           </div>
           :""}

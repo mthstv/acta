@@ -48,7 +48,7 @@ const SearchResultsMenu = (props) => {
     api.get('/rule')
       .then((res) => {
         const resumedRules = []
-        res.data.data.map((rule) => {
+        res.data.data.forEach((rule) => {
           const { id, rule_title } = rule
           resumedRules.push({ id, rule_title })
         })
