@@ -1,7 +1,7 @@
 import React from "react";
 import Faker from "faker";
 import PermIdentity from "@material-ui/icons/PermIdentity";
-import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
+// import OpenInBrowserIcon from '@material-ui/icons/OpenInBrowser';
 import MenuBook from "@material-ui/icons/MenuBook";
 import ReplyRoundedIcon from "@material-ui/icons/ReplyRounded";
 import ForumIcon from '@material-ui/icons/Forum';
@@ -9,7 +9,7 @@ import ForumIcon from '@material-ui/icons/Forum';
 const data = {
   adminMenus: [
     { text: "Regras", icon: <MenuBook />, link: "/" },
-    { text: "Importação", icon: <OpenInBrowserIcon />, link: "/importacao" },
+    // { text: "Importação", icon: <OpenInBrowserIcon />, link: "/importacao" },
     { text: "Usuários", icon: <PermIdentity />, link: "/usuarios" },
     { text: "Solicitações", icon: <ForumIcon />, link: "/solicitacoes" },
 
