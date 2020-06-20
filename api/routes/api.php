@@ -14,7 +14,8 @@
 Route::group(['middleware' => 'api-header'], function () {
 
     // all routes that doesnt require authentication are registered here  
-
+    Route::post('auth/forgot-password-email', 'Auth\ForgotPasswordController@forgotUserPassword');
+    Route::post('auth/reset-password', 'Auth\ResetPasswordController@resetPassword');
     Route::post('auth/login', 'AuthController@login');
     Route::post('auth/register', 'AuthController@register');
     Route::get('auth/by-token', 'AuthController@getUserByToken');
