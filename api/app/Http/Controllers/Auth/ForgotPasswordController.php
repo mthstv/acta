@@ -58,7 +58,7 @@ class ForgotPasswordController extends Controller
     {
         $user = \App\Models\User::where('email', $email)->first();
 
-        $link = env('APP_FRONT_END_URL') . '/recuperar/senha/' . $token;
+        $link = env('APP_FRONT_END_URL') . '/recuperar/senha/' . $token . '/' . $email;
 
         try {
             $data = ['name' => $user->name, 'recoverLink' => $link];

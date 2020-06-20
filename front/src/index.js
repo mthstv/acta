@@ -10,6 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./pages/App";
 import Login from "./pages/Login/LoginPage";
 import Register from "./pages/Register/RegisterPage";
+import Recover from "./pages/Recover/RecoverPasswordPage";
 import store from "./store";
 import AppSnackbar from "./components/AppSnackbar";
 
@@ -35,6 +36,7 @@ render(
           />
           <Route exact path="/login" component={Login} />
           <Route path="/registrar" component={Register} />
+          <Route path="/recuperar/senha/:token/:email" component={Recover} />
         </Switch>
       </Router>
     </Provider>

@@ -19,6 +19,7 @@ import { login } from "../../services/auth";
 import { useDispatch } from "react-redux";
 
 import {ReactComponent as Icon} from "../../images/book_shelf.svg";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 function LoginPage(props) {
   // const userState = useSelector(state => state.user)
@@ -33,13 +34,21 @@ function LoginPage(props) {
     errorMessage:""
   })
   const [loaded, setLoaded] = useState(false)
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true)
+  const [recover, setRecover] = useState(false)
+  const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(true)
+  const [isRecoverButtonDisabled, setIsRecoverButtonDisabled] = useState(true)
+  const [emailLoading, setEmailLoading] = useState(false)
   
   useEffect(() => {
     if (user.email.trim() && user.password.trim()) {
-      setIsButtonDisabled(false);
+      setIsLoginButtonDisabled(false);
     } else {
-      setIsButtonDisabled(true);
+      setIsLoginButtonDisabled(true);
+    }
+    if (user.email.trim()) {
+      setIsRecoverButtonDisabled(false);
+    } else {
+      setIsRecoverButtonDisabled(true);
     }
     setLoaded(true)
   }, [user.email, user.password]);
@@ -60,12 +69,34 @@ function LoginPage(props) {
   }
 
   const handleForgotPass = () => {
-    dispatch({type: 'SNACKBAR_SHOW', message: "Email enviado com sucesso!"})
+    setRecover(!recover);
+    setUser({ email: "", password: "" });
   }
 
   const handleFieldChange = (field, value) => {
     setError({value: false, errorMessage: ""})
     setUser({...user,  [field]: value})
+  }
+  const SendRecoverEmail = (e) => {
+    setEmailLoading(true);
+    setIsRecoverButtonDisabled(true);
+    e.preventDefault();
+    let data = {
+      email: user.email
+    }
+    api.post("/auth/forgot-password-email", data)
+      .then(async (res) => {
+        dispatch({type: 'SNACKBAR_SHOW', message: "E-mail enviado com sucesso!"});
+        setEmailLoading(false);
+      })
+      .catch((err) => {
+        if(err.response) {
+          dispatch({type: 'SNACKBAR_SHOW', message: "Não conseguimos enviar o e-mail"});
+          console.log(err.data.message);
+          setError({ value: true, errorMessage: err.response.data.message });
+          setEmailLoading(false);
+        }
+      });
   }
 
   return (
@@ -84,7 +115,7 @@ function LoginPage(props) {
               </b>
             </div>
           </Fade>
-          <Collapse in={loaded}>
+          <Collapse in={loaded && !recover}>
             <div>
               <Paper style={styles.paper}>
                 <form onSubmit={LoginUser}>
@@ -94,6 +125,7 @@ function LoginPage(props) {
                     required
                     error={error.value}
                     helperText={error.errorMessage}
+                    value={user.email}
                     onChange={(e) => handleFieldChange('email', e.target.value)} />
                   
                   <div style={{ marginTop: 16 }}>
@@ -103,6 +135,7 @@ function LoginPage(props) {
                       required
                       error={error.value}
                       type="password" 
+                      value={user.password}
                       onChange={(e) => handleFieldChange('password', e.target.value)} />
                   </div>
 
@@ -112,7 +145,8 @@ function LoginPage(props) {
                       variant="contained" 
                       color="primary" 
                       style={styles.loginBtn}
-                      disabled={isButtonDisabled}>
+                      value={user.email}
+                      disabled={isLoginButtonDisabled}>
                       Login
                     </Button>
                   </div>
@@ -120,7 +154,32 @@ function LoginPage(props) {
               </Paper>
             </div>
           </Collapse>
-
+          <Collapse in={recover}>
+            <div>
+              <Paper style={styles.paper}>
+                <form onSubmit={SendRecoverEmail}>
+                  <TextField 
+                    label="E-mail" 
+                    fullWidth={true}
+                    required
+                    error={error.value}
+                    helperText={error.errorMessage}
+                    onChange={(e) => handleFieldChange('email', e.target.value)} />
+                  <div style={{ marginTop: 10 }}>
+                      <Button
+                        type="submit"
+                        variant="contained" 
+                        color="primary" 
+                        style={styles.loginBtn}
+                        disabled={isRecoverButtonDisabled}>
+                        Enviar
+                      </Button>
+                      {emailLoading && <CircularProgress size={24} />}
+                  </div>
+                </form>
+              </Paper>
+            </div>
+          </Collapse>
           <Fade 
             in={loaded}
             style={{ transformOrigin: '0 0 0' }}
@@ -136,8 +195,6 @@ function LoginPage(props) {
                 onClick={handleForgotPass}>
                 <Help />
                 <span style={{ margin: 5 }}>Esqueceu a senha?</span>
-                {/* TODO */}
-                {/* INSERIR MODAL COM CAMPO DE EMAIL E DEPOIS UM CHECK DE EMAIL ENVIADO COM BOTAO DE VOLTAR/FAZER LOGIN */}
               </Button>
             </div>
           </Fade>

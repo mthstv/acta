@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 class ResetPasswordController extends Controller
 {
     /*
@@ -41,7 +43,7 @@ class ResetPasswordController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|exists:users,email',
-            'password' => 'required|confirmed',
+            'password' => 'required|min:4|confirmed',
             'token' => 'required' 
         ]);
 
@@ -54,11 +56,17 @@ class ResetPasswordController extends Controller
 
         $user = \App\Models\User::where('email', $tokenData->email)->first();
         if (!$user) return response()->json(['success' => false, 'data' => [], 'message' => 'Invalid e-mail.']);
-
+        
+        
         $user->password = Hash::make($request->password);
-        $user->update();
+        $user->save();
+
         DB::table('password_resets')->where('email', $user->email)->delete();
 
-        return response()->json(['success' => true, 'data' => [], 'message' => 'Password changed successfully.']);
+        $token = JWTAuth::attempt(['email' => $request->email, 'password' => $request->password]);
+        $user->auth_token = $token;
+        $user->save();
+        
+        return response()->json(['success' => true, 'data'=> ['name' => $user->name, 'id' => $user->id, 'email' => $user->email, 'auth_token' => $token], 'message' => 'Password changed successfully.']);
     }
 }

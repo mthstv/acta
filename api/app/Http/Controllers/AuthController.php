@@ -79,7 +79,7 @@ class AuthController extends Controller
       $user->auth_token = $token; // update user token
       $user->save();
       
-      $response = ['success'=>true, 'data'=>['name'=>$user->name,'id'=>$user->id,'email'=>$request->email,'auth_token'=>$token]];        
+      $response = ['success'=>true, 'data'=> ['name' => $user->name, 'id' => $user->id, 'email' => $request->email, 'auth_token' => $token]];        
     } else {
       $response = ['success'=>false, 'data'=>'Couldnt register user'];
     }
