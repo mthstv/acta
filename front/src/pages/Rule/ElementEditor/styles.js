@@ -1,4 +1,4 @@
-import { grey } from "@material-ui/core/colors";
+import { grey, red } from "@material-ui/core/colors";
 
 const styles = {
   toggleDiv: {
@@ -13,12 +13,16 @@ const styles = {
     marginTop: 30,
     float: "right"
   },
-  deleteButton: {
+  deleteButtonDiv: {
     marginTop: 30,
     float: "left"
   },
   saveButton: {
     marginLeft: 5
+  },
+  deleteButton: {
+    backgroundColor: red[400], 
+    color: 'white'
   }
 };
 

@@ -255,7 +255,7 @@ function RequestList (props) {
                   }
                   {!request.reviewed_at &&  user.is_consultant && 
                     <CardActions>
-                        <Button size="small" >Alterar</Button>
+                        {/* <Button size="small" >Alterar</Button> */}
                     </CardActions>
                   }
                 </Card>

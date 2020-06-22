@@ -12,6 +12,7 @@ import api from "../../../services/api";
 import { useDispatch } from "react-redux";
 
 import { handleElementName, handleUrlTranslateElement } from "../../../helpers";
+import ConfirmationModal from "../../../components/ConfirmationModal";
 
 function ElementEditor (props) {
   const dispatch = useDispatch()
@@ -23,6 +24,7 @@ function ElementEditor (props) {
     rule_reference: ""
   })
 
+  const [modalShow, setModalShow] = useState(false)
   const [selectedElement, setSelectedElement] = useState('')
 
   useEffect(() => {
@@ -43,9 +45,23 @@ function ElementEditor (props) {
         dispatch({type: 'SNACKBAR_SHOW', message: `${handleElementName(selectedElement)} alterado(a) com sucesso`})
       })
   }
+
+  const handleDeleteButton = async () => {
+    api.delete(`/${selectedElement}/${element.id}`)
+      .then((res) => {
+        props.history.push(`/regra/${element.rule_reference}`)
+        dispatch({type: 'SNACKBAR_SHOW', message: `${handleElementName(selectedElement)} excluído(a) com sucesso`})
+      })
+  }
     
   return (
     <PageBase title={"Editar " + handleElementName(selectedElement)}>
+      <ConfirmationModal
+        open={modalShow}
+        onClose={handleDeleteButton}
+        body={`Tem certeza que deseja excluir este(a) ${handleElementName(selectedElement)}?`}
+        confirmcolor="red"
+      />
       <form onSubmit={handleSubmit}>
         <Row>
           <Col sm={2} md={2} lg={2}>
@@ -93,10 +109,8 @@ function ElementEditor (props) {
           </Col>
         </Row>
 
-        <div style={styles.deleteButton}>
-          <Button variant="contained">Excluir</Button>
-          {/* TODO */}
-          {/* Modal de confirmação de exclusão */}
+        <div style={styles.deleteButtonDiv}>
+          <Button variant="contained" style={styles.deleteButton} onClick={() => setModalShow(true)}>Excluir</Button>
         </div>
         <div style={styles.buttons}>
           <Link to={`/regra/${element.rule_reference}`}>
