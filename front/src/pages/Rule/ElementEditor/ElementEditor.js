@@ -46,12 +46,16 @@ function ElementEditor (props) {
       })
   }
 
-  const handleDeleteButton = async () => {
-    api.delete(`/${selectedElement}/${element.id}`)
-      .then((res) => {
-        props.history.push(`/regra/${element.rule_reference}`)
-        dispatch({type: 'SNACKBAR_SHOW', message: `${handleElementName(selectedElement)} excluído(a) com sucesso`})
-      })
+  const handleDeleteButton = async verification => {
+    if(verification) {
+      api.delete(`/${selectedElement}/${element.id}`)
+        .then((res) => {
+          props.history.push(`/regra/${element.rule_reference}`)
+          dispatch({type: 'SNACKBAR_SHOW', message: `${handleElementName(selectedElement)} excluído(a) com sucesso`})
+        })
+    } else {
+      setModalShow(false);
+    }
   }
     
   return (
